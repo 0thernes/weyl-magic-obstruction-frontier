@@ -5,6 +5,11 @@ All notable changes to `weyl-magic-obstruction-frontier` (`0TH-2026-022`) are do
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2026-11-27
+
+### Fixed
+- Removed unnecessary `pip install --no-build-isolation --no-deps -e .` from `.github/workflows/ci.yml` (`python-matrix` on Python 3.12 lacks preinstalled `setuptools` under `--no-build-isolation`), ensuring clean 12/12 green CI across Ubuntu, macOS, and Windows while preserving isolated `WEYL_MAGIC_MUTANT_SRC` true source-code mutation testing (zero changes to any Lean 4.35.0 proof or computational verifier).
+
 ## [1.1.0] - 2026-11-27
 
 ### Added

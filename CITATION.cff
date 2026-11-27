@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you use this formalization, codebase, or manuscript, please cite it as below."
 type: software
 title: "The 2-Adic Magic Obstruction, Quaternary Bent-Hyperplane Rupture, Super-MUB Torsion Anomalies, and Divided-Power Characteristic-3 Alltop Constructions Across Product Weyl-Heisenberg Groups"
-version: "1.1.0"
+version: "1.1.1"
 date-released: "2026-11-27"
 authors:
   - family-names: "Donahue"

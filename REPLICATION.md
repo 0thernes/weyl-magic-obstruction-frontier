@@ -51,7 +51,6 @@ node node/moonlab_crosscheck.cjs
 
 # Step 4: Python exact oracle, differential/property/mutation tests & axiom anti-drift
 pip install -r requirements.lock.txt
-pip install --no-build-isolation --no-deps -e .
 python examples/quickstart_demo.py
 pytest -v tests/test_all.py
 python scripts/mutation_check.py
