@@ -1,9 +1,9 @@
-# weyl-magic-obstruction-frontier (`0TH-2026-020`) — Complete LLM Reference Context
+# weyl-magic-obstruction-frontier (`0TH-2026-021`) — Complete LLM Reference Context
 
 ## 1. Identity, Licensing, and Integrity Rules
 - **Repository:** `https://github.com/0thernes/weyl-magic-obstruction-frontier`
 - **Live Observatory & Blueprint:** `https://0thernes.github.io/weyl-magic-obstruction-frontier/`
-- **Archive ID:** `0TH-2026-020` (registered in `0thernes/0thernes-research-archive`)
+- **Archive ID:** `0TH-2026-021` (registered in `0thernes/0thernes-research-archive`)
 - **Author:** Alexander Stephen Donahue (`Independent Researcher, Spokane, WA, USA`, ORCID `0009-0006-8168-9648`, `0_0@0thernes.art`)
 - **Licenses:** Dual REUSE 3.3 — `Apache-2.0` (code) and `CC-BY-4.0` (paper, documentation, data, figures).
 - **Epistemic Hygiene:** Strictly separate `[LEAN-6K]` (machine-checked deductive proofs), `[EXACT-COMP]` (exact integer/cyclotomic/rational computations), `[NUMERICAL-APPROX]` (floating-point optimization/simulation/AD), and `[OPEN]` (unsettled questions). Never describe QGTL, Moonlab WASM, Eshkol AD, or `qrng_stream.c` as quantum hardware or physical quantum randomness — they are deterministic classical CPU cross-checks.

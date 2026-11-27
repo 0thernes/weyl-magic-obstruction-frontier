@@ -1,7 +1,7 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 # AGENTS.md — AI Coding Agent Instructions
 
-This repository (`weyl-magic-obstruction-frontier`, archive ID `0TH-2026-020`) follows the **Build Standard for LLMs v1.2.0** (`docs/build-standard.md`).
+This repository (`weyl-magic-obstruction-frontier`, archive ID `0TH-2026-021`) follows the **Build Standard for LLMs v1.2.0** (`docs/build-standard.md`).
 
 ## Non-Negotiable Rules
 1. **No blocking gates (R1–R4):** Commit and push straight to `main`. Never add branch protection, required checks, commit signing, PR templates, Dependabot, Renovate, CodeRabbit, or `.github/copilot-instructions.md`. CI is informational only.

@@ -1,9 +1,16 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 # Changelog
 
-All notable changes to `weyl-magic-obstruction-frontier` (`0TH-2026-020`) are documented in this file.
+All notable changes to `weyl-magic-obstruction-frontier` (`0TH-2026-021`) are documented in this file.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [1.0.1] - 2026-11-26
+
+### Changed & Fixed
+- Reassigned canonical Master Research Archive identifier from `0TH-2026-020` to `0TH-2026-021` to avoid collision with concurrent archive registration `ceced1a` (`quantum-phasespace-rigidity`), rebuilding frozen PDF, clean-room arXiv tarball, figures, manifests, and RFC 3161 / OpenTimestamps proofs with zero Lean proof changes.
+- Guarded `now_sec` under `#ifdef WEYL_MAGIC_HAS_ASM` in `c/tests/test_weyl_magic.c` for strict `-Werror` no-ASM ASan/UBSan CI builds.
+- Added `shell: bash` to `rust-matrix` CI job for Windows PowerShell compatibility and pinned `pytest==9.0.3` in `requirements.lock.txt` (0 open security alerts).
 
 ## [1.0.0] - 2026-11-26
 

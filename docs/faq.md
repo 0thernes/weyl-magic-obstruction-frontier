@@ -20,4 +20,4 @@ No. All four are strictly **deterministic classical CPU** cross-checks (finite-d
 Damski et al. established the existence of complete characteristic-3 Weyl–Heisenberg MUBs via Galois rings $\mathrm{GR}(9,n)$. Our Pillar 5 (`T5a`–`T5b`) provides an elementary $\mathbb{Z}_9$ divided-power carry formulation, a universal bilinear Gauss-sum flat-modulus theorem, and machine-checked Lean 4.35.0 $\mathbb{Z}[\zeta_9]$ certificates for $n = 1, 2, 3$ (extended to $n = 4, D = 81$ in Rust and C11).
 
 ### 7. Has this work been peer-reviewed?
-No. It is an independent machine-checked research preprint (`0TH-2026-020`). Machine checking guarantees logical validity relative to Lean 4.35.0's kernels and our stated definitions, not peer review.
+No. It is an independent machine-checked research preprint (`0TH-2026-021`). Machine checking guarantees logical validity relative to Lean 4.35.0's kernels and our stated definitions, not peer review.

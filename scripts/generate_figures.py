@@ -375,7 +375,7 @@ def generate_social_preview() -> None:
     fig.text(
         0.08,
         0.04,
-        "0TH-2026-020  |  Alexander Stephen Donahue (ORCID 0009-0006-8168-9648)  |  "
+        "0TH-2026-021  |  Alexander Stephen Donahue (ORCID 0009-0006-8168-9648)  |  "
         "github.com/0thernes/weyl-magic-obstruction-frontier",
         color="#64748B",
         fontsize=10,

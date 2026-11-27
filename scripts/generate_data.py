@@ -51,7 +51,7 @@ def main() -> None:
 
     summary = {
         "schema_version": "1.0",
-        "id": "0TH-2026-020",
+        "id": "0TH-2026-021",
         "pillar1_two_adic": {
             "odd_n_samples": [
                 {"n": n, "v2": v2_valuation((2**n) * ((2**n - 2) ** 2)), "odd_v2": True}

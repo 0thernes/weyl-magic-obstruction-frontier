@@ -1,4 +1,4 @@
-# weyl-magic-obstruction-frontier (0TH-2026-020)
+# weyl-magic-obstruction-frontier (0TH-2026-021)
 
 > Zero-Mathlib Lean 4.35.0 six-kernel formalization (22 theorem groups T1a-T5d, 23 Palomar targets, 36 audited declarations) and nine-engine polyglot verifier for the 2-Adic Odd-Qubit Magic Obstruction, n=4 Bent-Hyperplane Rupture, Super-MUB Torsion Anomalies, Two-Stabilizer n=5 SOS Rupture, AME Magic Ceilings, and Divided-Power Characteristic-3 Alltop Constructions.
 

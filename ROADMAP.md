@@ -4,7 +4,7 @@
 ## Released (`v1.0.0` — 2026-11-26)
 - Complete zero-Mathlib Lean 4.35.0 6-kernel formalization of all 5 pillars (`T1a`–`T5d`, 23 Palomar targets, 5 non-vacuity witnesses, 8 adversarial refutations).
 - Nine-engine polyglot exact & numerical cross-verification stack (Lean 4.35.0, Rust, Zig, ISO C11, x86-64 NASM, C++20, Python, QGTL, Moonlab WASM, Eshkol AD).
-- Zero-warning 14-page AMS-LaTeX preprint + clean-room `dist/arxiv_submission.tar.gz`, WebGL2 Observatory, Proof Blueprint DAG, RFC 3161 + OpenTimestamps provenance, and archive registration as `0TH-2026-020`.
+- Zero-warning 14-page AMS-LaTeX preprint + clean-room `dist/arxiv_submission.tar.gz`, WebGL2 Observatory, Proof Blueprint DAG, RFC 3161 + OpenTimestamps provenance, and archive registration as `0TH-2026-021`.
 
 ## Near-Term (`v1.1.x`)
 - **Palomar Registry submission:** Submit the pinned 40-character `v1.0.0` commit SHA to `palomar-registry.org` and record the registry URL in `README.md` and `CITATION.cff`.

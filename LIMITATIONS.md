@@ -1,7 +1,7 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 # LIMITATIONS.md — Scope, Epistemic Boundaries, and Real vs. Metaphor
 
-This document states explicitly what `weyl-magic-obstruction-frontier` (`0TH-2026-020`) **does not prove**, where its formal guarantees stop, and how classical software cross-checks are distinguished from physical quantum claims.
+This document states explicitly what `weyl-magic-obstruction-frontier` (`0TH-2026-021`) **does not prove**, where its formal guarantees stop, and how classical software cross-checks are distinguished from physical quantum claims.
 
 ## 1. Mathematical & Formal Scope Boundaries
 

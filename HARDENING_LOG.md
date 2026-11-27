@@ -1,5 +1,5 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
-# HARDENING_LOG.md — Three-Cycle Forensic Hardening Audit (`0TH-2026-020`)
+# HARDENING_LOG.md — Three-Cycle Forensic Hardening Audit (`0TH-2026-021`)
 
 Every defect, discrepancy, visual glitch, epistemic risk, or coverage gap uncovered across all three full hardening cycles is permanently logged below using the ten canonical finding classes of **Build Standard for LLMs v1.2.0** (`bug`, `error`, `issue`, `problem`, `concern`, `dilemma`, `conflict`, `gap`, `hole`, `blindspot`) and **Defensible Independent AI Research Playbook v1.3**.
 

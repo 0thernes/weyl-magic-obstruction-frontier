@@ -1,7 +1,7 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 # ERRATA.md
 
-This file tracks all post-release corrections, errata, and mathematical or numerical clarifications for `weyl-magic-obstruction-frontier` (`0TH-2026-020`).
+This file tracks all post-release corrections, errata, and mathematical or numerical clarifications for `weyl-magic-obstruction-frontier` (`0TH-2026-021`).
 
 ## Active Errata (`v1.0.0`)
 

@@ -1,5 +1,5 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
-# Run Log & Verification Audit Trail (`0TH-2026-020`)
+# Run Log & Verification Audit Trail (`0TH-2026-021`)
 
 Chronological record of verified builds, tests, cross-checks, and publication actions for `weyl-magic-obstruction-frontier` (`v1.0.0`).
 
