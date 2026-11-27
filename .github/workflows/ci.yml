@@ -102,6 +102,7 @@ jobs:
           components: clippy
       - name: Clippy (-D warnings), release tests & JSON audit
         working-directory: rust
+        shell: bash
         run: |
           cargo clippy --all-targets -- -D warnings
           cargo test --release

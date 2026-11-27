@@ -26,11 +26,13 @@ static wm_i128 ipow128(int64_t base, int exp) {
     return r;
 }
 
+#ifdef WEYL_MAGIC_HAS_ASM
 static double now_sec(void) {
     struct timespec ts;
     timespec_get(&ts, TIME_UTC);
     return (double)ts.tv_sec + (double)ts.tv_nsec * 1e-9;
 }
+#endif
 
 int main(void) {
     int fails = 0;
