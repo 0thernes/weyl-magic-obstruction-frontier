@@ -1,0 +1,33 @@
+# SPDX-License-Identifier: Apache-2.0
+# Build Standard for LLMs v1.2.0 — 10 Finding-Class Labels (A30)
+
+- name: bug
+  color: "d73a4a"
+  description: "Code or logic does the wrong thing relative to its specification"
+- name: error
+  color: "b60205"
+  description: "Factual, mathematical, citation, or build error"
+- name: issue
+  color: "e99695"
+  description: "Concrete defect or friction item needing attention"
+- name: problem
+  color: "d93f0b"
+  description: "Structural or systemic obstacle affecting correctness or credibility"
+- name: concern
+  color: "fbca04"
+  description: "Potential risk, fragility, or epistemic overstatement worth investigating"
+- name: dilemma
+  color: "fef2c0"
+  description: "Genuine trade-off between competing goals requiring an explicit decision"
+- name: conflict
+  color: "c5def5"
+  description: "Contradiction between two files, claims, policies, or constraints"
+- name: gap
+  color: "0075ca"
+  description: "Missing file, test, proof step, documentation, or coverage"
+- name: hole
+  color: "5319e7"
+  description: "Unchecked edge case, security weakness, or verification bypass"
+- name: blindspot
+  color: "000000"
+  description: "Unexamined assumption, hidden scope limit, or unmodeled failure mode"

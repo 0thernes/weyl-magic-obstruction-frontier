@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+<!-- Copyright (c) 2026 Alexander Stephen Donahue -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none';">
+  <title>Proof Blueprint DAG — Weyl–Heisenberg Magic Obstruction Frontier (0TH-2026-020)</title>
+  <style>
+    :root { --bg:#0b1120; --surface:#111827; --border:#334155; --text:#f1f5f9; --muted:#94a3b8; --accent:#38bdf8; --green:#009e73; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--text); }
+    header { padding:1.3rem 1.8rem; border-bottom:1px solid var(--border); background:#0f172a; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1rem; }
+    header h1 { margin:0; font-size:1.3rem; color:var(--accent); }
+    nav a { color:var(--text); text-decoration:none; padding:0.4rem 0.8rem; border:1px solid var(--border); border-radius:6px; font-size:0.85rem; margin-left:0.4rem; }
+    nav a:hover, nav a:focus { border-color:var(--accent); color:var(--accent); }
+    main { max-width:1240px; margin:0 auto; padding:1.5rem; display:grid; gap:1.3rem; }
+    .card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:1.2rem; }
+    .card h2 { margin:0 0 0.7rem; font-size:1.05rem; color:var(--accent); }
+    svg { width:100%; height:auto; display:block; background:#070b14; border-radius:8px; border:1px solid #1f2937; }
+    table { width:100%; border-collapse:collapse; font-size:0.85rem; }
+    th, td { text-align:left; padding:0.48rem 0.55rem; border-bottom:1px solid var(--border); }
+    th { color:var(--accent); }
+    code { color:#a5f3fc; font-size:0.82rem; }
+    .ok { color:#34d399; font-weight:600; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Zero-Mathlib Lean 4.35.0 Proof Dependency Blueprint (0TH-2026-020)</h1>
+      <div style="color:var(--muted);font-size:0.86rem;">23 Palomar Targets · 5 Non-Vacuity Witnesses · 8 Adversarial Refutations · 6 Independent Kernels</div>
+    </div>
+    <nav aria-label="Primary navigation">
+      <a href="index.html">Observatory</a>
+      <a href="blueprint.html" aria-current="page">Proof Blueprint DAG</a>
+      <a href="https://github.com/0thernes/weyl-magic-obstruction-frontier">GitHub Repository</a>
+    </nav>
+  </header>
+  <main>
+    <section class="card">
+      <h2>Formal Module &amp; Theorem Dependency DAG (Click any node to filter table)</h2>
+      <svg viewBox="0 0 1120 350" role="img" aria-label="Proof dependency directed acyclic graph">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+          </marker>
+        </defs>
+        <!-- Edges -->
+        <g stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arr)">
+          <path d="M 560 56 L 120 120"/><path d="M 560 56 L 340 120"/><path d="M 560 56 L 560 120"/><path d="M 560 56 L 780 120"/><path d="M 560 56 L 1000 120"/>
+          <path d="M 120 185 L 440 245"/><path d="M 340 185 L 440 245"/><path d="M 560 185 L 560 245"/><path d="M 780 185 L 680 245"/><path d="M 1000 185 L 680 245"/>
+          <path d="M 440 295 L 560 315"/><path d="M 680 295 L 560 315"/>
+        </g>
+        <!-- Root Basic -->
+        <g class="node" data-pillar="all" style="cursor:pointer">
+          <rect x="420" y="14" width="280" height="42" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+          <text x="560" y="34" fill="#38bdf8" font-size="13" font-weight="700" text-anchor="middle">WeylMagic.Basic (Zero-Mathlib)</text>
+          <text x="560" y="49" fill="#94a3b8" font-size="10.5" text-anchor="middle">dotMod2 · sympForm · Cauchy-Schwarz · Z[i] · Z[zeta8]</text>
+        </g>
+        <!-- 5 Pillars -->
+        <g class="node" data-pillar="P1" style="cursor:pointer">
+          <rect x="20" y="120" width="200" height="65" rx="8" fill="#0f2922" stroke="#009e73" stroke-width="2"/>
+          <text x="120" y="142" fill="#34d399" font-size="12.5" font-weight="700" text-anchor="middle">Pillar 1: TwoAdicObstruction</text>
+          <text x="120" y="160" fill="#cbd5e1" font-size="10.5" text-anchor="middle">T1a–T1d: All odd n &gt;= 3</text>
+          <text x="120" y="175" fill="#94a3b8" font-size="10" text-anchor="middle">2^n(2^n-2)^2 != K^2</text>
+        </g>
+        <g class="node" data-pillar="P2" style="cursor:pointer">
+          <rect x="240" y="120" width="200" height="65" rx="8" fill="#0f2922" stroke="#009e73" stroke-width="2"/>
+          <text x="340" y="142" fill="#34d399" font-size="12.5" font-weight="700" text-anchor="middle">Pillar 2: BentHyperplane</text>
+          <text x="340" y="160" fill="#cbd5e1" font-size="10.5" text-anchor="middle">T2a–T2e: Fermat + Rothaus</text>
+          <text x="340" y="175" fill="#94a3b8" font-size="10" text-anchor="middle">896 bent -&gt; n=4 rupture</text>
+        </g>
+        <g class="node" data-pillar="P3" style="cursor:pointer">
+          <rect x="460" y="120" width="200" height="65" rx="8" fill="#2b190f" stroke="#d55e00" stroke-width="2"/>
+          <text x="560" y="142" fill="#fb923c" font-size="12.5" font-weight="700" text-anchor="middle">Pillar 3: SuperMubAnomalies</text>
+          <text x="560" y="160" fill="#cbd5e1" font-size="10.5" text-anchor="middle">T3a–T3e: W(4)xW(2), W(4)xW(4)</text>
+          <text x="560" y="175" fill="#94a3b8" font-size="10" text-anchor="middle">Z[zeta8] MUB vs Z[i] Super-MUB</text>
+        </g>
+        <g class="node" data-pillar="P4" style="cursor:pointer">
+          <rect x="680" y="120" width="200" height="65" rx="8" fill="#1b1b3a" stroke="#cc79a7" stroke-width="2"/>
+          <text x="780" y="142" fill="#f472b6" font-size="12.5" font-weight="700" text-anchor="middle">Pillar 4: TwoStabilizerTower</text>
+          <text x="780" y="160" fill="#cbd5e1" font-size="10.5" text-anchor="middle">T4a–T4d: n=4 cubic, n=5 SOS</text>
+          <text x="780" y="175" fill="#94a3b8" font-size="10" text-anchor="middle">AME(n,d) magic ceilings</text>
+        </g>
+        <g class="node" data-pillar="P5" style="cursor:pointer">
+          <rect x="900" y="120" width="200" height="65" rx="8" fill="#0f2538" stroke="#56b4e9" stroke-width="2"/>
+          <text x="1000" y="142" fill="#7dd3fc" font-size="12.5" font-weight="700" text-anchor="middle">Pillar 5: Char3AlltopAndQGT</text>
+          <text x="1000" y="160" fill="#cbd5e1" font-size="10.5" text-anchor="middle">T5a–T5d: Z9 carry + Gauss FFT</text>
+          <text x="1000" y="175" fill="#94a3b8" font-size="10" text-anchor="middle">W(3)^1..3, W(5)^1..2, QGT</text>
+        </g>
+        <!-- Contract & Audit -->
+        <g class="node" data-pillar="all" style="cursor:pointer">
+          <rect x="290" y="245" width="240" height="50" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.8"/>
+          <text x="410" y="268" fill="#e2e8f0" font-size="12" font-weight="700" text-anchor="middle">Challenge.lean + PalomarSolution</text>
+          <text x="410" y="284" fill="#34d399" font-size="10.5" text-anchor="middle">23 Targets · 6 Independent Kernels</text>
+        </g>
+        <g class="node" data-pillar="all" style="cursor:pointer">
+          <rect x="590" y="245" width="240" height="50" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.8"/>
+          <text x="710" y="268" fill="#e2e8f0" font-size="12" font-weight="700" text-anchor="middle">NonVacuity + AdversarialTests</text>
+          <text x="710" y="284" fill="#34d399" font-size="10.5" text-anchor="middle">5 Witnesses · 8 Refutations · VerifyAxioms</text>
+        </g>
+      </svg>
+    </section>
+
+    <section class="card">
+      <h2>Audited Theorem Ledger (36 Declarations — All Strictly Within <code>[propext, Classical.choice, Quot.sound]</code>)</h2>
+      <table id="thmTable">
+        <thead><tr><th>ID</th><th>Pillar</th><th>Lean Declaration</th><th>Axioms</th><th>Status</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+  (function () {
+    'use strict';
+    const rows = [
+      ['T1a','P1','WeylMagic.Palomar.prove_t1a','[propext, Classical.choice, Quot.sound]'],
+      ['T1b','P1','WeylMagic.Palomar.prove_t1b','[propext]'],
+      ['T1c','P1','WeylMagic.Palomar.prove_t1c','[propext, Classical.choice, Quot.sound]'],
+      ['T1d','P1','WeylMagic.Palomar.prove_t1d','[propext, Quot.sound]'],
+      ['T2a','P2','WeylMagic.Palomar.prove_t2a','[propext, Quot.sound]'],
+      ['T2b','P2','WeylMagic.Palomar.prove_t2b','[propext, Classical.choice, Quot.sound]'],
+      ['T2c','P2','WeylMagic.Palomar.prove_t2c','[propext, Classical.choice, Quot.sound]'],
+      ['T2d','P2','WeylMagic.Palomar.prove_t2d','[propext, Classical.choice, Quot.sound]'],
+      ['T2e','P2','WeylMagic.Palomar.prove_t2e','[propext, Classical.choice, Quot.sound]'],
+      ['T3a','P3','WeylMagic.Palomar.prove_t3a','[propext, Classical.choice, Quot.sound]'],
+      ['T3b','P3','WeylMagic.Palomar.prove_t3b','[propext, Classical.choice, Quot.sound]'],
+      ['T3c','P3','WeylMagic.Palomar.prove_t3c','none (pure kernel reduction)'],
+      ['T3d','P3','WeylMagic.Palomar.prove_t3d','none (pure kernel reduction)'],
+      ['T3e','P3','WeylMagic.Palomar.prove_t3e','none (pure kernel reduction)'],
+      ['T4a','P4','WeylMagic.Palomar.prove_t4a','[propext, Classical.choice, Quot.sound]'],
+      ['T4b','P4','WeylMagic.Palomar.prove_t4b','[propext, Classical.choice, Quot.sound]'],
+      ['T4c','P4','WeylMagic.Palomar.prove_t4c','[propext, Classical.choice, Quot.sound]'],
+      ['T4d','P4','WeylMagic.Palomar.prove_t4d','[propext, Quot.sound]'],
+      ['T5a','P5','WeylMagic.Palomar.prove_t5a','[propext, Classical.choice, Quot.sound]'],
+      ['T5b','P5','WeylMagic.Palomar.prove_t5b','[propext, Classical.choice, Quot.sound]'],
+      ['T5c','P5','WeylMagic.Palomar.prove_t5c','[propext]'],
+      ['T5d','P5','WeylMagic.Palomar.prove_t5d','[propext, Classical.choice, Quot.sound]'],
+      ['ALL','ALL','WeylMagic.Palomar.prove_all_weyl_magic_theorems','[propext, Classical.choice, Quot.sound]']
+    ];
+    const tbody = document.querySelector('#thmTable tbody');
+    function render(filter) {
+      tbody.innerHTML = '';
+      for (const r of rows) {
+        if (filter !== 'all' && r[1] !== filter && r[1] !== 'ALL') continue;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td><strong>${r[0]}</strong></td><td>${r[1]}</td><td><code>${r[2]}</code></td><td><code>${r[3]}</code></td><td class="ok">VERIFIED</td>`;
+        tbody.appendChild(tr);
+      }
+    }
+    document.querySelectorAll('.node').forEach((n) => {
+      n.addEventListener('click', () => render(n.getAttribute('data-pillar')));
+    });
+    render('all');
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+# SPDX-License-Identifier: Apache-2.0
+# Project manifest for the Build Standard for LLMs v1.2.0. Read by scripts/Audit-Repo.ps1 and scripts/audit-repo.sh.
+standard: "1.2.0"
+name: "weyl-magic-obstruction-frontier"
+description: "Zero-Mathlib Lean 4.35.0 six-kernel formalization (22 theorem groups, T1a-T5d) and nine-engine polyglot verifier for the 2-Adic Odd-Qubit Magic Obstruction, n=4 Bent-Hyperplane Rupture, Super-MUB Torsion Anomalies, Two-Stabilizer n=5 SOS Rupture, AME Magic Ceilings, and Divided-Power Characteristic-3 Alltop Constructions."
+owner: "0thernes"
+year: "2026"
+version: "1.0.0"
+archive_id: "0TH-2026-020"
+project_type: research
+stack: [lean4, rust, zig, c11, asm, cpp20, python, node, eshkol, latex, web]
+author:
+  name: "Alexander Stephen Donahue"
+  orcid: "0009-0006-8168-9648"
+  email: "0_0@0thernes.art"
+  affiliation: "Independent Researcher, Spokane, WA, USA"
+repository: "https://github.com/0thernes/weyl-magic-obstruction-frontier"
+pages_url: "https://0thernes.github.io/weyl-magic-obstruction-frontier/"
+licenses:
+  code: "Apache-2.0"
+  docs: "CC-BY-4.0"
+flags:
+  public: true
+  package: true
+  visual: true
+  ui: true
+  native: true
+  ai: false
+  personal_data: false
+  service: false
+  deployed: true
+  api: false
+  perf: true
+  concurrent: false
+  numeric: true
+  experimental: false
+  ml: false
+  formal: true
+items:
+  A19: {status: done, note: "GitHub About description, homepage URL, and research topics configured via gh repo edit."}
+  A37: {status: done, note: "Explicit runtime performance budgets documented and verified in docs/benchmarks.md."}
+  A38: {status: done, note: "Interactive WebGL2 Observatory & Proof Blueprint satisfy WCAG 2.2 AA with strict CSP, zero CDN dependencies, semantic landmarks, aria-live readouts, and Okabe-Ito colorblind-safe palette."}
+  B03: {status: done, note: "Deterministic bit-for-bit JSON, PDF, arXiv tarball, and QRNG stream generation verified across runs."}
+  B05: {status: done, note: "All 22 numbered theorem groups (T1a-T5d) have machine-checked Lean 4.35.0 proofs and independent pytest assertions."}
+  B06: {status: done, note: "AdversarialTests.lean (8 formal boundary refutations), mutation-killing pytest tests, and tamper-injecting CI comparator gate."}
+  B07: {status: done, note: "Regression tests lock the exact 896 bent count, v42/v44 alpha-crossover, n=4 cubic root, n=5 SOS rupture, and char-3/char-5 spectra."}
+  B08: {status: done, note: "Frozen JSON datasets in data/ verified against SHA-256 manifests, RFC 3161 DigiCert .tsr, and OpenTimestamps .ots proofs."}
+  B11: {status: done, note: "Differential cross-verification across Lean 4.35.0, Rust, Zig, ISO C11, x86-64 NASM, C++20, Python, QGTL, and Moonlab WASM."}
+  B12: {status: done, note: "reference/oracle.py independently implements direct textbook O(D^3) Weyl-Heisenberg moments."}
+  B14: {status: done, note: "Hypothesis property tests and metamorphic phase/scaling invariance tests in tests/test_all.py."}
+  B20: {status: done, note: "100% exact integer, Gaussian-integer, cyclotomic (Z[zeta8], Z[zeta9], Z[zeta5]), and Fraction arithmetic for all formal claims."}
+  B22: {status: done, note: "Zero-Mathlib Lean 4.35.0 formalization (23 Palomar targets, 36 audited declarations) replayed across 6 independent kernels."}
+  B23: {status: n/a, note: "Deductive Lean 4.35.0 proofs supersede finite-state TLA+/Alloy design model checking."}
+  B24: {status: done, note: "Mathematical core proved in Lean 4.35.0; Rust verifier uses #![forbid(unsafe_code)]."}
+  B25: {status: done, note: "Bounded model checking harness c/tests/cbmc_harness.c (CBMC) plus C11 -Werror -Wconversion, ASan+UBSan, and 100k differential fuzzing."}
+  B27: {status: done, note: "CI job durations and FWHT assembly vs C11 speedup tracked report-only in docs/benchmarks.md and GitHub Actions run history."}

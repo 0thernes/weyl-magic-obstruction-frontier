@@ -1,0 +1,11 @@
+---
+description: Build Standard for LLMs v1.2.0 and Lean 4.35.0 formal integrity rules
+globs: ["**/*"]
+alwaysApply: true
+---
+
+Follow `AGENTS.md` and `docs/build-standard.md`:
+- Never introduce `sorry`, `admit`, `native_decide`, or custom axioms outside `lean/PalomarChallenge.lean`.
+- Keep all code Apache-2.0 and docs/paper/data CC-BY-4.0 per `REUSE.toml`.
+- Commit and push directly to `main`; CI is informational only (no gating hooks or branch protection).
+- Keep `[LEAN-6K]`, `[EXACT-COMP]`, `[NUMERICAL-APPROX]`, and `[OPEN]` epistemic boundaries explicit.

@@ -1,0 +1,19 @@
+name: Bug or Mathematical Finding Report
+description: Report a verification discrepancy, code defect, proof issue, or erratum.
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: Concise description of the defect, mathematical counterexample, or discrepancy.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction Steps
+      description: Exact commands, OS, toolchain versions (Lean 4.35.0 / Rust / C11 / Python), and observed vs. expected output.
+    validations:
+      required: true

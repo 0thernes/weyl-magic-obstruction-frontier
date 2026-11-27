@@ -1,0 +1,35 @@
+{
+  "challenge_module": "PalomarChallenge",
+  "solution_module": "PalomarSolution",
+  "theorem_names": [
+    "WeylMagic.Palomar.prove_t1a",
+    "WeylMagic.Palomar.prove_t1b",
+    "WeylMagic.Palomar.prove_t1c",
+    "WeylMagic.Palomar.prove_t1d",
+    "WeylMagic.Palomar.prove_t2a",
+    "WeylMagic.Palomar.prove_t2b",
+    "WeylMagic.Palomar.prove_t2c",
+    "WeylMagic.Palomar.prove_t2d",
+    "WeylMagic.Palomar.prove_t2e",
+    "WeylMagic.Palomar.prove_t3a",
+    "WeylMagic.Palomar.prove_t3b",
+    "WeylMagic.Palomar.prove_t3c",
+    "WeylMagic.Palomar.prove_t3d",
+    "WeylMagic.Palomar.prove_t3e",
+    "WeylMagic.Palomar.prove_t4a",
+    "WeylMagic.Palomar.prove_t4b",
+    "WeylMagic.Palomar.prove_t4c",
+    "WeylMagic.Palomar.prove_t4d",
+    "WeylMagic.Palomar.prove_t5a",
+    "WeylMagic.Palomar.prove_t5b",
+    "WeylMagic.Palomar.prove_t5c",
+    "WeylMagic.Palomar.prove_t5d",
+    "WeylMagic.Palomar.prove_all_weyl_magic_theorems"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

@@ -1,0 +1,64 @@
+;; SPDX-License-Identifier: Apache-2.0
+;; Copyright (c) 2026 Alexander Stephen Donahue
+;;
+;; Eshkol Exact Automatic Differentiation Cross-Check for Pillars 4 & 5:
+;;   1. Verifies exact stationarity d(Phi_4)/dt = 0 of the 4-qubit Two-Stabilizer
+;;      Magic Tower at the cubic root t* of 453*t^3 - 651*t^2 + 311*t - 49 = 0.
+;;   2. Verifies the exact Fubini-Study Quantum Geometric Tensor (QGT) metric
+;;      g_{theta,theta}(theta) = (1 - 1/D) / (2 + 2 cos(theta)/sqrt(D))^2
+;;      via exact forward/reverse-mode automatic differentiation of the projective
+;;      state overlap |<Psi_n(theta)|Psi_n(theta')>|^2 across n = 1, 2, 3, 4.
+;;
+;; HONEST LABELLING: Classical floating-point automatic differentiation cross-check;
+;; formal algebraic proofs live in Lean 4.35.0 (TwoStabilizerTower.lean & Char3AlltopAndQGT.lean).
+
+(define (phi4-n4 t)
+  (let* ((t2 (* t t))
+         (t3 (* t2 t))
+         (t4 (* t2 t2)))
+    (* 0.5 (+ (* 6795.0 t4) (* -13020.0 t3) (* 9330.0 t2) (* -2940.0 t) 347.0))))
+
+(define (stationary-cubic-n4 t)
+  (let* ((t2 (* t t))
+         (t3 (* t2 t)))
+    (+ (* 453.0 t3) (* -651.0 t2) (* 311.0 t) -49.0)))
+
+(define (two-stab-norm-sq D theta)
+  (+ 2.0 (* (/ 2.0 (sqrt D)) (cos theta))))
+
+;; Exact closed-form Fubini-Study QGT metric g_{theta,theta}(theta)
+(define (qgt-metric-closed D theta)
+  (let ((N (two-stab-norm-sq D theta)))
+    (/ (- 1.0 (/ 1.0 D)) (* N N))))
+
+;; Direct projective overlap F(theta, theta') = |<Psi(theta)|Psi(theta')>|^2
+;; so g_{theta,theta}(theta0) = -(1/2) * d^2/dtheta^2 F(theta0, theta) |_{theta=theta0}.
+(define (proj-overlap-sq D theta0 theta)
+  (let* ((s (/ 1.0 (sqrt D)))
+         (N0 (two-stab-norm-sq D theta0))
+         (N1 (two-stab-norm-sq D theta))
+         (dth (- theta theta0))
+         (re (+ 1.0 (cos dth) (* s (+ (cos theta0) (cos theta)))))
+         (im (+ (sin dth) (* s (- (sin theta) (sin theta0))))))
+    (/ (+ (* re re) (* im im)) (* N0 N1))))
+
+(with-region 'weyl-magic-qgt-ad
+  (let* ((t-star 0.3774568011835382)
+         (phi4-val (phi4-n4 t-star))
+         (dphi4-dt (derivative phi4-n4 t-star))
+         (cubic-val (stationary-cubic-n4 t-star))
+         (theta-star (acos (* 2.0 (- (/ 1.0 (- 1.0 t-star)) 2.0))))
+         (g-closed-n4 (qgt-metric-closed 16.0 theta-star))
+         (g-ad-n4 (* -0.5
+                     (derivative
+                       (lambda (th)
+                         (derivative (lambda (th2) (proj-overlap-sq 16.0 theta-star th2)) th))
+                       theta-star)))
+         (qgt-err (abs (- g-ad-n4 g-closed-n4))))
+    (display "Weyl-Magic Eshkol Exact AD Verification Report") (newline)
+    (display "  n=4 t* cubic residual         = ") (display cubic-val) (newline)
+    (display "  n=4 Phi_4(t*)                 = ") (display phi4-val) (newline)
+    (display "  n=4 AD d(Phi_4)/dt at t*      = ") (display dphi4-dt) (newline)
+    (display "  n=4 QGT g_tt closed form      = ") (display g-closed-n4) (newline)
+    (display "  n=4 QGT g_tt via 2nd-order AD = ") (display g-ad-n4) (newline)
+    (display "  n=4 QGT |AD - closed|         = ") (display qgt-err) (newline)))

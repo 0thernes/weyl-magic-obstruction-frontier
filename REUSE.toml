@@ -1,0 +1,19 @@
+version = 1
+
+[[annotations]]
+path = ["lean/**", "rust/**", "zig/**", "c/**", "cpp/**", "asm/**", "src/**", "reference/**", "tests/**", "scripts/**", "examples/**", "node/**", "eshkol/**", ".github/**", "justfile", "pyproject.toml", "repo.yaml", "repo-standard.schema.json"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Alexander Stephen Donahue"
+SPDX-License-Identifier = "Apache-2.0"
+
+[[annotations]]
+path = ["paper/**", "docs/**", "data/**", "results/**", "dist/**", "*.md", "CITATION.cff", "llms.txt", "llms-full.txt", "MANIFEST.sha256*"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Alexander Stephen Donahue"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+[[annotations]]
+path = ["third_party/moonlab/**", "third_party/qgtl/**"]
+precedence = "override"
+SPDX-FileCopyrightText = "2024 Tsotchke"
+SPDX-License-Identifier = "MIT"

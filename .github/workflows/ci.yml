@@ -1,0 +1,242 @@
+# SPDX-License-Identifier: Apache-2.0
+# Informational-only 6-kernel Lean 4.35.0, polyglot, and SLSA provenance CI (Build Standard R1-R4)
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+  attestations: write
+
+jobs:
+  lean-6kernel:
+    name: Lean 4.35.0 (6 Independent Proof Kernels)
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install bubblewrap for paranoid kernel sandboxing
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq bubblewrap
+
+      - name: Install elan & Lean 4.35.0
+        run: |
+          curl https://elan.lean-lang.org/elan-init.sh -sSf | sh -s -- -y --default-toolchain leanprover/lean4:v4.35.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Build zero-Mathlib library & PalomarChallenge
+        working-directory: lean
+        run: |
+          lake build
+          lake build PalomarChallenge
+
+      - name: Audit axioms (36/36 strictly within propext, Classical.choice, Quot.sound)
+        working-directory: lean
+        run: |
+          lake env lean VerifyAxioms.lean > ../results/ci_lean_axioms.txt
+          cat ../results/ci_lean_axioms.txt
+          python3 -c '
+          a = open("../results/lean_axioms.txt", encoding="utf-8-sig").read().replace("\r\n", "\n").strip()
+          b = open("../results/ci_lean_axioms.txt", encoding="utf-8-sig").read().replace("\r\n", "\n").strip()
+          assert a == b, f"Axiom drift!\nExpected:\n{a}\nActual:\n{b}"
+          print("Axiom footprint matches committed results/lean_axioms.txt exactly (36 declarations).")
+          '
+          python3 ../scripts/check_readme_axioms.py
+
+      - name: Standalone leanchecker & leanchecker-paranoid
+        working-directory: lean
+        run: |
+          lake env leanchecker --fresh PalomarSolution
+          lake env leanchecker-paranoid --fresh PalomarSolution
+
+      - name: Replay all 23 Palomar targets across all 6 independent kernels
+        working-directory: lean
+        run: |
+          lake check --paranoid
+          lake comparator --config comparator.json --paranoid
+
+      - name: Tamper-injecting negative comparator & axiom-gate test
+        run: |
+          rm -rf /tmp/neg_lean_test
+          cp -r lean /tmp/neg_lean_test
+          python3 -c '
+          p = "/tmp/neg_lean_test/PalomarSolution.lean"
+          s = open(p).read()
+          old = "theorem prove_t1a : WeylMagic.Spec.stmt_t1a := WeylMagic.Solution.prove_t1a"
+          assert old in s, "target line not found"
+          open(p, "w").write(s.replace(old, "theorem prove_t1a : WeylMagic.Spec.stmt_t1a := sorry", 1))
+          '
+          (cd /tmp/neg_lean_test && lake build PalomarSolution && ! lake comparator --config comparator.json --paranoid)
+          cp lean/PalomarSolution.lean /tmp/neg_lean_test/PalomarSolution.lean
+          python3 -c '
+          p = "/tmp/neg_lean_test/PalomarSolution.lean"
+          s = open(p).read()
+          old = "theorem prove_t1a : WeylMagic.Spec.stmt_t1a := WeylMagic.Solution.prove_t1a"
+          assert old in s, "target line not found"
+          rep = "axiom bogus_ci_axiom : WeylMagic.Spec.stmt_t1a\ntheorem prove_t1a : WeylMagic.Spec.stmt_t1a := bogus_ci_axiom"
+          open(p, "w").write(s.replace(old, rep, 1))
+          '
+          (cd /tmp/neg_lean_test && lake build PalomarSolution && ! lake comparator --config comparator.json --paranoid)
+          (cd /tmp/neg_lean_test && lake env lean VerifyAxioms.lean > /tmp/neg_axioms.txt)
+          grep -q "bogus_ci_axiom" /tmp/neg_axioms.txt
+          rm -rf /tmp/neg_lean_test /tmp/neg_axioms.txt
+
+  rust-matrix:
+    name: Rust Verifier (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      - name: Clippy (-D warnings), release tests & JSON audit
+        working-directory: rust
+        run: |
+          cargo clippy --all-targets -- -D warnings
+          cargo test --release
+          cargo run --release > /dev/null
+
+  zig-verify:
+    name: Zig Comptime Verifier
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mlugg/setup-zig@v2
+        with:
+          version: 0.14.1
+      - name: Zig unit tests & release check
+        working-directory: zig
+        run: |
+          zig test src/main.zig
+          zig run -OReleaseFast src/main.zig
+
+  c11-asm-cpp-qgtl:
+    name: ISO C11 + x86-64 NASM + ASan/UBSan + Fuzz + C++20 + QGTL
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install NASM
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq nasm
+      - name: Build & run strict C11 + NASM ELF64 + ASan/UBSan + 100k fuzz + QGTL + C++20
+        run: |
+          mkdir -p build
+          nasm -f elf64 asm/fwht_x64.asm -o build/fwht_x64.o
+          gcc -std=c11 -O3 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -DWEYL_MAGIC_HAS_ASM -Ic/include c/src/weyl_magic.c c/src/qrng_stream.c c/tests/test_weyl_magic.c build/fwht_x64.o -o build/test_weyl_magic
+          ./build/test_weyl_magic
+          gcc -std=c11 -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Ic/include c/src/weyl_magic.c c/src/qrng_stream.c c/tests/test_weyl_magic.c -o build/test_weyl_magic_san
+          ./build/test_weyl_magic_san
+          gcc -std=c11 -O3 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -DWEYL_MAGIC_HAS_ASM -Ic/include c/src/weyl_magic.c c/src/qrng_stream.c c/tests/fuzz_weyl_magic.c build/fwht_x64.o -o build/fuzz_weyl_magic
+          ./build/fuzz_weyl_magic
+          gcc -std=c11 -O2 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Ic/include c/src/weyl_magic.c c/tests/cbmc_harness.c -o build/cbmc_harness
+          ./build/cbmc_harness
+          gcc -std=gnu11 -O2 -Ithird_party/qgtl/include -Ithird_party/qgtl/stub third_party/qgtl/src/quantum_geometric/distributed/differential_geometry.c c/src/qgtl_bridge.c -o build/qgtl_bridge -lm
+          ./build/qgtl_bridge
+          g++ -std=c++20 -O3 -Wall -Wextra -Wpedantic -Werror -Ic/include cpp/magic_search.cpp c/src/qrng_stream.c -o build/magic_search
+          ./build/magic_search 8 > /dev/null
+
+  node-moonlab:
+    name: Moonlab WASM Classical Simulator & QRNG Twin
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Run Moonlab WASM & QRNG cross-check
+        run: node node/moonlab_crosscheck.cjs
+
+  python-matrix:
+    name: Python Exact Oracle & Differential Tests (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned test dependencies
+        run: pip install -r requirements.lock.txt
+      - name: Run quickstart, pytest (with Hypothesis), and axiom anti-drift check
+        env:
+          PYTHONPATH: src:.
+        run: |
+          python examples/quickstart_demo.py
+          pytest -v tests/test_all.py
+          python scripts/mutation_check.py
+          python scripts/check_readme_axioms.py
+          python scripts/verify_site.py
+
+  latex-and-provenance:
+    name: AMS-LaTeX, Clean-Room arXiv & SLSA Provenance
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Tectonic
+        run: |
+          curl --proto '=https' --tlsv1.2 -fsSL https://drop-sh.fullyjustified.net | sh
+          sudo mv tectonic /usr/local/bin/tectonic
+      - name: Compile manuscript & verify zero warnings/overfulls
+        run: |
+          mkdir -p paper/build
+          tectonic -X compile paper/main.tex --outdir paper/build --keep-logs
+          ! grep -E "Overfull|Underfull|Undefined|Error" paper/build/main.log
+      - name: Clean-room compile dist/arxiv_submission.tar.gz
+        run: |
+          mkdir -p /tmp/arxiv_cleanroom/out
+          tar -xzf dist/arxiv_submission.tar.gz -C /tmp/arxiv_cleanroom
+          tectonic -X compile /tmp/arxiv_cleanroom/main.tex --outdir /tmp/arxiv_cleanroom/out
+          test -s /tmp/arxiv_cleanroom/out/main.pdf
+      - name: Verify SHA-256 manifests, emit SHA256SUMS & generate SLSA provenance attestation
+        run: |
+          sha256sum -c data/MANIFEST.sha256
+          sha256sum -c MANIFEST.sha256
+          test -s MANIFEST.sha256.tsr
+          test -s MANIFEST.sha256.ots
+          sha256sum dist/Donahue_2026_weyl_magic_obstruction_frontier.pdf dist/arxiv_submission.tar.gz MANIFEST.sha256 MANIFEST.sha256.tsr MANIFEST.sha256.ots > SHA256SUMS
+          cat SHA256SUMS
+      - name: Generate SLSA build provenance attestation
+        if: github.event_name == 'push'
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: |
+            dist/Donahue_2026_weyl_magic_obstruction_frontier.pdf
+            dist/arxiv_submission.tar.gz
+            MANIFEST.sha256
+            MANIFEST.sha256.tsr
+            MANIFEST.sha256.ots
+
+  lint-audit-security:
+    name: Lint, Typecheck & Build Standard Audit (Report-Only)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.lock.txt ruff mypy
+      - name: Ruff & mypy
+        run: |
+          ruff check src/ reference/ scripts/ tests/ examples/
+          mypy --strict src/ reference/
+      - name: Build Standard v1.2.0 Audit
+        run: bash scripts/audit-repo.sh .
+      - name: Secret & placeholder scan
+        run: |
+          ! grep -rnE "(ghp_[A-Za-z0-9]{30,}|sk-[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16})" . --exclude-dir=.git --exclude-dir=.lake --exclude-dir=target

@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this formalization, codebase, or manuscript, please cite it as below."
+type: software
+title: "The 2-Adic Magic Obstruction, Quaternary Bent-Hyperplane Rupture, Super-MUB Torsion Anomalies, and Divided-Power Characteristic-3 Alltop Constructions Across Product Weyl-Heisenberg Groups"
+version: "1.0.0"
+date-released: "2026-11-26"
+authors:
+  - family-names: "Donahue"
+    given-names: "Alexander Stephen"
+    orcid: "https://orcid.org/0009-0006-8168-9648"
+    email: "0_0@0thernes.art"
+    affiliation: "Independent Researcher, Spokane, WA, USA"
+repository-code: "https://github.com/0thernes/weyl-magic-obstruction-frontier"
+url: "https://0thernes.github.io/weyl-magic-obstruction-frontier/"
+license: Apache-2.0
+keywords:
+  - stabilizer-renyi-entropy
+  - non-stabilizerness
+  - weyl-heisenberg-group
+  - mutually-unbiased-bases
+  - bent-functions
+  - lean4
+  - formal-verification

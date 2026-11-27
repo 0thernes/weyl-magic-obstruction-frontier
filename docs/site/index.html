@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+<!-- Copyright (c) 2026 Alexander Stephen Donahue -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none';">
+  <title>Weyl–Heisenberg Magic Obstruction Frontier (0TH-2026-020) — Interactive Observatory</title>
+  <style>
+    :root {
+      --bg: #0b1120; --surface: #111827; --panel: #1e293b; --border: #334155;
+      --text: #f1f5f9; --muted: #94a3b8; --accent: #38bdf8; --orange: #e69f00;
+      --green: #009e73; --vermilion: #d55e00; --purple: #cc79a7; --blue: #0072b2;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.55; }
+    header { padding: 1.4rem 1.8rem; border-bottom: 1px solid var(--border); background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; }
+    header h1 { margin: 0; font-size: 1.35rem; color: var(--accent); letter-spacing: 0.02em; }
+    header p { margin: 0.25rem 0 0; font-size: 0.9rem; color: var(--muted); }
+    nav a { color: var(--text); text-decoration: none; padding: 0.45rem 0.85rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; margin-left: 0.4rem; background: rgba(15,23,42,0.7); }
+    nav a:hover, nav a:focus { border-color: var(--accent); color: var(--accent); outline: 2px solid var(--accent); outline-offset: 2px; }
+    main { max-width: 1240px; margin: 0 auto; padding: 1.5rem; display: grid; gap: 1.4rem; }
+    .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 1.4rem; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.2rem; }
+    .card h2 { margin: 0 0 0.6rem; font-size: 1.05rem; color: var(--accent); }
+    .card p { margin: 0 0 0.8rem; font-size: 0.9rem; color: var(--muted); }
+    canvas { width: 100%; height: 320px; display: block; background: #070b14; border-radius: 8px; border: 1px solid #1f2937; }
+    .controls { display: flex; flex-wrap: wrap; gap: 0.9rem; align-items: center; margin-top: 0.8rem; font-size: 0.88rem; }
+    .controls label { display: flex; align-items: center; gap: 0.45rem; }
+    input[type="range"] { accent-color: var(--accent); }
+    select, button { background: var(--panel); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 0.35rem 0.65rem; font-size: 0.85rem; cursor: pointer; }
+    button:hover, button:focus { border-color: var(--accent); outline: 2px solid var(--accent); outline-offset: 1px; }
+    .readout { margin-top: 0.7rem; padding: 0.7rem 0.9rem; background: #0f172a; border-left: 3px solid var(--accent); border-radius: 4px; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.83rem; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+    th, td { text-align: left; padding: 0.5rem 0.6rem; border-bottom: 1px solid var(--border); }
+    th { color: var(--accent); font-weight: 600; }
+    .badge { display: inline-block; padding: 0.15rem 0.45rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+    .b-lean { background: rgba(0,158,115,0.2); color: #34d399; border: 1px solid #059669; }
+    .b-super { background: rgba(213,94,0,0.22); color: #fb923c; border: 1px solid #ea580c; }
+    .b-open { background: rgba(204,121,167,0.2); color: #f472b6; border: 1px solid #db2777; }
+    footer { text-align: center; padding: 1.4rem; color: var(--muted); font-size: 0.82rem; border-top: 1px solid var(--border); margin-top: 1rem; }
+    footer a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Weyl–Heisenberg Magic Obstruction Frontier</h1>
+      <p>Archive <code>0TH-2026-020</code> · Zero-Mathlib Lean 4.35.0 (6 Kernels, 23 Palomar Targets) · Zero-CDN WebGL2 Observatory</p>
+    </div>
+    <nav aria-label="Primary navigation">
+      <a href="index.html" aria-current="page">Observatory</a>
+      <a href="blueprint.html">Proof Blueprint DAG</a>
+      <a href="https://github.com/0thernes/weyl-magic-obstruction-frontier">GitHub Repository</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="card" aria-labelledby="h-webgl">
+      <h2 id="h-webgl">1. Interactive 3D WebGL2 Order-16 Abelian Phase Landscape &amp; Tower Surface</h2>
+      <p>Real-time zero-CDN WebGL2 projection of the exact two-stabilizer magic surface Φ<sub>4</sub>(|Ψ<sub>n</sub>(θ)⟩) alongside the five order-16 abelian Weyl–Heisenberg phases (ℤ<sub>16</sub>, ℤ<sub>4</sub>×ℤ<sub>4</sub> Super-MUB, ℤ<sub>4</sub>×ℤ<sub>2</sub><sup>2</sup> WH-MUB, ℤ<sub>8</sub>×ℤ<sub>2</sub>, ℤ<sub>2</sub><sup>4</sup>). Drag horizontally on the canvas or adjust sliders below.</p>
+      <canvas id="glCanvas" width="1180" height="320" role="img" aria-label="3D WebGL2 visualization of the Weyl-Heisenberg magic landscape"></canvas>
+      <div class="controls">
+        <label>Qubits n:
+          <select id="selN" aria-label="Select qubit count n">
+            <option value="2">n = 2 (WH-MUB min 7/4)</option>
+            <option value="3">n = 3 (Hoggar SIC min 16/9)</option>
+            <option value="4" selected>n = 4 (Cubic min 2.150520)</option>
+            <option value="5">n = 5 (SOS floor &ge; 3; ruptured at 2.666086)</option>
+          </select>
+        </label>
+        <label>Phase θ/π: <input id="rngTheta" type="range" min="0" max="100" value="82" aria-label="Relative phase theta over pi"> <span id="lblTheta">0.82</span></label>
+        <label>Yaw: <input id="rngYaw" type="range" min="-180" max="180" value="28" aria-label="Camera yaw angle"></label>
+        <button id="btnOpt" type="button">Snap to Exact n=4 Cubic t*</button>
+      </div>
+      <div class="readout" id="towerReadout" aria-live="polite"></div>
+    </section>
+
+    <div class="grid2">
+      <section class="card" aria-labelledby="h-alpha">
+        <h2 id="h-alpha">2. Super-MUB Torsion Anomaly &amp; α-Crossover Explorer (T3c, T3d)</h2>
+        <p>Inspect the exact ℤ[i] Super-MUB witnesses v<sub>4,2</sub> ∈ ℤ[i]<sup>8</sup> and v<sub>4,4</sub> ∈ ℤ[i]<sup>16</sup> against their exact ℤ[ζ<sub>8</sub>] WH-MUB baselines across Rényi index α ∈ [1.5, 5.0].</p>
+        <canvas id="alphaCanvas" width="560" height="300" role="img" aria-label="Super-MUB magic excess versus Renyi index alpha"></canvas>
+        <div class="controls">
+          <label>Rényi index α: <input id="rngAlpha" type="range" min="15" max="50" value="20" aria-label="Renyi index alpha"> <span id="lblAlpha">2.0</span></label>
+        </div>
+        <div class="readout" id="alphaReadout" aria-live="polite"></div>
+      </section>
+
+      <section class="card" aria-labelledby="h-odd">
+        <h2 id="h-odd">3. Pillar 1–5 Formal Verification Ledger &amp; Open Frontier</h2>
+        <p>Every obstruction, exact cyclotomic witness, SOS rupture bound, and AME ceiling is kernel-checked in zero-Mathlib Lean 4.35.0 across 6 independent kernels.</p>
+        <table>
+          <thead><tr><th>System</th><th>Exact Value / Bound</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Odd n &ge; 3 Pauli MUBs</td><td>v<sub>2</sub>(2<sup>n</sup>(2<sup>n</sup>−2)<sup>2</sup>) = n+2 (odd)</td><td><span class="badge b-lean">T1c LEAN-6K</span></td></tr>
+            <tr><td>n = 4 Lagrangian MUBs</td><td>896 bent &rArr; 1+1+1 &equiv; 0 (mod 2)</td><td><span class="badge b-lean">T2e LEAN-6K</span></td></tr>
+            <tr><td>W(4)⊗W(2) Super-MUB</td><td>Φ<sub>4</sub> = 1.844152 &lt; 15/8; Φ<sub>6</sub> &lt; 71/64</td><td><span class="badge b-super">T3c LEAN-6K</span></td></tr>
+            <tr><td>W(4)⊗W(4) Super-MUB</td><td>Φ<sub>4</sub> = 1.911056 &lt; 31/16; Φ<sub>6</sub> &lt; 271/256</td><td><span class="badge b-super">T3d LEAN-6K</span></td></tr>
+            <tr><td>n = 5 Two-Stabilizer Rupture</td><td>Φ<sub>4</sub>(Ψ<sub>5</sub>) &ge; 3 &gt; 693568064/260144641</td><td><span class="badge b-lean">T4c LEAN-6K</span></td></tr>
+            <tr><td>Char-3 Divided-Power Alltop</td><td>W(3)<sup>⊗1,2,3</sup> (ℤ[ζ<sub>9</sub>]); n = 4 exact</td><td><span class="badge b-lean">T5c LEAN-6K</span></td></tr>
+            <tr><td>Even n &ge; 6 &amp; non-cyclic SIC</td><td>Cubic bent lifts; W(4)⊗W(4) SIC</td><td><span class="badge b-open">OPEN</span></td></tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    Alexander Stephen Donahue (ORCID <a href="https://orcid.org/0009-0006-8168-9648">0009-0006-8168-9648</a>, Independent Researcher, Spokane, WA, USA) · Code: Apache-2.0 · Docs/Site: CC-BY-4.0 · Zero external CDN dependencies.
+  </footer>
+
+  <script>
+  (function () {
+    'use strict';
+    function evalTower(n, theta) {
+      const D = 1 << n;
+      const denom = 2.0 + 2.0 * Math.cos(theta) / Math.sqrt(D);
+      const t = 1.0 - 1.0 / denom;
+      const half = D / 2.0;
+      const s3 = (4.0 / D) * (1.0 - t) * (1.0 - t) - (1.0 - 2.0 * t) * (1.0 - 2.0 * t);
+      const phi4 = 1.0 + 2.0 * (D - 1) * Math.pow(t, 4) + (D - 1) * (half - 1) * Math.pow(1 - 2 * t, 4) + (D - 1) * half * s3 * s3;
+      const gtt = (1.0 - 1.0 / D) / (denom * denom);
+      return { D, t, phi4, m2: Math.log(D / phi4), gtt };
+    }
+
+    // ---- WebGL2 (with crisp 2D fallback) 3D Surface + Order-16 Bars ----
+    const glCanvas = document.getElementById('glCanvas');
+    const gl = glCanvas.getContext('webgl2');
+    const selN = document.getElementById('selN');
+    const rngTheta = document.getElementById('rngTheta');
+    const lblTheta = document.getElementById('lblTheta');
+    const rngYaw = document.getElementById('rngYaw');
+    const towerReadout = document.getElementById('towerReadout');
+
+    let prog = null, vbo = null;
+    if (gl) {
+      const vsSrc = `#version 300 es
+        in vec3 aPos; in vec3 aCol; uniform mat4 uMvp; out vec3 vCol;
+        void main() { gl_Position = uMvp * vec4(aPos, 1.0); vCol = aCol; gl_PointSize = 7.0; }`;
+      const fsSrc = `#version 300 es
+        precision mediump float; in vec3 vCol; out vec4 fragColor;
+        void main() { fragColor = vec4(vCol, 1.0); }`;
+      const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; };
+      prog = gl.createProgram();
+      gl.attachShader(prog, sh(gl.VERTEX_SHADER, vsSrc));
+      gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, fsSrc));
+      gl.linkProgram(prog);
+      vbo = gl.createBuffer();
+    }
+
+    function mulMat4(a, b) {
+      const o = new Float32Array(16);
+      for (let r = 0; r < 4; r++) for (let c = 0; c < 4; c++) {
+        let s = 0; for (let k = 0; k < 4; k++) s += a[r + k * 4] * b[k + c * 4];
+        o[r + c * 4] = s;
+      }
+      return o;
+    }
+
+    function makeMvp(yawDeg, aspect) {
+      const f = 1.0 / Math.tan(0.65 / 2), nf = 1 / (0.1 - 30.0);
+      const proj = new Float32Array([f/aspect,0,0,0, 0,f,0,0, 0,0,(30.1)*nf,-1, 0,0,2*30*0.1*nf,0]);
+      const y = yawDeg * Math.PI / 180, p = 0.36;
+      const cy = Math.cos(y), sy = Math.sin(y), cp = Math.cos(p), sp = Math.sin(p);
+      const view = new Float32Array([
+        cy, sy*sp, -sy*cp, 0,
+        0, cp, sp, 0,
+        sy, -cy*sp, cy*cp, 0,
+        0, -0.25, -4.6, 1
+      ]);
+      return mulMat4(proj, view);
+    }
+
+    function drawGL() {
+      const n = parseInt(selN.value, 10);
+      const thFrac = parseFloat(rngTheta.value) / 100.0;
+      const theta = thFrac * Math.PI;
+      lblTheta.textContent = thFrac.toFixed(2);
+      const info = evalTower(n, theta);
+      const mub = 2.0 - 1.0 / info.D;
+      towerReadout.textContent = `n=${n} (D=${info.D}) | theta=${theta.toFixed(6)} rad | t=${info.t.toFixed(9)} | Phi_4=${info.phi4.toFixed(9)} | M_2=${info.m2.toFixed(9)} nats | QGT g_tt=${info.gtt.toFixed(9)} | WH-MUB ref=${mub.toFixed(6)}`;
+
+      if (!gl || !prog) return;
+      gl.viewport(0, 0, glCanvas.width, glCanvas.height);
+      gl.clearColor(0.03, 0.05, 0.09, 1.0);
+      gl.enable(gl.DEPTH_TEST);
+      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+      gl.useProgram(prog);
+
+      const verts = [];
+      const pushV = (x, y, z, r, g, b) => verts.push(x, y, z, r, g, b);
+      // Grid floor
+      for (let i = -5; i <= 5; i++) {
+        pushV(i * 0.35, -0.7, -1.2, 0.16, 0.22, 0.32); pushV(i * 0.35, -0.7, 1.2, 0.16, 0.22, 0.32);
+      }
+      for (let j = -3; j <= 3; j++) {
+        pushV(-1.75, -0.7, j * 0.4, 0.16, 0.22, 0.32); pushV(1.75, -0.7, j * 0.4, 0.16, 0.22, 0.32);
+      }
+      const gridCount = verts.length / 6;
+
+      // 4 tower curves (n = 2, 3, 4, 5)
+      const curveCols = { 2: [0.0,0.62,0.45], 3: [0.34,0.71,0.91], 4: [0.90,0.62,0.0], 5: [0.84,0.37,0.0] };
+      const curveMeta = [];
+      for (const k of [2, 3, 4, 5]) {
+        const start = verts.length / 6;
+        const z = (k - 3.5) * 0.55;
+        const c = curveCols[k];
+        const boost = (k === n) ? 1.0 : 0.48;
+        for (let s = 0; s <= 90; s++) {
+          const th = (s / 90) * Math.PI;
+          const ev = evalTower(k, th);
+          const x = -1.6 + (s / 90) * 3.2;
+          const y = Math.min(1.35, -0.7 + (ev.phi4 - 1.5) * 0.65);
+          pushV(x, y, z, c[0]*boost, c[1]*boost, c[2]*boost);
+        }
+        curveMeta.push({ start, count: 91 });
+      }
+
+      // Highlighted marker point
+      const ptStart = verts.length / 6;
+      const px = -1.6 + thFrac * 3.2;
+      const py = Math.min(1.35, -0.7 + (info.phi4 - 1.5) * 0.65);
+      const pz = (n - 3.5) * 0.55;
+      pushV(px, py, pz, 1.0, 1.0, 1.0);
+
+      const data = new Float32Array(verts);
+      gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
+      gl.bufferData(gl.ARRAY_BUFFER, data, gl.DYNAMIC_DRAW);
+      const aPos = gl.getAttribLocation(prog, 'aPos');
+      const aCol = gl.getAttribLocation(prog, 'aCol');
+      gl.enableVertexAttribArray(aPos);
+      gl.vertexAttribPointer(aPos, 3, gl.FLOAT, false, 24, 0);
+      gl.enableVertexAttribArray(aCol);
+      gl.vertexAttribPointer(aCol, 3, gl.FLOAT, false, 24, 12);
+      const mvp = makeMvp(parseFloat(rngYaw.value), glCanvas.width / glCanvas.height);
+      gl.uniformMatrix4fv(gl.getUniformLocation(prog, 'uMvp'), false, mvp);
+
+      gl.drawArrays(gl.LINES, 0, gridCount);
+      for (const cm of curveMeta) gl.drawArrays(gl.LINE_STRIP, cm.start, cm.count);
+      gl.drawArrays(gl.POINTS, ptStart, 1);
+    }
+
+    // ---- 2D Canvas: Exact Alpha-Crossover Curve ----
+    const alphaCanvas = document.getElementById('alphaCanvas');
+    const ctx = alphaCanvas.getContext('2d');
+    const rngAlpha = document.getElementById('rngAlpha');
+    const lblAlpha = document.getElementById('lblAlpha');
+    const alphaReadout = document.getElementById('alphaReadout');
+
+    // Exact precomputed squared expectations of v42 (norm^2=1001) & v44 (norm^2=1596)
+    const v42 = [[-2,5],[-2,5],[-9,9],[-9,-10],[-11,-4],[-11,-4],[-1,-18],[0,1]];
+    const v44 = [[9,-10],[-7,-1],[4,4],[2,15],[1,1],[-7,0],[2,-1],[5,2],[14,-7],[-6,14],[3,6],[-5,-1],[-2,1],[0,-16],[3,4],[-4,13]];
+    function computeM2List(dims, vec) {
+      const D = dims.reduce((a, b) => a * b, 1);
+      const norm2 = vec.reduce((s, z) => s + z[0]*z[0] + z[1]*z[1], 0);
+      const unpack = (x) => { const r = []; for (let k = dims.length - 1; k >= 0; k--) { r[k] = x % dims[k]; x = Math.floor(x / dims[k]); } return r; };
+      const pack = (t) => t.reduce((acc, v, k) => acc * dims[k] + (v % dims[k]), 0);
+      const out = [];
+      for (let a = 0; a < D; a++) {
+        const au = unpack(a);
+        for (let b = 0; b < D; b++) {
+          const bu = unpack(b);
+          let sr = 0, si = 0;
+          for (let x = 0; x < D; x++) {
+            const xu = unpack(x);
+            const xa = pack(xu.map((v, k) => (v + au[k]) % dims[k]));
+            let cr = vec[x][0]*vec[xa][0] + vec[x][1]*vec[xa][1];
+            let ci = vec[x][0]*vec[xa][1] - vec[x][1]*vec[xa][0];
+            let q = 0; for (let k = 0; k < dims.length; k++) q += (4 / dims[k]) * bu[k] * xu[k];
+            q &= 3;
+            if (q === 1) { const t = cr; cr = -ci; ci = t; }
+            else if (q === 2) { cr = -cr; ci = -ci; }
+            else if (q === 3) { const t = cr; cr = ci; ci = -t; }
+            sr += cr; si += ci;
+          }
+          out.push((sr*sr + si*si) / (norm2 * norm2));
+        }
+      }
+      return out;
+    }
+    const spec42 = computeM2List([4, 2], v42);
+    const spec44 = computeM2List([4, 4], v44);
+    function deltaM(spec, D, al) {
+      const phi = spec.reduce((s, m) => s + Math.pow(m, al), 0);
+      const mub = 1.0 + (D - 1) * Math.pow(1.0 / D, al - 1);
+      return (Math.log(D / phi) - Math.log(D / mub)) / (al - 1.0);
+    }
+
+    function drawAlpha() {
+      const al = parseInt(rngAlpha.value, 10) / 10.0;
+      lblAlpha.textContent = al.toFixed(1);
+      const d42 = deltaM(spec42, 8, al);
+      const d44 = deltaM(spec44, 16, al);
+      alphaReadout.textContent = `alpha=${al.toFixed(1)} | W(4)xW(2) dM=${d42 >= 0 ? '+' : ''}${d42.toFixed(6)} (${d42 > 0 ? 'BEATS MUB' : 'CROSSOVER'}) | W(4)xW(4) dM=${d44 >= 0 ? '+' : ''}${d44.toFixed(6)} (${d44 > 0 ? 'BEATS MUB' : 'CROSSOVER'})`;
+
+      const W = alphaCanvas.width, H = alphaCanvas.height;
+      ctx.fillStyle = '#070b14'; ctx.fillRect(0, 0, W, H);
+      const xOf = (a) => 52 + ((a - 1.5) / 3.5) * (W - 76);
+      const yOf = (y) => H - 36 - ((y + 0.006) / 0.030) * (H - 60);
+
+      // Zero line
+      ctx.strokeStyle = '#64748b'; ctx.setLineDash([5, 4]); ctx.beginPath();
+      ctx.moveTo(52, yOf(0)); ctx.lineTo(W - 24, yOf(0)); ctx.stroke(); ctx.setLineDash([]);
+
+      const plotCurve = (spec, D, color) => {
+        ctx.strokeStyle = color; ctx.lineWidth = 2.2; ctx.beginPath();
+        for (let k = 0; k <= 70; k++) {
+          const a = 1.5 + (k / 70) * 3.5;
+          const x = xOf(a), y = yOf(deltaM(spec, D, a));
+          if (k === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      };
+      plotCurve(spec42, 8, '#d55e00');
+      plotCurve(spec44, 16, '#38bdf8');
+
+      // Cursor line
+      const cx = xOf(al);
+      ctx.strokeStyle = '#f8fafc'; ctx.lineWidth = 1.1; ctx.beginPath();
+      ctx.moveTo(cx, 20); ctx.lineTo(cx, H - 36); ctx.stroke();
+      ctx.fillStyle = '#d55e00'; ctx.beginPath(); ctx.arc(cx, yOf(d42), 4.5, 0, 7); ctx.fill();
+      ctx.fillStyle = '#38bdf8'; ctx.beginPath(); ctx.arc(cx, yOf(d44), 4.5, 0, 7); ctx.fill();
+
+      ctx.fillStyle = '#cbd5e1'; ctx.font = '12px monospace';
+      ctx.fillText('alpha = 1.5', 46, H - 14); ctx.fillText('alpha = 3.0', xOf(3.0) - 30, H - 14); ctx.fillText('alpha = 5.0', W - 92, H - 14);
+      ctx.fillStyle = '#d55e00'; ctx.fillText('W(4)xW(2) v42', 64, 24);
+      ctx.fillStyle = '#38bdf8'; ctx.fillText('W(4)xW(4) v44', 180, 24);
+    }
+
+    document.getElementById('btnOpt').addEventListener('click', () => {
+      selN.value = '4';
+      const thStar = Math.acos(2.0 * (1.0 / (1.0 - 0.3774568011835382) - 2.0));
+      rngTheta.value = String(Math.round((thStar / Math.PI) * 100));
+      drawGL();
+    });
+    selN.addEventListener('change', drawGL);
+    rngTheta.addEventListener('input', drawGL);
+    rngYaw.addEventListener('input', drawGL);
+    rngAlpha.addEventListener('input', drawAlpha);
+
+    let dragX = null;
+    glCanvas.addEventListener('pointerdown', (e) => { dragX = e.clientX; });
+    window.addEventListener('pointerup', () => { dragX = null; });
+    window.addEventListener('pointermove', (e) => {
+      if (dragX !== null) {
+        const dx = e.clientX - dragX; dragX = e.clientX;
+        rngYaw.value = String(Math.max(-180, Math.min(180, parseFloat(rngYaw.value) + dx * 0.6)));
+        drawGL();
+      }
+    });
+
+    drawGL();
+    drawAlpha();
+  })();
+  </script>
+</body>
+</html>

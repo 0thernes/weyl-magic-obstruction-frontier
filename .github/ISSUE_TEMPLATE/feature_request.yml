@@ -1,0 +1,19 @@
+name: Research Extension or Feature Request
+description: Propose a new theorem formalization, higher-dimensional engine check, or observatory feature.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: Describe the mathematical extension, verifier check, or visualization enhancement.
+    validations:
+      required: true
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation & Scope
+      description: Explain how this advances the Cayley-Dickson zero-divisor or sums-of-squares frontier.
+    validations:
+      required: true
