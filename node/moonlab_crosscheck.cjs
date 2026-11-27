@@ -158,11 +158,15 @@ function pauliPhi4FromBuffer(re, im) {
   ];
   assertClose('n=5 Rupture Witness v5 (< 3.0)', evalStateInMoonlab(5, v5), 693568064 / 260144641, 1e-12);
 
-  // 5. QRNG deterministic twin check
+  // 5. QRNG deterministic twin bit-exact known-answer assertion
   const st = absorbU64(1n);
   const w0 = streamNext(st, 0);
   const w1 = streamNext(st, 1);
-  console.log(`[moonlab-qrng] deterministic seed=1: state=${hex16(st)} w0=${hex16(w0)} w1=${hex16(w1)}`);
+  const qrngOk = hex16(st) === '532662e3dcf55ef7' &&
+                 hex16(w0) === '5df9ef9ba7cdcca2' &&
+                 hex16(w1) === 'ddb5674ec90579d9';
+  if (!qrngOk) fails++;
+  console.log(`[moonlab-qrng] ${qrngOk ? 'PASS' : 'FAIL'} deterministic seed=1: state=${hex16(st)} w0=${hex16(w0)} w1=${hex16(w1)}`);
 
   process.exit(fails === 0 ? 0 : 1);
 })();

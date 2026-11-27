@@ -1074,6 +1074,191 @@ theorem n4_z4_bent_hyperplane_rupture (qMask lin : Nat) (c0 : Bool)
   · exact hall b hb_pos hb_lt
   · exact hall (a ^^^ b) hc_pos hc_lt
 
+/-! ### Kernel Bridge: Direct `IsBent 2 f → False` (Closing `T2c → T2d → T2e` Inside Lean) -/
+
+/-- Boolean ANF coefficient of monomial `M` in `f` on `𝔽₂⁴`. -/
+def anfBit4 (f : Nat → Bool) (M : Nat) : Bool :=
+  (anfSum 4 f M) % 2 == 1
+
+/-- Extracts the 4-bit linear ANF mask of `f : 𝔽₂⁴ → Bool`. -/
+def extractLin4 (f : Nat → Bool) : Nat :=
+  (if anfBit4 f 1 then 1 else 0) +
+  (if anfBit4 f 2 then 2 else 0) +
+  (if anfBit4 f 4 then 4 else 0) +
+  (if anfBit4 f 8 then 8 else 0)
+
+/-- Extracts the 6-bit homogeneous quadratic ANF mask of `f : 𝔽₂⁴ → Bool`. -/
+def extractQuad4 (f : Nat → Bool) : Nat :=
+  (if anfBit4 f 3  then 1  else 0) +
+  (if anfBit4 f 5  then 2  else 0) +
+  (if anfBit4 f 9  then 4  else 0) +
+  (if anfBit4 f 6  then 8  else 0) +
+  (if anfBit4 f 10 then 16 else 0) +
+  (if anfBit4 f 12 then 32 else 0)
+
+private def b2i (b : Bool) : Int :=
+  if b then 1 else 0
+
+private theorem b2i_xor_eq (a b : Bool) :
+    b2i (xor a b) = (b2i a + b2i b) % 2 := by
+  cases a <;> cases b <;> decide
+
+private theorem b2i_eq_of_mod2 (a b : Bool) (h : b2i a % 2 = b2i b % 2) : a = b := by
+  cases a <;> cases b <;> simp [b2i] at h ⊢
+
+private theorem b2i_anfBit4_eq (f : Nat → Bool) (M : Nat) :
+    b2i (anfBit4 f M) = (anfSum 4 f M) % 2 := by
+  unfold anfBit4 b2i
+  have h01 : (anfSum 4 f M) % 2 = 0 ∨ (anfSum 4 f M) % 2 = 1 := by omega
+  rcases h01 with h0 | h1
+  · simp [h0]
+  · simp [h1]
+
+private theorem extractQuad4_lt_64 (f : Nat → Bool) : extractQuad4 f < 64 := by
+  unfold extractQuad4
+  cases anfBit4 f 3 <;> cases anfBit4 f 5 <;> cases anfBit4 f 9 <;>
+    cases anfBit4 f 6 <;> cases anfBit4 f 10 <;> cases anfBit4 f 12 <;> decide
+
+private theorem extractLin4_lt_16 (f : Nat → Bool) : extractLin4 f < 16 := by
+  unfold extractLin4
+  cases anfBit4 f 1 <;> cases anfBit4 f 2 <;> cases anfBit4 f 4 <;> cases anfBit4 f 8 <;> decide
+
+private theorem extractQuad4_bits (f : Nat → Bool) :
+    ((extractQuad4 f &&& 1) == 1) = anfBit4 f 3 ∧
+    (((extractQuad4 f >>> 1) &&& 1) == 1) = anfBit4 f 5 ∧
+    (((extractQuad4 f >>> 2) &&& 1) == 1) = anfBit4 f 9 ∧
+    (((extractQuad4 f >>> 3) &&& 1) == 1) = anfBit4 f 6 ∧
+    (((extractQuad4 f >>> 4) &&& 1) == 1) = anfBit4 f 10 ∧
+    (((extractQuad4 f >>> 5) &&& 1) == 1) = anfBit4 f 12 := by
+  unfold extractQuad4
+  cases anfBit4 f 3 <;> cases anfBit4 f 5 <;> cases anfBit4 f 9 <;>
+    cases anfBit4 f 6 <;> cases anfBit4 f 10 <;> cases anfBit4 f 12 <;> decide
+
+private theorem extractLin4_bits (f : Nat → Bool) :
+    ((extractLin4 f &&& 1) == 1) = anfBit4 f 1 ∧
+    (((extractLin4 f >>> 1) &&& 1) == 1) = anfBit4 f 2 ∧
+    (((extractLin4 f >>> 2) &&& 1) == 1) = anfBit4 f 4 ∧
+    (((extractLin4 f >>> 3) &&& 1) == 1) = anfBit4 f 8 := by
+  unfold extractLin4
+  cases anfBit4 f 1 <;> cases anfBit4 f 2 <;> cases anfBit4 f 4 <;> cases anfBit4 f 8 <;> decide
+
+private theorem dotMod2_4_eq (l x : Nat) (hl : l < 16) (hx : x < 16) :
+    dotMod2 4 l x =
+      xor (xor (((l &&& 1) == 1) && ((x &&& 1) == 1))
+               ((((l >>> 1) &&& 1) == 1) && (((x >>> 1) &&& 1) == 1)))
+          (xor ((((l >>> 2) &&& 1) == 1) && (((x >>> 2) &&& 1) == 1))
+               ((((l >>> 3) &&& 1) == 1) && (((x >>> 3) &&& 1) == 1))) := by
+  have hcheck :
+      ((List.range 16).all fun a =>
+        (List.range 16).all fun b =>
+          dotMod2 4 a b ==
+            xor (xor (((a &&& 1) == 1) && ((b &&& 1) == 1))
+                     ((((a >>> 1) &&& 1) == 1) && (((b >>> 1) &&& 1) == 1)))
+                (xor ((((a >>> 2) &&& 1) == 1) && (((b >>> 2) &&& 1) == 1))
+                     ((((a >>> 3) &&& 1) == 1) && (((b >>> 3) &&& 1) == 1)))) = true := by
+    decide
+  have h1 := (List.all_eq_true.mp hcheck) l (List.mem_range.mpr hl)
+  have h2 := (List.all_eq_true.mp h1) x (List.mem_range.mpr hx)
+  exact beq_iff_eq.mp h2
+
+private theorem deg2Eval4_eq_of_high_anf_zero (f : Nat → Bool)
+    (h7  : anfSum 4 f 7  % 2 = 0)
+    (h11 : anfSum 4 f 11 % 2 = 0)
+    (h13 : anfSum 4 f 13 % 2 = 0)
+    (h14 : anfSum 4 f 14 % 2 = 0)
+    (h15 : anfSum 4 f 15 % 2 = 0) :
+    ∀ x, x < 16 → f x = deg2Eval4 (extractQuad4 f) (extractLin4 f) (f 0) x := by
+  obtain ⟨hq0, hq1, hq2, hq3, hq4, hq5⟩ := extractQuad4_bits f
+  obtain ⟨hl0, hl1, hl2, hl3⟩ := extractLin4_bits f
+  have hl_lt : extractLin4 f < 16 := extractLin4_lt_16 f
+  have ha0 : ∀ M, b2i (anfBit4 f M) = anfSum 4 f M % 2 := b2i_anfBit4_eq f
+  intro x hx
+  apply b2i_eq_of_mod2
+  rw [deg2Eval4, dotMod2_4_eq (extractLin4 f) x hl_lt hx]
+  dsimp only [quad4Eval]
+  rw [hq0, hq1, hq2, hq3, hq4, hq5, hl0, hl1, hl2, hl3]
+  have hx' : x = 0 ∨ x = 1 ∨ x = 2 ∨ x = 3 ∨ x = 4 ∨ x = 5 ∨ x = 6 ∨ x = 7 ∨
+             x = 8 ∨ x = 9 ∨ x = 10 ∨ x = 11 ∨ x = 12 ∨ x = 13 ∨ x = 14 ∨ x = 15 := by omega
+  rcases hx' with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl |
+                  rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
+  · simp [b2i]
+  all_goals
+    · simp [b2i_xor_eq, ha0]
+      simp [anfSum, sumSubcube, sumBits, b2i] at h7 h11 h13 h14 h15 ⊢
+      omega
+
+private theorem walsh_deg2Eval4_shift (qMask lin : Nat) (c0 : Bool) (u : Nat) :
+    walshTransform 4 (deg2Eval4 qMask lin c0) (u ^^^ lin) =
+      paritySign c0 * walshTransform 4 (quad4Eval qMask) u := by
+  unfold walshTransform
+  rw [← sumBits_mul_left]
+  apply sumBits_congr
+  intro x _
+  rw [← paritySign_xor]
+  congr 1
+  simp only [deg2Eval4, dotMod2_xor_left]
+  cases quad4Eval qMask x <;> cases dotMod2 4 lin x <;> cases c0 <;> cases dotMod2 4 u x <;> rfl
+
+/-- **T2e.3 (Unconditional Arbitrary-Bent `n = 4` Rupture Bridge):**
+    Directly combines Rothaus's universal degree bound (`T2c`) with the exhaustive 28-form
+    hyperplane-triple classification (`T2d`) and parity contradiction (`T2e`) INSIDE the
+    Lean 4 kernel: for EVERY arbitrary Boolean function `f : Nat → Bool` satisfying `IsBent 2 f`
+    and EVERY lift `h : Nat → Bool`, NO `ℤ₄` phase state satisfies `|z4RealExpect4 f h d| = 4`
+    for all nonzero `d < 16`. -/
+theorem n4_z4_bent_hyperplane_rupture_arbitrary_bent (f h : Nat → Bool)
+    (hbent : IsBent 2 f)
+    (hall : ∀ d, 0 < d → d < 16 →
+      z4RealExpect4 f h d = 4 ∨ z4RealExpect4 f h d = -4) : False := by
+  have h7  : anfSum 4 f 7  % 2 = 0 := rothaus_degree_bound_all_m 2 (by omega) f hbent 7  (by decide)
+  have h11 : anfSum 4 f 11 % 2 = 0 := rothaus_degree_bound_all_m 2 (by omega) f hbent 11 (by decide)
+  have h13 : anfSum 4 f 13 % 2 = 0 := rothaus_degree_bound_all_m 2 (by omega) f hbent 13 (by decide)
+  have h14 : anfSum 4 f 14 % 2 = 0 := rothaus_degree_bound_all_m 2 (by omega) f hbent 14 (by decide)
+  have h15 : anfSum 4 f 15 % 2 = 0 := rothaus_degree_bound_all_m 2 (by omega) f hbent 15 (by decide)
+  let q := extractQuad4 f
+  let l := extractLin4 f
+  let c0 := f 0
+  have hfg : ∀ x, x < 16 → f x = deg2Eval4 q l c0 x :=
+    deg2Eval4_eq_of_high_anf_zero f h7 h11 h13 h14 h15
+  have hq_lt : q < 64 := extractQuad4_lt_64 f
+  have hl_lt : l < 16 := extractLin4_lt_16 f
+  have hbent_q : isBent4Bool (quad4Eval q) = true := by
+    unfold isBent4Bool
+    rw [List.all_eq_true]
+    intro u hu
+    have hu_lt : u < 16 := List.mem_range.mp hu
+    have hul_lt : u ^^^ l < 16 := Nat.xor_lt_two_pow (n := 4) hu_lt hl_lt
+    have hwf := hbent (u ^^^ l) hul_lt
+    have hcongr : walshTransform 4 f (u ^^^ l) = walshTransform 4 (deg2Eval4 q l c0) (u ^^^ l) := by
+      unfold walshTransform
+      apply sumBits_congr
+      intro x hx
+      rw [hfg x hx]
+    rw [hcongr, walsh_deg2Eval4_shift q l c0 u] at hwf
+    have h22 : ((2 : Int) ^ 2) = 4 := by decide
+    rw [h22] at hwf
+    simp only [Bool.or_eq_true, beq_iff_eq]
+    rcases hwf with hpos | hneg
+    · rcases Bool.eq_false_or_eq_true c0 with hc0 | hc0
+      · rw [hc0] at hpos; simp [paritySign] at hpos; right; omega
+      · rw [hc0] at hpos; simp [paritySign] at hpos; left; exact hpos
+    · rcases Bool.eq_false_or_eq_true c0 with hc0 | hc0
+      · rw [hc0] at hneg; simp [paritySign] at hneg; left; omega
+      · rw [hc0] at hneg; simp [paritySign] at hneg; right; exact hneg
+  have hall_g : ∀ d, 0 < d → d < 16 →
+      z4RealExpect4 (deg2Eval4 q l c0) h d = 4 ∨
+      z4RealExpect4 (deg2Eval4 q l c0) h d = -4 := by
+    intro d hd_pos hd_lt
+    have hcongr : z4RealExpect4 (deg2Eval4 q l c0) h d = z4RealExpect4 f h d := by
+      unfold z4RealExpect4
+      apply sumBits_congr
+      intro x hx
+      have hxd : x ^^^ d < 16 := Nat.xor_lt_two_pow (n := 4) hx hd_lt
+      simp only [inEa, ← hfg x hx, ← hfg (x ^^^ d) hxd]
+      rfl
+    rw [hcongr]
+    exact hall d hd_pos hd_lt
+  exact n4_z4_bent_hyperplane_rupture q l c0 hq_lt hbent_q h hall_g
+
 end
 
 end WeylMagic

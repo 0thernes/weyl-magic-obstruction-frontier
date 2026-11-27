@@ -126,7 +126,7 @@ wm_bent4_audit_t wm_audit_all_65536_f2_4(int use_asm) {
         int max_deg = 0;
         for (int m = 0; m < 16; m++) {
             if (anf[m]) {
-                int w = __builtin_popcount((unsigned int)m);
+                int w = (m & 1) + ((m >> 1) & 1) + ((m >> 2) & 1) + ((m >> 3) & 1);
                 if (w > max_deg) max_deg = w;
             }
         }
@@ -390,10 +390,8 @@ static int f3_trace(int n, const int *poly, const int *u) {
 
 int wm_verify_char3_alltop(int n, int *out_id, int *out_zero, int *out_flat, int *out_other) {
     /* Irreducible monic polynomials t^n = sum c_i t^i over F_3:
-     * n=1: t = 1; n=2: t^2 = 2 (t^2+1); n=3: t^3 = 2 + t (t^3+2t+1);
-     * n=4: t^4 = 1 + t (t^4+2t+2 -> check: x^4 + x + 2? wait: t^4 = t + 1 -> x^4 - x - 1 = x^4 + 2x + 2;
-     * Wait: x^4 + x + 2 over F_3: 0->2, 1->1, 2->16+2+2=20=2; no quadratic factor!
-     * Specifically t^4 = 2t + 1 (i.e. t^4 + t + 2 = 0: poly=[1, 2, 0, 0]) is primitive over F_3!). */
+     * n=1: t = 1 (t + 2 = 0); n=2: t^2 = 2 (t^2 + 1 = 0);
+     * n=3: t^3 = 2 + t (t^3 + 2t + 1 = 0); n=4: t^4 = 1 + 2t (t^4 + t + 2 = 0). */
     static const int poly1[4] = {1, 0, 0, 0};
     static const int poly2[4] = {2, 0, 0, 0};
     static const int poly3[4] = {2, 1, 0, 0};

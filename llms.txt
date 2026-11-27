@@ -1,21 +1,22 @@
 # weyl-magic-obstruction-frontier (0TH-2026-022)
 
-> Zero-Mathlib Lean 4.35.0 six-kernel formalization (22 theorem groups T1a-T5d, 23 Palomar targets, 36 audited declarations) and nine-engine polyglot verifier for the 2-Adic Odd-Qubit Magic Obstruction, n=4 Bent-Hyperplane Rupture, Super-MUB Torsion Anomalies, Two-Stabilizer n=5 SOS Rupture, AME Magic Ceilings, and Divided-Power Characteristic-3 Alltop Constructions.
+> Zero-Mathlib Lean 4.35.0 six-kernel formalization (22 theorem groups T1a-T5d, 23 Palomar targets, 38 audited declarations) and eight-engine executed polyglot verifier (+ Eshkol AD spec) for the 2-Adic Odd-Qubit Magic Obstruction, n=4 Bent-Hyperplane Rupture, Super-MUB Torsion Anomalies, Two-Stabilizer n=5 SOS Rupture, AME Magic Ceilings, and Divided-Power Characteristic-3 Alltop Constructions.
 
 Author: Alexander Stephen Donahue (Independent Researcher, Spokane, WA, USA; ORCID 0009-0006-8168-9648). Dual licensed: Apache-2.0 (code) and CC-BY-4.0 (paper/docs/data).
 
 ## Core Entry Points
-- [README.md](README.md): Executive summary, 5-pillar table, verbatim 36-declaration `#print axioms` audit, quickstart, and polyglot matrix.
+- [README.md](README.md): Executive summary, 5-pillar table, verbatim 38-declaration `#print axioms` audit, quickstart, and polyglot matrix.
+- [docs/statement-fidelity.md](docs/statement-fidelity.md): Line-by-line mapping of all 38 audited Lean declarations and explicit paper-to-Lean bridges.
 - [CLAIMS.md](CLAIMS.md): Claim-by-claim falsifiable ledger with epistemic tags (`[LEAN-6K]`, `[EXACT-COMP]`, `[NUMERICAL-APPROX]`, `[OPEN]`) and falsification criteria.
 - [LIMITATIONS.md](LIMITATIONS.md): Scope boundaries, open problems, and classical cross-check disclaimers.
-- [REPLICATION.md](REPLICATION.md): Clean-room replication procedure and replication log.
+- [REPLICATION.md](REPLICATION.md): Clean-room replication procedure and replication log (`B44: partial` until third-party human replication).
 - [AGENTS.md](AGENTS.md): Canonical instructions for AI coding and verification agents.
 
 ## Formal Proofs (Zero-Mathlib Lean 4.35.0)
 - [lean/PalomarChallenge.lean](lean/PalomarChallenge.lean): Isolated Palomar challenge statements (23 targets).
 - [lean/PalomarSolution.lean](lean/PalomarSolution.lean): Zero-sorry Palomar solution module.
 - [lean/comparator.json](lean/comparator.json): Six-kernel `lake comparator --paranoid` specification.
-- [lean/VerifyAxioms.lean](lean/VerifyAxioms.lean): Axiom auditor for all 36 declarations (output frozen in `results/lean_axioms.txt`).
+- [lean/VerifyAxioms.lean](lean/VerifyAxioms.lean): Axiom auditor for all 38 declarations (output frozen in `results/lean_axioms.txt`).
 - [lean/WeylMagic/TwoAdicObstruction.lean](lean/WeylMagic/TwoAdicObstruction.lean): Pillar 1 (`T1a`-`T1d`).
 - [lean/WeylMagic/BentHyperplaneRupture.lean](lean/WeylMagic/BentHyperplaneRupture.lean): Pillar 2 (`T2a`-`T2e`, universal Rothaus bound + all 896 n=4 bent functions).
 - [lean/WeylMagic/SuperMubAnomalies.lean](lean/WeylMagic/SuperMubAnomalies.lean): Pillar 3 (`T3a`-`T3e`, exact Z[zeta_8] MUBs + Z[i] Super-MUB alpha-crossover).

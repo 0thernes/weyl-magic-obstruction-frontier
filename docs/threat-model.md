@@ -3,7 +3,7 @@
 
 ## Assets to Protect
 
-1. **Formal Mathematical Soundness:** Truth and specification fidelity of the 23 Palomar theorem targets (`T1a`–`T5d`) and 36 audited Lean 4.35.0 declarations.
+1. **Formal Mathematical Soundness:** Truth and specification fidelity of the 23 Palomar theorem targets (`T1a`–`T5d`), kernel-closed arbitrary-bent bridge, 6 non-vacuity witnesses, and 8 adversarial boundary refutations (38 audited Lean 4.35.0 declarations; see `docs/statement-fidelity.md`).
 2. **Exact Computational Witness Integrity:** Exact integer/cyclotomic consensus across Rust, Zig, C11, NASM, and Python.
 3. **Artifact & Timestamp Provenance:** Integrity of frozen PDFs, arXiv source tarball, JSON datasets, and cryptographic timestamps.
 4. **Browser Client Safety:** Zero XSS, zero tracking, and zero supply-chain script injection on the static GitHub Pages Observatory & Blueprint.

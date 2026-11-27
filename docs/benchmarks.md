@@ -1,23 +1,24 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 # Benchmarks & Performance Budgets
 
-All timings below were measured locally on Windows 11 x86-64 (single-threaded unless noted, exact arithmetic release builds) during `v1.0.0` verification. No numbers are extrapolated or fabricated.
+All timings below were measured locally on Windows 11 x86-64 (single-threaded unless noted, exact arithmetic release builds) during `v1.0.0`–`v1.1.0` verification. No numbers are extrapolated or fabricated.
 
 ## 1. Measured Verification Timings & Budgets
 
 | Component | Command | Measured Runtime | Performance Budget | Result |
 |---|---|---|---|---|
-| **Lean 4.35.0 full build** | `lake build` (17 jobs, zero-Mathlib) | `< 15 s` | `< 60 s` | PASS (0 warnings) |
-| **Lean 4.35.0 `VerifyAxioms.lean`** | `lake env lean VerifyAxioms.lean` (36 decls) | `< 3 s` | `< 15 s` | PASS |
+| **Lean 4.35.0 full build** | `lake build` (17 jobs, zero-Mathlib) | `< 120 s` (cold) | `< 180 s` | PASS (0 warnings) |
+| **Lean 4.35.0 `VerifyAxioms.lean`** | `lake env lean VerifyAxioms.lean` (38 decls) | `< 5 s` | `< 15 s` | PASS |
 | **Rust release suite (`D <= 81`)** | `cargo test --release` (4 tests) | `0.01 s` | `< 5 s` | PASS (0 clippy warnings) |
 | **Zig release exact check** | `zig run -OReleaseFast src/main.zig` | `< 0.05 s` | `< 5 s` | PASS |
 | **ISO C11 FWHT-16 (200,000 calls)** | GCC `-std=c11 -O3` reference loop | `0.0033 s` | `< 0.1 s` | Baseline (`1.00×`) |
 | **x86-64 NASM FWHT-16 (200,000 calls)** | `asm/fwht_x64.asm` (`fwht16_i64_asm`) | `0.0021 s` | `< 0.05 s` | **`1.56×` speedup** over `-O3` C11 |
 | **C11 + NASM differential fuzzer** | `100,000` FWHT-16 + `25,000` FWHT-32 checks | `< 0.1 s` | `< 5 s` | PASS (0 mismatches) |
-| **Python exact test suite** | `pytest -v tests/test_all.py` (162 tests) | `0.56 s` | `< 15 s` | PASS |
+| **Python exact test suite** | `pytest -v tests/test_all.py` (16 tests, incl. 3 Hypothesis suites) | `< 2 s` | `< 15 s` | PASS |
+| **True source mutation testing** | `python scripts/mutation_check.py` (9 isolated `oracle.py` mutants) | `< 15 s` | `< 60 s` | PASS (9/9 killed) |
 | **Moonlab WASM + QRNG twin** | `node node/moonlab_crosscheck.cjs` | `< 0.3 s` | `< 5 s` | PASS (`max_err = 1.33e-14`) |
 | **QGTL Richardson QGT bridge** | `./build/qgtl_bridge` (20 points, `n=1..4`) | `< 0.05 s` | `< 5 s` | PASS (`max_rel_err = 1.224e-8`) |
-| **Tectonic clean-room PDF build** | `python scripts/package_arxiv.py` | `< 10 s` | `< 60 s` | PASS (14 pages, 0 warnings) |
+| **Tectonic clean-room PDF build** | `python scripts/package_arxiv.py` | `< 10 s` | `< 60 s` | PASS (0 warnings) |
 
 ## 2. Algorithmic Performance Decisions
 

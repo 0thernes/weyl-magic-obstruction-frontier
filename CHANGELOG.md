@@ -5,6 +5,22 @@ All notable changes to `weyl-magic-obstruction-frontier` (`0TH-2026-022`) are do
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-11-27
+
+### Added
+- **Lean 4.35.0 Kernel-Closed Arbitrary-Bent $n=4$ Bridge (`WeylMagic.n4_z4_bent_hyperplane_rupture_arbitrary_bent`):** Directly invokes Rothaus's universal degree bound (`T2c`), exact $\mathbb{F}_2^4$ Möbius ANF reconstruction, and the 28-form hyperplane-triple rupture (`T2d`–`T2e`) inside the Lean 4 kernel for arbitrary `IsBent 2 f`.
+- **Nontrivial $n=2$ Pauli Idempotence Non-Vacuity Witness (`WeylMagic.nonvacuity_pillar1_n2_mub_spectrum`):** Proves `IsScaledPauliMUBSpectrum 2 n2MubSign` directly from the $\mathbb{Z}[i]^4$ fiducial `(1, 1, 1, i)` with `pauliIdempRHS 2 n2MubSign 1 0 = 4 ≠ 0` (`38` audited declarations total in `VerifyAxioms.lean`).
+- **Statement-Fidelity Audit (`docs/statement-fidelity.md`):** Line-by-line mapping of all 38 audited Lean declarations to manuscript claims with explicit disclosure of every paper-to-Lean bridge.
+- **True Isolated Source-Code Mutation Testing (`scripts/mutation_check.py`):** Replaced arithmetic checks with 9 real production-code mutants injected into an isolated temp copy of `src/weyl_magic/oracle.py` verified via `pytest` subprocesses (`9/9` killed).
+- **Strict Draft 2020-12 `repo.yaml` Schema Validation & Frozen-JSON Consistency Tests (`tests/test_all.py`):** Enforces `repo-standard.schema.json`, `CITATION.cff` + `VERSION` single-source-of-truth, and all 5 frozen JSON datasets in CI.
+- **2D Canvas Fallback & WCAG 2.2 AA Keyboard Navigation (`docs/site/index.html`, `docs/site/blueprint.html`):** Added automatic 2D Canvas fallback when WebGL2 is absent, expanded Blueprint ledger to all 38 audited declarations, and added keyboard activation (`tabindex="0"`, Enter/Space, focus rings) on SVG nodes.
+
+### Fixed
+- **Live Bibliography Correction (`paper/references.bib` & `scripts/check_citations.py`):** Upgraded `check_citations.py` to live title/author matching, Atom `<entry>` XML parsing, and both-direction (`updated-by` & `update-to`) Crossref retraction screening — catching and correcting a 1-digit wrong arXiv ID on `Leone2022SRE` (`2106.12567` → `2106.12587`). All 17 entries (`14` DOIs + `10` arXiv IDs) now pass live title, author, and retraction verification.
+- **Glossary Formula Correction (`docs/glossary.md`):** Fixed $\Phi_{2\alpha}$ / $\ln$ definition to match manuscript Eq. (1) exactly.
+- **Strict 1-to-1 Lean Target Alignment (`CLAIMS.md`, `LIMITATIONS.md`, `docs/faq.md`, `ROADMAP.md`):** Aligned `T1b`/`T1c`/`T1d`, `T3e`, and `T5b`/`T5c` labels with `lean/Challenge.lean`.
+- **Attribution, Provenance & Epistemic Honesty Fixes:** Fixed `tsotchke/quantum_rng` (`splitmix64`+`hadamard_mix`, MIT) attribution (removing wrong `Xoshiro256++` references), removed stale `ks31` residue from `third_party/{qgtl,moonlab}/PROVENANCE.md`, removed unarchived `"2,000+"` / `"278"` numerical restart counts, honestly labeled `eshkol/magic_qgt_ad.esk` as an unexecuted source-level companion spec, honestly marked `B44: partial` in `repo.yaml` / `REPLICATION.md` pending third-party human replication, fixed a `qgtl_bridge.c` error-path leak, added QRNG known-answer assertions in C11 & Node, checked computed `norm2` and all 4 `Zeta8` norm components in Zig & Rust, and removed dead `Eisenstein` struct from `WeylMagic/Basic.lean`.
+
 ## [1.0.2] - 2026-11-27
 
 ### Changed

@@ -26,7 +26,9 @@ verify-c:
     ./build/fuzz_weyl_magic
     gcc -std=c11 -O2 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Ic/include c/src/weyl_magic.c c/tests/cbmc_harness.c -o build/cbmc_harness
     ./build/cbmc_harness
-    gcc -std=gnu11 -O2 -Ithird_party/qgtl/include -Ithird_party/qgtl/stub third_party/qgtl/src/quantum_geometric/distributed/differential_geometry.c c/src/qgtl_bridge.c -o build/qgtl_bridge -lm
+    gcc -std=gnu11 -O2 -Wall -Wextra -Werror -Ithird_party/qgtl/include -Ithird_party/qgtl/stub -c c/src/qgtl_bridge.c -o build/qgtl_bridge.o
+    gcc -std=gnu11 -O2 -Ithird_party/qgtl/include -Ithird_party/qgtl/stub -c third_party/qgtl/src/quantum_geometric/distributed/differential_geometry.c -o build/qgtl_diffgeo.o
+    gcc build/qgtl_bridge.o build/qgtl_diffgeo.o -o build/qgtl_bridge -lm
     ./build/qgtl_bridge
 
 verify-cbmc:

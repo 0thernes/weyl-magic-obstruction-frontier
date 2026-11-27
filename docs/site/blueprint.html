@@ -14,23 +14,27 @@
     header { padding:1.3rem 1.8rem; border-bottom:1px solid var(--border); background:#0f172a; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1rem; }
     header h1 { margin:0; font-size:1.3rem; color:var(--accent); }
     nav a { color:var(--text); text-decoration:none; padding:0.4rem 0.8rem; border:1px solid var(--border); border-radius:6px; font-size:0.85rem; margin-left:0.4rem; }
-    nav a:hover, nav a:focus { border-color:var(--accent); color:var(--accent); }
+    nav a:hover, nav a:focus { border-color:var(--accent); color:var(--accent); outline:2px solid var(--accent); outline-offset:2px; }
     main { max-width:1240px; margin:0 auto; padding:1.5rem; display:grid; gap:1.3rem; }
     .card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:1.2rem; }
     .card h2 { margin:0 0 0.7rem; font-size:1.05rem; color:var(--accent); }
     svg { width:100%; height:auto; display:block; background:#070b14; border-radius:8px; border:1px solid #1f2937; }
-    table { width:100%; border-collapse:collapse; font-size:0.85rem; }
-    th, td { text-align:left; padding:0.48rem 0.55rem; border-bottom:1px solid var(--border); }
+    .node { cursor:pointer; }
+    .node:focus { outline:none; }
+    .node:focus rect { stroke:#f8fafc; stroke-width:3; }
+    table { width:100%; border-collapse:collapse; font-size:0.84rem; }
+    th, td { text-align:left; padding:0.45rem 0.55rem; border-bottom:1px solid var(--border); }
     th { color:var(--accent); }
-    code { color:#a5f3fc; font-size:0.82rem; }
+    code { color:#a5f3fc; font-size:0.81rem; }
     .ok { color:#34d399; font-weight:600; }
+    .filter-status { color:var(--muted); font-size:0.85rem; margin-bottom:0.6rem; }
   </style>
 </head>
 <body>
   <header>
     <div>
       <h1>Zero-Mathlib Lean 4.35.0 Proof Dependency Blueprint (0TH-2026-022)</h1>
-      <div style="color:var(--muted);font-size:0.86rem;">23 Palomar Targets · 5 Non-Vacuity Witnesses · 8 Adversarial Refutations · 6 Independent Kernels</div>
+      <div style="color:var(--muted);font-size:0.86rem;">23 Palomar Targets · 1 Arbitrary-Bent Bridge · 6 Non-Vacuity Witnesses · 8 Adversarial Refutations · 6 Independent Kernels</div>
     </div>
     <nav aria-label="Primary navigation">
       <a href="index.html">Observatory</a>
@@ -40,74 +44,71 @@
   </header>
   <main>
     <section class="card">
-      <h2>Formal Module &amp; Theorem Dependency DAG (Click any node to filter table)</h2>
+      <h2>Formal Module &amp; Theorem Dependency DAG (Click or press Enter/Space on any node to filter)</h2>
       <svg viewBox="0 0 1120 350" role="img" aria-label="Proof dependency directed acyclic graph">
         <defs>
           <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
             <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
           </marker>
         </defs>
-        <!-- Edges -->
         <g stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arr)">
           <path d="M 560 56 L 120 120"/><path d="M 560 56 L 340 120"/><path d="M 560 56 L 560 120"/><path d="M 560 56 L 780 120"/><path d="M 560 56 L 1000 120"/>
           <path d="M 120 185 L 440 245"/><path d="M 340 185 L 440 245"/><path d="M 560 185 L 560 245"/><path d="M 780 185 L 680 245"/><path d="M 1000 185 L 680 245"/>
           <path d="M 440 295 L 560 315"/><path d="M 680 295 L 560 315"/>
         </g>
-        <!-- Root Basic -->
-        <g class="node" data-pillar="all" style="cursor:pointer">
+        <g class="node" data-pillar="all" tabindex="0" role="button" aria-label="Show all 38 audited declarations">
           <rect x="420" y="14" width="280" height="42" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
           <text x="560" y="34" fill="#38bdf8" font-size="13" font-weight="700" text-anchor="middle">WeylMagic.Basic (Zero-Mathlib)</text>
           <text x="560" y="49" fill="#94a3b8" font-size="10.5" text-anchor="middle">dotMod2 · sympForm · Cauchy-Schwarz · Z[i] · Z[zeta8]</text>
         </g>
-        <!-- 5 Pillars -->
-        <g class="node" data-pillar="P1" style="cursor:pointer">
+        <g class="node" data-pillar="P1" tabindex="0" role="button" aria-label="Filter Pillar 1 theorems">
           <rect x="20" y="120" width="200" height="65" rx="8" fill="#0f2922" stroke="#009e73" stroke-width="2"/>
           <text x="120" y="142" fill="#34d399" font-size="12.5" font-weight="700" text-anchor="middle">Pillar 1: TwoAdicObstruction</text>
           <text x="120" y="160" fill="#cbd5e1" font-size="10.5" text-anchor="middle">T1a–T1d: All odd n &gt;= 3</text>
           <text x="120" y="175" fill="#94a3b8" font-size="10" text-anchor="middle">2^n(2^n-2)^2 != K^2</text>
         </g>
-        <g class="node" data-pillar="P2" style="cursor:pointer">
+        <g class="node" data-pillar="P2" tabindex="0" role="button" aria-label="Filter Pillar 2 theorems">
           <rect x="240" y="120" width="200" height="65" rx="8" fill="#0f2922" stroke="#009e73" stroke-width="2"/>
           <text x="340" y="142" fill="#34d399" font-size="12.5" font-weight="700" text-anchor="middle">Pillar 2: BentHyperplane</text>
-          <text x="340" y="160" fill="#cbd5e1" font-size="10.5" text-anchor="middle">T2a–T2e: Fermat + Rothaus</text>
+          <text x="340" y="160" fill="#cbd5e1" font-size="10.5" text-anchor="middle">T2a–T2e + Arbitrary-Bent Bridge</text>
           <text x="340" y="175" fill="#94a3b8" font-size="10" text-anchor="middle">896 bent -&gt; n=4 rupture</text>
         </g>
-        <g class="node" data-pillar="P3" style="cursor:pointer">
+        <g class="node" data-pillar="P3" tabindex="0" role="button" aria-label="Filter Pillar 3 theorems">
           <rect x="460" y="120" width="200" height="65" rx="8" fill="#2b190f" stroke="#d55e00" stroke-width="2"/>
           <text x="560" y="142" fill="#fb923c" font-size="12.5" font-weight="700" text-anchor="middle">Pillar 3: SuperMubAnomalies</text>
           <text x="560" y="160" fill="#cbd5e1" font-size="10.5" text-anchor="middle">T3a–T3e: W(4)xW(2), W(4)xW(4)</text>
           <text x="560" y="175" fill="#94a3b8" font-size="10" text-anchor="middle">Z[zeta8] MUB vs Z[i] Super-MUB</text>
         </g>
-        <g class="node" data-pillar="P4" style="cursor:pointer">
+        <g class="node" data-pillar="P4" tabindex="0" role="button" aria-label="Filter Pillar 4 theorems">
           <rect x="680" y="120" width="200" height="65" rx="8" fill="#1b1b3a" stroke="#cc79a7" stroke-width="2"/>
           <text x="780" y="142" fill="#f472b6" font-size="12.5" font-weight="700" text-anchor="middle">Pillar 4: TwoStabilizerTower</text>
           <text x="780" y="160" fill="#cbd5e1" font-size="10.5" text-anchor="middle">T4a–T4d: n=4 cubic, n=5 SOS</text>
           <text x="780" y="175" fill="#94a3b8" font-size="10" text-anchor="middle">AME(n,d) magic ceilings</text>
         </g>
-        <g class="node" data-pillar="P5" style="cursor:pointer">
+        <g class="node" data-pillar="P5" tabindex="0" role="button" aria-label="Filter Pillar 5 theorems">
           <rect x="900" y="120" width="200" height="65" rx="8" fill="#0f2538" stroke="#56b4e9" stroke-width="2"/>
           <text x="1000" y="142" fill="#7dd3fc" font-size="12.5" font-weight="700" text-anchor="middle">Pillar 5: Char3AlltopAndQGT</text>
           <text x="1000" y="160" fill="#cbd5e1" font-size="10.5" text-anchor="middle">T5a–T5d: Z9 carry + Gauss FFT</text>
           <text x="1000" y="175" fill="#94a3b8" font-size="10" text-anchor="middle">W(3)^1..3, W(5)^1..2, QGT</text>
         </g>
-        <!-- Contract & Audit -->
-        <g class="node" data-pillar="all" style="cursor:pointer">
+        <g class="node" data-pillar="all" tabindex="0" role="button" aria-label="Show all Palomar targets">
           <rect x="290" y="245" width="240" height="50" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.8"/>
           <text x="410" y="268" fill="#e2e8f0" font-size="12" font-weight="700" text-anchor="middle">Challenge.lean + PalomarSolution</text>
           <text x="410" y="284" fill="#34d399" font-size="10.5" text-anchor="middle">23 Targets · 6 Independent Kernels</text>
         </g>
-        <g class="node" data-pillar="all" style="cursor:pointer">
+        <g class="node" data-pillar="ASSURE" tabindex="0" role="button" aria-label="Filter non-vacuity witnesses and adversarial refutations">
           <rect x="590" y="245" width="240" height="50" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.8"/>
           <text x="710" y="268" fill="#e2e8f0" font-size="12" font-weight="700" text-anchor="middle">NonVacuity + AdversarialTests</text>
-          <text x="710" y="284" fill="#34d399" font-size="10.5" text-anchor="middle">5 Witnesses · 8 Refutations · VerifyAxioms</text>
+          <text x="710" y="284" fill="#34d399" font-size="10.5" text-anchor="middle">6 Witnesses · 8 Refutations · VerifyAxioms</text>
         </g>
       </svg>
     </section>
 
     <section class="card">
-      <h2>Audited Theorem Ledger (36 Declarations — All Strictly Within <code>[propext, Classical.choice, Quot.sound]</code>)</h2>
+      <h2>Audited Theorem Ledger (38 Declarations — All Strictly Within <code>[propext, Classical.choice, Quot.sound]</code>)</h2>
+      <div class="filter-status" id="filterStatus" aria-live="polite"></div>
       <table id="thmTable">
-        <thead><tr><th>ID</th><th>Pillar</th><th>Lean Declaration</th><th>Axioms</th><th>Status</th></tr></thead>
+        <thead><tr><th>ID</th><th>Group</th><th>Lean Declaration</th><th>Axioms</th><th>Status</th></tr></thead>
         <tbody></tbody>
       </table>
     </section>
@@ -126,6 +127,7 @@
       ['T2c','P2','WeylMagic.Palomar.prove_t2c','[propext, Classical.choice, Quot.sound]'],
       ['T2d','P2','WeylMagic.Palomar.prove_t2d','[propext, Classical.choice, Quot.sound]'],
       ['T2e','P2','WeylMagic.Palomar.prove_t2e','[propext, Classical.choice, Quot.sound]'],
+      ['T2e+','P2','WeylMagic.n4_z4_bent_hyperplane_rupture_arbitrary_bent','[propext, Classical.choice, Quot.sound]'],
       ['T3a','P3','WeylMagic.Palomar.prove_t3a','[propext, Classical.choice, Quot.sound]'],
       ['T3b','P3','WeylMagic.Palomar.prove_t3b','[propext, Classical.choice, Quot.sound]'],
       ['T3c','P3','WeylMagic.Palomar.prove_t3c','none (pure kernel reduction)'],
@@ -139,20 +141,42 @@
       ['T5b','P5','WeylMagic.Palomar.prove_t5b','[propext, Classical.choice, Quot.sound]'],
       ['T5c','P5','WeylMagic.Palomar.prove_t5c','[propext]'],
       ['T5d','P5','WeylMagic.Palomar.prove_t5d','[propext, Classical.choice, Quot.sound]'],
-      ['ALL','ALL','WeylMagic.Palomar.prove_all_weyl_magic_theorems','[propext, Classical.choice, Quot.sound]']
+      ['ALL','ALL','WeylMagic.Palomar.prove_all_weyl_magic_theorems','[propext, Classical.choice, Quot.sound]'],
+      ['NV1','ASSURE','WeylMagic.nonvacuity_pillar1_odd_obstruction','[propext, Quot.sound]'],
+      ['NV1b','ASSURE','WeylMagic.nonvacuity_pillar1_n2_mub_spectrum','[propext, Quot.sound]'],
+      ['NV2','ASSURE','WeylMagic.nonvacuity_pillar2_symplectic_and_bent','[propext, Classical.choice, Quot.sound]'],
+      ['NV3','ASSURE','WeylMagic.nonvacuity_pillar3_dual_witnesses','[propext, Classical.choice, Quot.sound]'],
+      ['NV4','ASSURE','WeylMagic.nonvacuity_pillar4_tower_and_ame','[propext]'],
+      ['NV5','ASSURE','WeylMagic.nonvacuity_pillar5_gauss_and_qgt','[propext, Classical.choice, Quot.sound]'],
+      ['ADV1','ASSURE','WeylMagic.refute_two_adic_obstruction_at_n1_and_n2','none (pure kernel reduction)'],
+      ['ADV2','ASSURE','WeylMagic.refute_rothaus_at_m1','[propext, Quot.sound]'],
+      ['ADV3','ASSURE','WeylMagic.refute_fermat_axis_locking_for_odd_pow2','none (pure kernel reduction)'],
+      ['ADV4','ASSURE','WeylMagic.refute_w42_super_mub_at_alpha4','[propext]'],
+      ['ADV5','ASSURE','WeylMagic.refute_w44_super_mub_at_alpha4','[propext]'],
+      ['ADV6','ASSURE','WeylMagic.refute_two_stab_optimal_at_n5','[propext, Classical.choice, Quot.sound]'],
+      ['ADV7','ASSURE','WeylMagic.refute_n4_tower_reaches_mub','none (pure kernel reduction)'],
+      ['ADV8','ASSURE','WeylMagic.refute_reducible_char3_poly','[propext]']
     ];
     const tbody = document.querySelector('#thmTable tbody');
+    const filterStatus = document.getElementById('filterStatus');
     function render(filter) {
       tbody.innerHTML = '';
+      let shown = 0;
       for (const r of rows) {
         if (filter !== 'all' && r[1] !== filter && r[1] !== 'ALL') continue;
         const tr = document.createElement('tr');
         tr.innerHTML = `<td><strong>${r[0]}</strong></td><td>${r[1]}</td><td><code>${r[2]}</code></td><td><code>${r[3]}</code></td><td class="ok">VERIFIED</td>`;
         tbody.appendChild(tr);
+        shown++;
       }
+      filterStatus.textContent = `Showing ${shown} of ${rows.length} audited Lean 4.35.0 declarations (filter: ${filter}).`;
     }
     document.querySelectorAll('.node').forEach((n) => {
-      n.addEventListener('click', () => render(n.getAttribute('data-pillar')));
+      const activate = () => render(n.getAttribute('data-pillar'));
+      n.addEventListener('click', activate);
+      n.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); }
+      });
     });
     render('all');
   })();

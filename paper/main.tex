@@ -52,7 +52,7 @@ Constructions Across Product Weyl--Heisenberg Groups}
 \email{0\_0@0thernes.art}
 \urladdr{https://orcid.org/0009-0006-8168-9648}
 
-\date{November 27, 2026 (Version 1.0.2; Archive ID \texttt{0TH-2026-022})}
+\date{November 27, 2026 (Version 1.1.0; Archive ID \texttt{0TH-2026-022})}
 
 \subjclass[2020]{Primary 81P15, 81P45; Secondary 05B15, 11T23, 94D10}
 \keywords{Stabilizer R\'enyi entropy, non-stabilizerness, Weyl--Heisenberg group,
@@ -99,11 +99,13 @@ elementary ring-free $\Z_9$ divided-power carry-polynomial construction for
 characteristic-3 Alltop MUBs ($W(3)^{\otimes 1,2,3,4}$), certify $W(5)^{\otimes 1,2}$
 lower bounds for Knipfer et al., and prove the exact Fubini--Study Quantum Geometric
 Tensor metric $g_{\theta\theta}(\theta)=(1-D^{-1})/(2+2D^{-1/2}\cos\theta)^2$
-(\textbf{T5a--T5d}). All 22 numbered theorem groups (36 audited declarations including
-non-vacuity witnesses and adversarial refutations) are formally proved in zero-Mathlib
-Lean~4.35.0 within \texttt{[propext, Classical.choice, Quot.sound]} and cross-checked
-across six independent Lean kernels plus Rust, Zig, ISO~C11, x86-64 NASM assembly,
-C++20, Python, Eshkol, QGTL, and Moonlab.
+(\textbf{T5a--T5d}). All 22 numbered theorem groups (38 audited declarations including
+an arbitrary-bent $n=4$ kernel bridge, six non-vacuity witnesses, and eight adversarial
+refutations) are formally proved in zero-Mathlib Lean~4.35.0 within
+\texttt{[propext, Classical.choice, Quot.sound]} and cross-checked across six independent
+Lean kernels plus seven additional executed polyglot engines (Rust, Zig, ISO~C11 with
+x86-64 NASM assembly, C++20, Python, QGTL, and Moonlab WASM, alongside a source-level
+Eshkol AD companion specification).
 \end{abstract}
 
 \maketitle
@@ -190,9 +192,10 @@ independent kernels (\texttt{lean}, \texttt{leanchecker-paranoid}, \texttt{lean4
 \tagcomp\ denotes deterministic exact integer/cyclotomic computation cross-checked across
 multiple independent engines (C11, Rust, Zig, Python);
 \tagnum\ denotes double-precision numerical optimization or classical state-vector
-simulation (C++20, QGTL, Moonlab WASM, Eshkol AD); and
+simulation (C++20, QGTL, Moonlab WASM); and
 \tagopen\ denotes an open problem explicitly \emph{not} claimed solved.
-\Cref{tab:claims,tab:fidelity} summarize every claim and statement-fidelity audit.
+\Cref{tab:claims,tab:fidelity} summarize every claim and statement-fidelity audit
+(with full line-by-line formalization bridges documented in \texttt{docs/statement-fidelity.md}).
 
 \begin{table}[htbp]
 \centering
@@ -562,8 +565,8 @@ and $(D-1)(D/2)$ operators with $c_P^2=\frac{4}{D}(1-t)^2-(1-2t)^2$.
   \end{equation}
   $P_4'(t)=1359t^2-1302t+311>0$ throughout $[0,2/5]$, and $P_4(3774568/10^7)<0<P_4(3774569/10^7)$,
   uniquely bracketing $t^*=0.3774568011835\ldots$, with $\Phi_4^*=2.1505201547139\ldots$
-  and $M_2^*=2.0068789769361\ldots$ (unbeaten across all 64 C++20 and 278 earlier
-  multi-start optimizations \tagnum; global optimality over $\C^{16}$ remains \tagopen).
+  and $M_2^*=2.0068789769361\ldots$ (unbeaten across all 64 deterministic QRNG-seeded
+  C++20 multi-start optimizations \tagnum; global optimality over $\C^{16}$ remains \tagopen).
   \item \emph{(\textbf{T4c} $n=5$ SOS Rupture)} At $n=5$ ($D=32$), setting $u=p$ and
   $v=q-2p$ yields the exact integer sum-of-squares identity
   \begin{equation}\label{eq:n5-sos}
@@ -588,8 +591,8 @@ and $(D-1)(D/2)$ operators with $c_P^2=\frac{4}{D}(1-t)^2-(1-2t)^2$.
   showing unification of $n=2$ WH-MUB ($7/4$) and $n=3$ Hoggar SIC ($16/9$), the $n=4$
   cubic minimum ($2.1505$), and the $n=5$ SOS floor ($\ge 3$) ruptured by our exact
   $\Z[i]^{32}$ witness ($2.6661$). (b) Exact Fubini--Study QGT metric
-  $g_{\theta\theta}(\theta)$ (\textbf{T5d}) verified against QGTL ($1.22\times 10^{-8}$)
-  and Eshkol exact AD.}
+  $g_{\theta\theta}(\theta)$ (\textbf{T5d}) verified against QGTL Richardson
+  extrapolation ($1.22\times 10^{-8}$) and Python finite-difference checks.}
   \label{fig:tower}
 \end{figure}
 
@@ -686,15 +689,19 @@ declares the 23 proof obligations for \texttt{lake comparator} (run with
 which verifies definitional statement equivalence against \texttt{PalomarSolution.lean}
 and checks all 23 targets across six independent Lean typecheckers (\texttt{lean},
 \texttt{leanchecker-paranoid}, \texttt{lean4lean}, \texttt{nanoda}, \texttt{con-leche},
-\texttt{con-ron}). \texttt{VerifyAxioms.lean} audits all 36 declarations (23 Palomar
-targets, 5 non-vacuity witnesses in \texttt{NonVacuity.lean}, and 8 adversarial boundary
-refutations in \texttt{AdversarialTests.lean}); every declaration depends strictly on a
-subset of \texttt{[propext, Classical.choice, Quot.sound]} with zero \texttt{sorryAx},
-zero \texttt{Lean.ofReduceBool}, and zero custom axioms.
+\texttt{con-ron}). \texttt{VerifyAxioms.lean} audits all 38 declarations (23 Palomar
+targets, the kernel-closed arbitrary-bent $n=4$ bridge
+\texttt{n4\_\allowbreak z4\_\allowbreak bent\_\allowbreak hyperplane\_\allowbreak rupture\_\allowbreak arbitrary\_\allowbreak bent}, 6 non-vacuity witnesses in
+\texttt{NonVacuity.lean} including nontrivial $n=2$ Pauli idempotence with $K=4$, and
+8 adversarial boundary refutations in \texttt{AdversarialTests.lean}); every declaration
+depends strictly on a subset of \texttt{[propext, Classical.choice, Quot.sound]} with zero
+\texttt{sorryAx}, zero \texttt{Lean.ofReduceBool}, and zero custom axioms.
 
 To eliminate single-implementation bias, all finite arithmetic witnesses and sweeps are
-independently re-verified across a nine-component polyglot stack (\Cref{tab:polyglot}).
-Every non-Lean simulation or numerical tool (QGTL, Moonlab WASM, Eshkol AD, QRNG mixer)
+independently re-verified across an eight-engine executed polyglot stack (\Cref{tab:polyglot}),
+accompanied by a source-level Eshkol AD companion specification (\texttt{eshkol/magic\_qgt\_ad.esk},
+not compiled or executed in CI because no Eshkol toolchain binary is installed on the runner).
+Every non-Lean simulation or numerical tool (QGTL, Moonlab WASM, QRNG integer mixer)
 is explicitly labelled as classical CPU arithmetic/simulation; no quantum hardware
 experiment is performed or claimed.
 
@@ -703,19 +710,19 @@ experiment is performed or claimed.
 \caption{Polyglot Differential Verification and Honest Cross-Check Matrix.}
 \label{tab:polyglot}
 \small
-\begin{tabularx}{\textwidth}{@{}P{3.3cm} l L P{2.4cm}@{}}
+\begin{tabularx}{\textwidth}{@{}P{3.3cm} l L P{2.6cm}@{}}
 \toprule
 \textbf{Engine} & \textbf{Tier} & \textbf{Verified Scope and Measured Output} & \textbf{Status} \\
 \midrule
-Lean 4.35.0 (6 kernels) & \taglean & All 22 theorem groups + ALL + 5 non-vacuity + 8 adversarial (36 audited decls). & 0 errors, 0 warn \\
+Lean 4.35.0 (6 kernels) & \taglean & All 22 theorem groups + ALL + $n=4$ bent bridge + 6 non-vacuity + 8 adversarial (38 audited decls). & 0 errors, 0 warn \\
 Rust (safe \texttt{i128}) & \tagcomp & \texttt{\#![forbid(unsafe\_code)]}: 65{,}536 $\F_2^4$ bent scan, $\Z[\zeta_8]$, $\Z[i]$ Super-MUBs, $n=5$, $W(3)^{\otimes 1..4}$. & 4/4 tests, clippy 0 \\
-Zig 0.17.0 (comptime) & \tagcomp & Comptime FWHT-16/32 exact \texttt{i128} differential verifier matching Lean/Rust bit-for-bit. & 1/1 test, 0 warn \\
-ISO C11 + x86-64 ASM & \tagcomp & Strict \texttt{-std=c11 -Wpedantic -Werror}; 1.56$\times$ FWHT-16 ASM speedup; 100k fuzz checks. & All PASS, 0 warn \\
-C++20 L-BFGS & \tagnum & 64 QRNG-seeded starts/group across all 3 order-8 \& 5 order-16 abelian groups. & Frozen JSON \\
-Python exact oracle & \tagcomp & Exact \texttt{Fraction}/50-digit \texttt{Decimal}, 162 pytest checks, \texttt{ruff} \& \texttt{mypy --strict}. & 162/162 PASS \\
+Zig (comptime) & \tagcomp & Comptime FWHT-16/32 exact \texttt{i128} differential verifier matching Lean/Rust bit-for-bit. & 1/1 test, 0 warn \\
+ISO C11 + x86-64 ASM & \tagcomp & Strict \texttt{-std=c11 -Wpedantic -Werror}; 1.56$\times$ FWHT-16 ASM speedup; 100k fuzz checks + CBMC. & All PASS, 0 warn \\
+C++20 L-BFGS & \tagnum & 64 deterministic QRNG-seeded starts/group across all 3 order-8 \& 5 order-16 abelian groups. & Frozen JSON \\
+Python exact oracle & \tagcomp & Exact \texttt{Fraction}/50-digit \texttt{Decimal}, 16 pytest checks (incl.\ 3 Hypothesis suites), 9/9 true source mutation kills, \texttt{ruff} \& \texttt{mypy --strict}. & All PASS \\
 QGTL (\texttt{diffgeo}) & \tagnum & Classical double-precision Fubini--Study cross-check of \textbf{T5d} ($n=1..4$, 20 pts). & Rel.\ err $1.22\times 10^{-8}$ \\
-Moonlab v1.2.1 WASM & \tagnum & Classical CPU state-vector simulator cross-check of $n=2,3,4,5$ states + QRNG twin. & Max err $1.33\times 10^{-14}$ \\
-Eshkol AD (\texttt{.esk}) & \tagnum & Exact symbolic/AD cross-check of $d\Phi_4/dt|_{t^*}=0$ and 2nd-order QGT metric. & Clean AD spec \\
+Moonlab v1.2.1 WASM & \tagnum & Classical CPU state-vector simulator cross-check of $n=2,3,4,5$ states + QRNG bit-exact twin. & Max err $1.33\times 10^{-14}$ \\
+Eshkol AD (\texttt{.esk}) & Spec only & Source-level AD companion script mirroring \textbf{T4b} \& \textbf{T5d} (derivatives checked in Lean/QGTL/Python). & Not run in CI \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -745,9 +752,14 @@ zero-Mathlib Lean~4 formalization rather than first existence of char-3 MUBs.
   \item \emph{Numerical global optima (\tagnum):} Neither the 4-qubit cubic value
   $\Phi_4^*\approx 2.150520$ nor the C++20 order-8/16 minima constitute formal global
   optimality proofs over $\C^D$.
-  \item \emph{Classical simulation disclaimer:} QGTL, Moonlab WASM, Eshkol AD, and the
-  \texttt{quantum\_rng} mixer are classical deterministic arithmetic cross-checks, not
-  quantum hardware experiments or physical entropy sources.
+  \item \emph{Classical simulation disclaimer:} QGTL, Moonlab WASM, and the
+  \texttt{quantum\_rng} integer mixer are classical deterministic arithmetic cross-checks,
+  not quantum hardware experiments or physical entropy sources; \texttt{eshkol/magic\_qgt\_ad.esk}
+  is a source-level AD companion specification not executed in CI.
+  \item \emph{Preprint and replication notice:} This manuscript is an independent
+  non-peer-reviewed preprint. All builds and verifiers have passed author self-replication
+  and clean-room multi-OS GitHub Actions CI, while independent third-party human replication
+  remains open (see \texttt{REPLICATION.md}).
 \end{enumerate}
 
 \section{Reproducibility, Provenance, and Disclosures}\label{sec:disclosures}

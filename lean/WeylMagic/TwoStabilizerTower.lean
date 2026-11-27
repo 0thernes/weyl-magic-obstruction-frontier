@@ -24,7 +24,7 @@ Proves the complete exact algebraic theory of the two-stabilizer magic tower
    factorization `N₄'(t) = 120 * (453 t^3 - 651 t^2 + 311 t - 49)`, with exact sign-change
    bracketing of the unique real root `t* ∈ (3774568/10^7, 3774569/10^7)` and exact rational
    upper bound `Φ₄(3774568/10^7) < 21505202 / 10^7` (strictly above `31/16 = 1.9375` and
-   matching the global 278-start numerical floor `2.1505201547139396`).
+   matching the 64-start C++20 L-BFGS numerical value `2.150520154714`).
 3. **T4c (`n5_two_stab_sos_rupture`):** At `n = 5` (`D = 32`), the exact integer sum-of-squares
    identity proves `Φ₄(Ψ₅(θ)) ≥ 3` for ALL `t = u / (2u + v) ∈ ℝ` (every `u, v ∈ ℤ` with
    `2u + v ≠ 0`), while our explicit exact `ℤ[i]³²` 5-qubit witness (`‖v‖² = 254`) achieves
@@ -77,17 +77,12 @@ theorem two_stab_parseval_universal (H p q : Int) :
   grind
 
 /-- **T4a.2 (Exact Unification of `n = 1, 2, 3` Global Magic Optima on the Two-Stabilizer Tower):**
-    - `n = 1` (`H = 1, D = 2`): at `t = 1/2 - √(1/12)`? Even simpler: at `t = 1/2` (`p=1, q=2`)
-      Wait: for `D = 2`: `s3 = 4(1-t)^2 - 2(1-2t)^2`; at `t = (3 - √3)/6` or check `t = 1/3`?
-      Wait: let's check `D = 2` directly! At `t = 1 - 1/(2 + √2 cos θ)`:
-      - `D = 2` (`H = 1`): `twoStabPhi4Num 1 p q / (4 q^4)`:
-        for `p/q`: `Φ₄ = 1 + 2*t^4 + (2(1-t)^2 - (1-2t)^2)^2 = 1 + 2 t^4 + (1 - 2 t^2)^2`!
-        Set `t^2 = 1/3` (`cos θ = ...`): `Φ₄ = 1 + 2/9 + (1/3)^2 = 1 + 3/9 = 4/3`!
-        In integer form with `u = t^2`: at `t^2 = 1/3`, `3 * (1 + 2 u^2 + (1 - 2u)^2) = 4`!
-      - `D = 4` (`H = 2`): at `t = 1/2` (`p = 1, q = 2`, i.e. `cos θ = 0`, `θ = π/2`):
-        `twoStabPhi4Num 2 1 2 = 4^2 * 2^4 * (7/4) = 448` -> exact `Φ₄ = 7/4` (2-qubit WH-MUB)!
-      - `D = 8` (`H = 4`): at `t = 1/3` (`p = 1, q = 3`, i.e. `2 + 2/√8 cos θ = 3/2` -> `cos θ = -1/√2`):
-        `twoStabPhi4Num 4 1 3 / (64 * 81) = 16/9` -> exact `Φ₄ = 16/9` (3-qubit Hoggar SIC)! -/
+    - `n = 1` (`H = 1, D = 2`): `3 * twoStabPhi4Num 1 p q - 16 q^4 = 8 * (3 p^2 - q^2)^2 ≥ 0`,
+      attaining the Tetrahedral SIC floor `Φ₄ = 4/3` at `t^2 = 1/3`.
+    - `n = 2` (`H = 2, D = 4`): at `t = 1/2` (`p = 1, q = 2`, i.e., `θ = π/2`),
+      `twoStabPhi4Num 2 1 2 = 448`, attaining exact `Φ₄ = 7/4` (2-qubit WH-MUB).
+    - `n = 3` (`H = 4, D = 8`): at `t = 1/3` (`p = 1, q = 3`, i.e., `cos θ = -1/√2`),
+      `twoStabPhi4Num 4 1 3 / (64 * 81) = 16/9`, attaining exact `Φ₄ = 16/9` (3-qubit Hoggar SIC). -/
 theorem two_stab_unifies_n1_n2_n3 :
     -- Exact polynomial identity for D = 2 (n = 1): 3 * twoStabPhi4Num 1 p q - 16 q^4 = 8 * (3 p^2 - q^2)^2 ≥ 0!
     (∀ p q : Int, 3 * twoStabPhi4Num 1 p q - 4 * (4 * (q * q * q * q)) =
@@ -138,18 +133,7 @@ theorem n4_two_stab_cubic_exact :
 theorem n4_cubic_strictly_monotone_on_interval (p q : Int) (hq : 0 < q)
     (hp4 : 10 * p ≤ 4 * q) :
     0 < 1359 * (p * p) - 1302 * (p * q) + 311 * (q * q) := by
-  -- Write `1359 p² - 1302 p q + 311 q²`: on `10p ≤ 4q`, `25 * (1359 p² - 1302 p q + 311 q²) =
-  -- (4q - 10p)*(215q - 340p) + ...` Even cleaner:
-  -- For `x = 4q - 10p ≥ 0` and `p ≥ 0`, `100 * (1359 p² - 1302 p q + 311 q²)`:
-  -- Wait: `1359 p² - 1302 p q + 311 q² = 1359 * (p - 2q/5)^2 + ...`:
-  -- Check at `p = 2q/5 = 0.4 q`: `1359*0.16 - 1302*0.4 + 311 = 217.44 - 520.8 + 311 = +7.64 > 0`!
-  -- And `25 * (1359 p² - 1302 p q + 311 q²) = 1359*(5p - 2q)^2 + 1092*(2q - 5p)*q + 191*q^2`!
-  -- Verify: `1359*(25p^2 - 20pq + 4q^2) + 1092*(2q^2 - 5pq) + 191*q^2`
-  -- `= 33975 p^2 + (-27180 - 5460) pq + (5436 + 2184 + 191) q^2`
-  -- `= 33975 p^2 - 32640 pq + 7811 q^2` vs `25*(1359, -1302, 311) = (33975, -32550, 7775)`!
-  -- Adjust coefficient of `(2q - 5p)*q` to `1074`:
-  -- `-27180 - 5*1074 = -27180 - 5370 = -32550`!
-  -- `5436 + 2*1074 = 5436 + 2148 = 7584`, remainder `7775 - 7584 = +191`!!
+  -- Positive-definite expansion about `p = 2q/5` (`2q - 5p ≥ 0`, `q > 0`).
   have hid : 25 * (1359 * (p * p) - 1302 * (p * q) + 311 * (q * q)) =
       1359 * ((2 * q - 5 * p) * (2 * q - 5 * p)) +
       1074 * ((2 * q - 5 * p) * q) +
@@ -173,13 +157,8 @@ theorem n5_two_stab_sos_floor (p q : Int) :
     3 * (1024 * (q * q * q * q)) ≤ twoStabPhi4Num 16 p q := by
   let u := p
   let v := q - 2 * p
-  -- Check exact factored excess: let's relate directly to `twoStabPhi4Num 16 p q - 3072 q^4`!
-  -- Note: `twoStabPhi4Num 16 p q = 1024*q^4 + 62*1024*p^4 + 31*15*1024*(q-2p)^4 + 31*16*(4(q-p)^2 - 32(q-2p)^2)^2`.
-  -- Wait: `31 * 16 = 496`, and `4(q-p)^2 - 32(q-2p)^2 = 4(u+v)^2 - 32 v^2 = 4(u^2 + 2uv - 7v^2)`!
-  -- Its square is `16 * (u^2 + 2uv - 7v^2)^2`, times `496` = `7936 * (u^2 + 2uv - 7v^2)^2`!
-  -- Wait: `twoStabPhi4Num 16 p q - 3072 q^4 = 1024 * (62 u^4 + 465 v^4 - 2 (2u+v)^4) + 7936 * (u^2 + 2uv - 7v^2)^2`!
-  -- Notice the second term `7936 * (...)^2` is ALREADY A SQUARE (`≥ 0`), AND the first term satisfies
-  -- our exact SOS identity `8880 * (62 u^4 + 465 v^4 - 2 (2u+v)^4) = 1184*(15u^2 - 16uv - 23v^2)^2 + (296uv - 1712v^2)^2 + 554160*v^4`!
+  -- Split excess into a pure square `7936*(u^2 + 2uv - 7v^2)^2` plus `1024` times
+  -- a quartic form certified non-negative by an explicit integer SOS decomposition.
   have hsplit : twoStabPhi4Num 16 p q - 3 * (1024 * (q * q * q * q)) =
       1024 * (62 * (u * u * u * u) + 465 * (v * v * v * v) -
         2 * ((2 * u + v) * (2 * u + v) * (2 * u + v) * (2 * u + v))) +

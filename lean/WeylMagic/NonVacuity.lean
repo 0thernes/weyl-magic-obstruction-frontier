@@ -28,6 +28,55 @@ theorem nonvacuity_pillar1_odd_obstruction :
     (3 ≤ 5 ∧ 5 % 2 = 1) := by
   exact ⟨⟨n1MubSign, sharpness_n1_n2_witnesses.1⟩, by decide, by decide⟩
 
+/-- Exact signed Hermitian 2-qubit Pauli expectation `⟨v|i^(wt(a∧b)) X^a Z^b|v⟩ ∈ ℤ[i]`. -/
+def n2PauliExpectG (v : Nat → GaussInt) (a b : Nat) : GaussInt :=
+  let c0 := GaussInt.mul (GaussInt.conj (v 0)) (v (0 ^^^ a))
+  let s0 := if dotMod2 2 b 0 then GaussInt.neg c0 else c0
+  let c1 := GaussInt.mul (GaussInt.conj (v 1)) (v (1 ^^^ a))
+  let s1 := if dotMod2 2 b 1 then GaussInt.neg c1 else c1
+  let c2 := GaussInt.mul (GaussInt.conj (v 2)) (v (2 ^^^ a))
+  let s2 := if dotMod2 2 b 2 then GaussInt.neg c2 else c2
+  let c3 := GaussInt.mul (GaussInt.conj (v 3)) (v (3 ^^^ a))
+  let s3 := if dotMod2 2 b 3 then GaussInt.neg c3 else c3
+  let raw := GaussInt.add (GaussInt.add s0 s1) (GaussInt.add s2 s3)
+  GaussInt.mulPowI raw (popcount 2 (a &&& b))
+
+/-- Exact scaled 2-qubit WH-MUB sign table `s(a,b) = 2 ⟨ψ|P(a,b)|ψ⟩ ∈ {0, 1, -1}`
+    for non-identity Paulis `(a,b) ≠ (0,0)` (and `0` at `(0,0)` which `pauliIdempRHS` skips),
+    derived directly from the `ℤ[i]⁴` fiducial `n2MubVec = (1, 1, 1, i)`. -/
+def n2MubSign (a b : Nat) : Int :=
+  if a == 0 && b == 0 then 0 else (n2PauliExpectG n2MubVec a b).re / 2
+
+/-- Nontrivial `n = 2` non-vacuity of `IsScaledPauliMUBSpectrum`: unlike `n = 1` (where
+    `2^1 - 2 = 0`), at `n = 2` we have `2^2 * (2^2 - 2)^2 = 16 ≠ 0`, and `n2MubSign`
+    satisfies the full squared Pauli idempotence law with `pauliIdempRHS = ±4` on all
+    12 non-vanishing Paulis — validating `pauliPhaseExp4` and `pauliCommSign` end-to-end. -/
+theorem nonvacuity_pillar1_n2_mub_spectrum :
+    (n2PauliExpectG n2MubVec 0 0 = ⟨4, 0⟩) ∧
+    (∀ a b, a < 4 → b < 4 → (a ≠ 0 ∨ b ≠ 0) →
+      (n2PauliExpectG n2MubVec a b).im = 0 ∧
+      (n2PauliExpectG n2MubVec a b).re = 2 * n2MubSign a b) ∧
+    IsScaledPauliMUBSpectrum 2 n2MubSign ∧
+    (pauliIdempRHS 2 n2MubSign 1 0 = 4) := by
+  refine ⟨by decide, ?_, ?_, by decide⟩
+  · intro a b ha hb hne
+    have ha' : a = 0 ∨ a = 1 ∨ a = 2 ∨ a = 3 := by omega
+    have hb' : b = 0 ∨ b = 1 ∨ b = 2 ∨ b = 3 := by omega
+    rcases ha' with rfl | rfl | rfl | rfl <;> rcases hb' with rfl | rfl | rfl | rfl
+    · exfalso; omega
+    all_goals decide
+  · refine ⟨?_, ⟨1, 0, by decide, by decide, by decide, by decide⟩, ?_⟩
+    · intro pa pb hpa hpb
+      have ha' : pa = 0 ∨ pa = 1 ∨ pa = 2 ∨ pa = 3 := by omega
+      have hb' : pb = 0 ∨ pb = 1 ∨ pb = 2 ∨ pb = 3 := by omega
+      rcases ha' with rfl | rfl | rfl | rfl <;> rcases hb' with rfl | rfl | rfl | rfl <;> decide
+    · intro ra rb hra hrb hne
+      have ha' : ra = 0 ∨ ra = 1 ∨ ra = 2 ∨ ra = 3 := by omega
+      have hb' : rb = 0 ∨ rb = 1 ∨ rb = 2 ∨ rb = 3 := by omega
+      rcases ha' with rfl | rfl | rfl | rfl <;> rcases hb' with rfl | rfl | rfl | rfl
+      · exfalso; omega
+      all_goals decide
+
 /-- Explicit computational `Z`-subgroup on `n = 2` qubits (`inH a b = (a == 0)`),
     satisfying `PauliSubgroup 2`, isotropy, and resolution of identity. -/
 def zSubgroup2 : PauliSubgroup 2 where

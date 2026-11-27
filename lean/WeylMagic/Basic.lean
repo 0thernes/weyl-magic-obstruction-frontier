@@ -6,8 +6,8 @@ module
 # Core Algebraic Primitives (`WeylMagic.Basic`)
 
 Zero-Mathlib exact integer, bitwise symplectic, Gaussian-integer (`ℤ[i]`),
-8th-cyclotomic (`ℤ[ζ₈]`), and Eisenstein-integer (`ℤ[ω₃]`) primitives used
-across all five pillars of the Weyl–Heisenberg Magic Obstruction Frontier.
+and 8th-cyclotomic (`ℤ[ζ₈]`) primitives used across all five pillars of the
+Weyl–Heisenberg Magic Obstruction Frontier.
 -/
 
 namespace WeylMagic
@@ -239,34 +239,6 @@ def normSqPair (x : Zeta8) : Int × Int :=
   (p.c0, p.c1)
 
 end Zeta8
-
-/-! ### Exact Eisenstein Integers `ℤ[ω₃] = ℤ[ω]/(ω² + ω + 1)` -/
-
-/-- Exact Eisenstein integer `a + b*ω₃ ∈ ℤ[ω₃]` with `ω₃ = e^{2πi/3}`, `ω₃² + ω₃ + 1 = 0`. -/
-structure Eisenstein where
-  a : Int
-  b : Int
-  deriving DecidableEq, Repr
-
-namespace Eisenstein
-
-def zero : Eisenstein := ⟨0, 0⟩
-def one : Eisenstein := ⟨1, 0⟩
-def omega : Eisenstein := ⟨0, 1⟩
-def add (x y : Eisenstein) : Eisenstein := ⟨x.a + y.a, x.b + y.b⟩
-def conj (x : Eisenstein) : Eisenstein := ⟨x.a - x.b, -x.b⟩
-def mul (x y : Eisenstein) : Eisenstein :=
-  ⟨x.a * y.a - x.b * y.b, x.a * y.b + x.b * y.a - x.b * y.b⟩
-def normSq (x : Eisenstein) : Int := x.a * x.a - x.a * x.b + x.b * x.b
-
-/-- Multiply by `ω₃^r` for `r mod 3`. -/
-def mulPowW3 (x : Eisenstein) (r : Nat) : Eisenstein :=
-  match r % 3 with
-  | 0 => x
-  | 1 => ⟨-x.b, x.a - x.b⟩
-  | _ => ⟨x.b - x.a, -x.a⟩
-
-end Eisenstein
 
 end
 

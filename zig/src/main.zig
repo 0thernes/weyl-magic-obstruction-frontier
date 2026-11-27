@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright (c) 2026 Alexander Stephen Donahue
 //
-// Zero-dependency Zig 0.17.0 comptime-specialized exact i128 verifier for all five
-// pillars of the Weyl-Heisenberg Magic Obstruction Frontier.
+// Zero-dependency Zig (0.14.1+ / 0.17.0 compatible) comptime-specialized exact i128
+// verifier across the finite witnesses of the Weyl-Heisenberg Magic Obstruction Frontier.
 
 const std = @import("std");
 
@@ -183,6 +183,8 @@ fn runAllChecks() AuditResult {
         .{ .c0 = 0, .c1 = 0, .c2 = 1, .c3 = 0 },
         .{ .c0 = 0, .c1 = 1, .c2 = 0, .c3 = -1 },
     };
+    var norm42 = Zeta8{ .c0 = 0, .c1 = 0, .c2 = 0, .c3 = 0 };
+    for (psi42) |p| norm42 = norm42.add(p.mul(p.conj()));
     var ci: usize = 0;
     var cz: usize = 0;
     var cf: usize = 0;
@@ -208,7 +210,8 @@ fn runAllChecks() AuditResult {
             else co += 1;
         }
     }
-    res.w42_mub_ok = (ci == 1 and cz == 7 and cf == 56 and co == 0);
+    res.w42_mub_ok = (norm42.c0 == 8 and norm42.c1 == 0 and norm42.c2 == 0 and norm42.c3 == 0 and
+        ci == 1 and cz == 7 and cf == 56 and co == 0);
 
     const psi44 = [16]Zeta8{
         .{ .c0 = 3, .c1 = 0, .c2 = 1, .c3 = 0 }, .{ .c0 = -1, .c1 = 0, .c2 = 3, .c3 = 0 },
@@ -220,6 +223,8 @@ fn runAllChecks() AuditResult {
         .{ .c0 = 0, .c1 = -3, .c2 = 0, .c3 = -1 }, .{ .c0 = 0, .c1 = -3, .c2 = 0, .c3 = -1 },
         .{ .c0 = 0, .c1 = 5, .c2 = 0, .c3 = -5 }, .{ .c0 = 0, .c1 = 3, .c2 = 0, .c3 = 1 },
     };
+    var norm44 = Zeta8{ .c0 = 0, .c1 = 0, .c2 = 0, .c3 = 0 };
+    for (psi44) |p| norm44 = norm44.add(p.mul(p.conj()));
     ci = 0; cz = 0; cf = 0; co = 0;
     for (0..16) |a| {
         const a0 = a / 4;
@@ -242,13 +247,16 @@ fn runAllChecks() AuditResult {
             else co += 1;
         }
     }
-    res.w44_mub_ok = (ci == 1 and cz == 15 and cf == 240 and co == 0);
+    res.w44_mub_ok = (norm44.c0 == 320 and norm44.c1 == 0 and norm44.c2 == 0 and norm44.c3 == 0 and
+        ci == 1 and cz == 15 and cf == 240 and co == 0);
 
     // Pillar 3: Super-MUB Z[i] witnesses
     const v42 = [8]Gauss{
         .{ .re = -2, .im = 5 }, .{ .re = -2, .im = 5 }, .{ .re = -9, .im = 9 }, .{ .re = -9, .im = -10 },
         .{ .re = -11, .im = -4 }, .{ .re = -11, .im = -4 }, .{ .re = -1, .im = -18 }, .{ .re = 0, .im = 1 },
     };
+    var norm_v42: i128 = 0;
+    for (v42) |z| norm_v42 += z.normSq();
     var n4: i128 = 0;
     var n6: i128 = 0;
     var n8: i128 = 0;
@@ -273,10 +281,10 @@ fn runAllChecks() AuditResult {
         }
     }
     res.w42_num4 = n4;
-    res.w42_super_ok = (n4 == 1851540086824 and
-        8 * n4 < 15 * ipow128(1001, 4) and
-        64 * n6 < 71 * ipow128(1001, 6) and
-        512 * n8 > 519 * ipow128(1001, 8));
+    res.w42_super_ok = (norm_v42 == 1001 and n4 == 1851540086824 and
+        8 * n4 < 15 * ipow128(norm_v42, 4) and
+        64 * n6 < 71 * ipow128(norm_v42, 6) and
+        512 * n8 > 519 * ipow128(norm_v42, 8));
 
     const v44 = [16]Gauss{
         .{ .re = 9, .im = -10 }, .{ .re = -7, .im = -1 }, .{ .re = 4, .im = 4 }, .{ .re = 2, .im = 15 },
@@ -284,6 +292,8 @@ fn runAllChecks() AuditResult {
         .{ .re = 14, .im = -7 }, .{ .re = -6, .im = 14 }, .{ .re = 3, .im = 6 }, .{ .re = -5, .im = -1 },
         .{ .re = -2, .im = 1 }, .{ .re = 0, .im = -16 }, .{ .re = 3, .im = 4 }, .{ .re = -4, .im = 13 },
     };
+    var norm_v44: i128 = 0;
+    for (v44) |z| norm_v44 += z.normSq();
     n4 = 0; n6 = 0; n8 = 0;
     for (0..16) |a| {
         const a0 = a / 4;
@@ -306,10 +316,10 @@ fn runAllChecks() AuditResult {
         }
     }
     res.w44_num4 = n4;
-    res.w44_super_ok = (n4 == 12399519780160 and
-        16 * n4 < 31 * ipow128(1596, 4) and
-        256 * n6 < 271 * ipow128(1596, 6) and
-        4096 * n8 > 4111 * ipow128(1596, 8));
+    res.w44_super_ok = (norm_v44 == 1596 and n4 == 12399519780160 and
+        16 * n4 < 31 * ipow128(norm_v44, 4) and
+        256 * n6 < 271 * ipow128(norm_v44, 6) and
+        4096 * n8 > 4111 * ipow128(norm_v44, 8));
 
     // Pillar 4: 5-qubit rupture witness
     const v5 = [32]Gauss{
@@ -322,6 +332,8 @@ fn runAllChecks() AuditResult {
         .{ .re = 0, .im = 3 }, .{ .re = 1, .im = 0 }, .{ .re = -3, .im = 3 }, .{ .re = 1, .im = 1 },
         .{ .re = -3, .im = 2 }, .{ .re = 3, .im = -2 }, .{ .re = -3, .im = 0 }, .{ .re = 1, .im = 3 },
     };
+    var norm_v5: i128 = 0;
+    for (v5) |z| norm_v5 += z.normSq();
     var total5: i128 = 0;
     for (0..32) |a| {
         var re_buf: [32]i128 = undefined;
@@ -339,7 +351,7 @@ fn runAllChecks() AuditResult {
         }
     }
     res.n5_num4 = total5;
-    res.n5_rupture_ok = (total5 == 11097089024 and total5 < 3 * ipow128(254, 4));
+    res.n5_rupture_ok = (norm_v5 == 254 and total5 == 11097089024 and total5 < 3 * ipow128(norm_v5, 4));
     return res;
 }
 

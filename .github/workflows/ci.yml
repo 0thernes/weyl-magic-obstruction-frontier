@@ -37,7 +37,7 @@ jobs:
           lake build
           lake build PalomarChallenge
 
-      - name: Audit axioms (36/36 strictly within propext, Classical.choice, Quot.sound)
+      - name: Audit axioms (38/38 strictly within propext, Classical.choice, Quot.sound)
         working-directory: lean
         run: |
           lake env lean VerifyAxioms.lean > ../results/ci_lean_axioms.txt
@@ -46,7 +46,7 @@ jobs:
           a = open("../results/lean_axioms.txt", encoding="utf-8-sig").read().replace("\r\n", "\n").strip()
           b = open("../results/ci_lean_axioms.txt", encoding="utf-8-sig").read().replace("\r\n", "\n").strip()
           assert a == b, f"Axiom drift!\nExpected:\n{a}\nActual:\n{b}"
-          print("Axiom footprint matches committed results/lean_axioms.txt exactly (36 declarations).")
+          print("Axiom footprint matches committed results/lean_axioms.txt exactly (38 declarations).")
           '
           python3 ../scripts/check_readme_axioms.py
 
@@ -143,7 +143,9 @@ jobs:
           ./build/fuzz_weyl_magic
           gcc -std=c11 -O2 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Ic/include c/src/weyl_magic.c c/tests/cbmc_harness.c -o build/cbmc_harness
           ./build/cbmc_harness
-          gcc -std=gnu11 -O2 -Ithird_party/qgtl/include -Ithird_party/qgtl/stub third_party/qgtl/src/quantum_geometric/distributed/differential_geometry.c c/src/qgtl_bridge.c -o build/qgtl_bridge -lm
+          gcc -std=gnu11 -O2 -Wall -Wextra -Werror -Ithird_party/qgtl/include -Ithird_party/qgtl/stub -c c/src/qgtl_bridge.c -o build/qgtl_bridge.o
+          gcc -std=gnu11 -O2 -Ithird_party/qgtl/include -Ithird_party/qgtl/stub -c third_party/qgtl/src/quantum_geometric/distributed/differential_geometry.c -o build/qgtl_diffgeo.o
+          gcc build/qgtl_bridge.o build/qgtl_diffgeo.o -o build/qgtl_bridge -lm
           ./build/qgtl_bridge
           g++ -std=c++20 -O3 -Wall -Wextra -Wpedantic -Werror -Ic/include cpp/magic_search.cpp c/src/qrng_stream.c -o build/magic_search
           ./build/magic_search 8 > /dev/null
@@ -171,11 +173,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Install pinned test dependencies
-        run: pip install -r requirements.lock.txt
-      - name: Run quickstart, pytest (with Hypothesis), and axiom anti-drift check
-        env:
-          PYTHONPATH: src:.
+      - name: Install pinned test dependencies & editable package
+        run: |
+          pip install -r requirements.lock.txt
+          pip install --no-build-isolation --no-deps -e .
+      - name: Run quickstart, pytest (with Hypothesis), true source mutation tests & axiom anti-drift check
         run: |
           python examples/quickstart_demo.py
           pytest -v tests/test_all.py

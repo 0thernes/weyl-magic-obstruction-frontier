@@ -13,7 +13,8 @@ Every defect, discrepancy, visual glitch, epistemic risk, or coverage gap uncove
 | **Cycle 1** | 90-item Build Standard audit, Palomar 6-kernel replay, forbidden token & LLC sweeps, CSP & site validation | 4 | 4 | 0 |
 | **Cycle 2** | Deep cross-file mathematical consistency, 14-page rendered PDF visual inspection, LF normalization, symbol fidelity | 8 | 8 | 0 |
 | **Cycle 3** | Figure label micro-alignment, Ruff/Mypy strictness, SHA-256 manifests, live RFC 3161 + OpenTimestamps freeze, clean-tree audit | 2 | 2 | 0 |
-| **Total** | **All 3 Cycles Complete** | **24** | **24** | **0** |
+| **v1.1.0 Hostile Red-Team (Cycles 1–3)** | Draft 2020-12 `repo.yaml` schema, true 9-mutant source mutation testing, live title+retraction citation audit (`Leone2022SRE` fixed), arbitrary-bent $n=4$ Lean bridge + nontrivial $n=2$ non-vacuity (`38/38` axioms), `B44: partial` honesty, Eshkol/QRNG/PROVENANCE/glossary fixes, 2D fallback + WCAG keyboard nav | 18 | 18 | 0 |
+| **Total** | **All Cycles Complete** | **42** | **42** | **0** |
 
 ---
 
@@ -66,3 +67,15 @@ Every defect, discrepancy, visual glitch, epistemic risk, or coverage gap uncove
 |---|---|---|---|---|
 | `C3-1` | `issue` | `scripts/generate_figures.py` (`fig2`, `fig4`) | Visual re-inspection showed `AME(2,2) >= 2` slightly grazing the left y-axis spine in `fig4`, and the `alpha = 4` crossover label slightly clipped below `y = 0` in `fig2`. | Adjusted `fig4` `AME(2,2)` offset rightward (`+0.08`) and expanded `fig2` y-axis lower bound to `-0.0048`; visually verified clean margins and zero TeX warnings. |
 | `C3-2` | `issue` | `scripts/verify_site.py:26` | `uvx ruff check` flagged `E501` (line length 121 > 120). | Extracted `cdns` tuple onto preceding line; `ruff check` (`0` errors) and `mypy --strict` (`0` errors) both pass cleanly. |
+
+---
+
+## v1.1.0 Hostile 3-Cycle Red-Team Audit (2026-11-27)
+
+Full 18-finding table covering all 10 Build Standard v1.2.0 classes (`bug`, `error`, `issue`, `problem`, `concern`, `dilemma`, `conflict`, `gap`, `hole`, `blindspot`) and Playbook v1.3 Gold Standard checks is archived in [docs/reviews/2026-11-27-hostile-red-team-v1.1.0-audit.md](docs/reviews/2026-11-27-hostile-red-team-v1.1.0-audit.md). Key high-severity catches resolved at root cause:
+
+- **`R1-05` (`hole` — real bibliographic bug):** Upgrading `scripts/check_citations.py` from HTTP-200-only to live title/author/XML/both-direction retraction auditing caught a real 1-digit wrong arXiv ID on `Leone2022SRE` (`2106.12567` → `2106.12587`). All `17/17` entries (`14` DOIs + `10` arXiv IDs) now pass live checks.
+- **`R1-01` (`conflict`):** `repo.yaml` previously failed strict Draft 2020-12 `repo-standard.schema.json` validation; rewritten strictly schema-compliant with `B44: partial` (honestly noting third-party human replication remains open) and enforced permanently in `tests/test_all.py`.
+- **`R1-02` (`hole`):** Replaced arithmetic tautologies in `scripts/mutation_check.py` with true isolated source-code mutation testing injecting 9 production mutants into `src/weyl_magic/oracle.py` and running real `pytest` subprocesses (`9/9` killed).
+- **`R1-06` & `R1-07` (`hole`, `gap`):** Added nontrivial $n=2$ Pauli idempotence non-vacuity (`nonvacuity_pillar1_n2_mub_spectrum`, $K=4 \ne 0$) and kernel-closed arbitrary-bent $n=4$ bridge (`n4_z4_bent_hyperplane_rupture_arbitrary_bent`) inside Lean 4.35.0 (`38/38` audited declarations strictly within `[propext, Classical.choice, Quot.sound]`), plus `docs/statement-fidelity.md`.
+- **`R1-24`, `R2-01`, `R2-02`, `R2-17` (`error`, `dilemma`):** Removed stale `ks31` residue from `third_party/{qgtl,moonlab}/PROVENANCE.md`, corrected `tsotchke/quantum_rng` attribution (removing wrong `Xoshiro256++` labels), fixed the $\Phi_{2\alpha}$/$\ln$ formula in `docs/glossary.md`, aligned `CLAIMS.md` 1-to-1 with `Challenge.lean`, removed unarchived `"2,000+"`/`"278"` restart counts, honestly labeled `eshkol/magic_qgt_ad.esk` as a source-level companion spec not run in CI, and added 2D Canvas fallback + WCAG 2.2 AA keyboard navigation to `docs/site/`.

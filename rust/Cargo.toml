@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 [package]
 name = "weyl-magic-verifier"
-version = "1.0.0"
+version = "1.1.0"
 edition = "2021"
 license = "Apache-2.0"
 description = "Zero-dependency exact i128 differential verifier for the Weyl-Heisenberg Magic Obstruction Frontier"

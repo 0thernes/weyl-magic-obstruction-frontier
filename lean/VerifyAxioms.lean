@@ -10,10 +10,11 @@ import WeylMagic.AdversarialTests
 # Strict Kernel Axiom Audit (`VerifyAxioms.lean`)
 
 Prints exact transitive axiom footprints for all 23 Palomar headline targets
-(`T1a`–`T5d` + `ALL`), all 5 pillar non-vacuity witnesses, and all 8 adversarial
-boundary refutations (36 declarations total). Every declaration must depend ONLY
-on a subset of `{propext, Classical.choice, Quot.sound}` (zero `sorryAx`, zero
-`Lean.ofReduceBool`, zero custom axioms).
+(`T1a`–`T5d` + `ALL`), the kernel-closed arbitrary-bent `n = 4` rupture bridge,
+all 6 pillar non-vacuity witnesses (including nontrivial `n = 2` Pauli idempotence),
+and all 8 adversarial boundary refutations (38 declarations total). Every declaration
+must depend ONLY on a subset of `{propext, Classical.choice, Quot.sound}` (zero
+`sorryAx`, zero `Lean.ofReduceBool`, zero custom axioms).
 -/
 
 #print axioms WeylMagic.Palomar.prove_t1a
@@ -40,7 +41,10 @@ on a subset of `{propext, Classical.choice, Quot.sound}` (zero `sorryAx`, zero
 #print axioms WeylMagic.Palomar.prove_t5d
 #print axioms WeylMagic.Palomar.prove_all_weyl_magic_theorems
 
+#print axioms WeylMagic.n4_z4_bent_hyperplane_rupture_arbitrary_bent
+
 #print axioms WeylMagic.nonvacuity_pillar1_odd_obstruction
+#print axioms WeylMagic.nonvacuity_pillar1_n2_mub_spectrum
 #print axioms WeylMagic.nonvacuity_pillar2_symplectic_and_bent
 #print axioms WeylMagic.nonvacuity_pillar3_dual_witnesses
 #print axioms WeylMagic.nonvacuity_pillar4_tower_and_ame

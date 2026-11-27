@@ -1,24 +1,12 @@
 # SPDX-License-Identifier: Apache-2.0
-# Project manifest for the Build Standard for LLMs v1.2.0. Read by scripts/Audit-Repo.ps1 and scripts/audit-repo.sh.
+# Project manifest for the Build Standard for LLMs v1.2.0 (strict Draft 2020-12 schema + Audit-Repo.ps1 compatible).
 standard: "1.2.0"
 name: "weyl-magic-obstruction-frontier"
-description: "Zero-Mathlib Lean 4.35.0 six-kernel formalization (22 theorem groups, T1a-T5d) and nine-engine polyglot verifier for the 2-Adic Odd-Qubit Magic Obstruction, n=4 Bent-Hyperplane Rupture, Super-MUB Torsion Anomalies, Two-Stabilizer n=5 SOS Rupture, AME Magic Ceilings, and Divided-Power Characteristic-3 Alltop Constructions."
+description: "Zero-Mathlib Lean 4.35.0 six-kernel formalization (22 theorem groups, T1a-T5d, 38 audited declarations) and eight-engine executed polyglot verifier (+ Eshkol AD spec) for the 2-Adic Odd-Qubit Magic Obstruction, n=4 Bent-Hyperplane Rupture, Super-MUB Torsion Anomalies, Two-Stabilizer n=5 SOS Rupture, AME Magic Ceilings, and Divided-Power Characteristic-3 Alltop Constructions."
 owner: "0thernes"
 year: "2026"
-version: "1.0.2"
-archive_id: "0TH-2026-022"
 project_type: research
-stack: [lean4, rust, zig, c11, asm, cpp20, python, node, eshkol, latex, web]
-author:
-  name: "Alexander Stephen Donahue"
-  orcid: "0009-0006-8168-9648"
-  email: "0_0@0thernes.art"
-  affiliation: "Independent Researcher, Spokane, WA, USA"
-repository: "https://github.com/0thernes/weyl-magic-obstruction-frontier"
-pages_url: "https://0thernes.github.io/weyl-magic-obstruction-frontier/"
-licenses:
-  code: "Apache-2.0"
-  docs: "CC-BY-4.0"
+stack: [python, rust, zig, c-cpp, node, other]
 flags:
   public: true
   package: true
@@ -37,20 +25,22 @@ flags:
   ml: false
   formal: true
 items:
-  A19: {status: done, note: "GitHub About description, homepage URL, and research topics configured via gh repo edit."}
-  A37: {status: done, note: "Explicit runtime performance budgets documented and verified in docs/benchmarks.md."}
-  A38: {status: done, note: "Interactive WebGL2 Observatory & Proof Blueprint satisfy WCAG 2.2 AA with strict CSP, zero CDN dependencies, semantic landmarks, aria-live readouts, and Okabe-Ito colorblind-safe palette."}
-  B03: {status: done, note: "Deterministic bit-for-bit JSON, PDF, arXiv tarball, and QRNG stream generation verified across runs."}
-  B05: {status: done, note: "All 22 numbered theorem groups (T1a-T5d) have machine-checked Lean 4.35.0 proofs and independent pytest assertions."}
-  B06: {status: done, note: "AdversarialTests.lean (8 formal boundary refutations), mutation-killing pytest tests, and tamper-injecting CI comparator gate."}
-  B07: {status: done, note: "Regression tests lock the exact 896 bent count, v42/v44 alpha-crossover, n=4 cubic root, n=5 SOS rupture, and char-3/char-5 spectra."}
-  B08: {status: done, note: "Frozen JSON datasets in data/ verified against SHA-256 manifests, RFC 3161 DigiCert .tsr, and OpenTimestamps .ots proofs."}
-  B11: {status: done, note: "Differential cross-verification across Lean 4.35.0, Rust, Zig, ISO C11, x86-64 NASM, C++20, Python, QGTL, and Moonlab WASM."}
-  B12: {status: done, note: "reference/oracle.py independently implements direct textbook O(D^3) Weyl-Heisenberg moments."}
-  B14: {status: done, note: "Hypothesis property tests and metamorphic phase/scaling invariance tests in tests/test_all.py."}
-  B20: {status: done, note: "100% exact integer, Gaussian-integer, cyclotomic (Z[zeta8], Z[zeta9], Z[zeta5]), and Fraction arithmetic for all formal claims."}
-  B22: {status: done, note: "Zero-Mathlib Lean 4.35.0 formalization (23 Palomar targets, 36 audited declarations) replayed across 6 independent kernels."}
+  A19: {status: done, evidence: "https://github.com/0thernes/weyl-magic-obstruction-frontier", note: "GitHub About description, homepage URL, and research topics configured."}
+  A37: {status: done, evidence: "docs/benchmarks.md", note: "Explicit runtime performance budgets documented and verified across all 8 executed engines and Tectonic."}
+  A38: {status: done, evidence: "docs/site/index.html; docs/site/blueprint.html; scripts/verify_site.py", note: "WebGL2/2D-fallback Observatory and keyboard-accessible Proof Blueprint satisfy WCAG 2.2 AA with strict default-src 'none' CSP, zero CDN, landmarks, aria-live readouts, and Okabe-Ito palette."}
+  B03: {status: done, evidence: "scripts/generate_data.py; scripts/generate_manifests.py", note: "Deterministic JSON, PDF, arXiv tarball, and QRNG stream generation verified across runs."}
+  B05: {status: done, evidence: "lean/PalomarSolution.lean; tests/test_all.py", note: "All 22 numbered theorem groups (T1a-T5d) plus the arbitrary-bent n=4 bridge have machine-checked Lean 4.35.0 proofs and independent pytest assertions."}
+  B06: {status: done, evidence: "lean/WeylMagic/AdversarialTests.lean; .github/workflows/ci.yml", note: "8 formal boundary refutations in AdversarialTests.lean, mutation-killing tests, and tamper-injecting negative comparator CI gate."}
+  B07: {status: done, evidence: "tests/test_all.py; rust/src/lib.rs; c/tests/test_weyl_magic.c", note: "Regression tests lock the exact 896 bent count, v42/v44 alpha-crossover, n=4 cubic root, n=5 SOS rupture, char-3/char-5 spectra, and bit-exact QRNG vectors."}
+  B08: {status: done, evidence: "data/MANIFEST.sha256; MANIFEST.sha256; MANIFEST.sha256.tsr; MANIFEST.sha256.ots", note: "Frozen JSON datasets and manuscript artifacts pinned by SHA-256 manifests, RFC 3161 DigiCert .tsr, and OpenTimestamps .ots proofs."}
+  B11: {status: done, evidence: "lean/; rust/; zig/; c/; asm/; cpp/; src/; node/", note: "Differential cross-verification across 8 executed engines: Lean 4.35.0 (6 kernels), Rust, Zig, ISO C11 + x86-64 NASM, C++20, Python, QGTL, and Moonlab WASM."}
+  B12: {status: done, evidence: "reference/oracle.py; tests/test_all.py", note: "reference/oracle.py independently implements direct textbook O(D^3) Pauli and product Weyl-Heisenberg moments."}
+  B13: {status: done, evidence: "scripts/mutation_check.py", note: "True isolated source-code mutation testing injects 9 production mutants into a temp copy of src/weyl_magic/oracle.py and runs pytest subprocesses (9/9 killed)."}
+  B14: {status: done, evidence: "tests/test_all.py", note: "Hypothesis property tests and metamorphic phase/scaling invariance tests in tests/test_all.py."}
+  B20: {status: done, evidence: "lean/WeylMagic/; src/weyl_magic/oracle.py; rust/src/lib.rs", note: "100% exact integer, Gaussian-integer, cyclotomic (Z[zeta8], Z[zeta9], Z[zeta5]), and Fraction arithmetic for all deductive and exact claims."}
+  B22: {status: done, evidence: "lean/comparator.json; results/lean_axioms.txt; docs/statement-fidelity.md", note: "Zero-Mathlib Lean 4.35.0 formalization (23 Palomar targets, 38 audited declarations) replayed across 6 independent kernels."}
   B23: {status: n/a, note: "Deductive Lean 4.35.0 proofs supersede finite-state TLA+/Alloy design model checking."}
-  B24: {status: done, note: "Mathematical core proved in Lean 4.35.0; Rust verifier uses #![forbid(unsafe_code)]."}
-  B25: {status: done, note: "Bounded model checking harness c/tests/cbmc_harness.c (CBMC) plus C11 -Werror -Wconversion, ASan+UBSan, and 100k differential fuzzing."}
-  B27: {status: done, note: "CI job durations and FWHT assembly vs C11 speedup tracked report-only in docs/benchmarks.md and GitHub Actions run history."}
+  B24: {status: done, evidence: "lean/VerifyAxioms.lean; rust/src/lib.rs", note: "Mathematical core proved in Lean 4.35.0; Rust verifier enforces #![forbid(unsafe_code)]."}
+  B25: {status: done, evidence: "c/tests/cbmc_harness.c; c/tests/fuzz_weyl_magic.c; .github/workflows/ci.yml", note: "Bounded model checking harness (CBMC), strict C11 -Werror -Wconversion, ASan+UBSan, and 100k differential fuzzing."}
+  B27: {status: done, evidence: "docs/benchmarks.md; .github/workflows/ci.yml", note: "CI job durations and FWHT assembly vs C11 speedup tracked report-only in docs/benchmarks.md and GitHub Actions run history."}
+  B44: {status: partial, evidence: "REPLICATION.md", note: "Clean-room replication protocol verified via author self-replication (Windows) and automated GitHub Actions CI (Linux/macOS/Windows); independent third-party human replication remains open."}

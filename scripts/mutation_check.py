@@ -1,91 +1,157 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (c) 2026 Alexander Stephen Donahue
-"""Executable mutation testing harness verifying that test assertions kill real arithmetic mutants."""
+"""True isolated source-code mutation testing for src/weyl_magic/oracle.py.
+
+Copies the production package into an isolated temporary directory, verifies the
+unmutated baseline passes pytest, then injects 9 real production-code mutants
+spanning all five pillars and asserts that the real pytest suite kills 100% of
+them (exit code != 0). Never mutates the working tree.
+"""
 
 from __future__ import annotations
 
-import math
+import os
+import shutil
+import subprocess
 import sys
-from fractions import Fraction
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
-sys.path.insert(0, str(ROOT))
+SRC_PKG = ROOT / "src" / "weyl_magic"
 
-from weyl_magic.oracle import (  # noqa: E402
-    V42_SUPER_MUB,
-    audit_all_f2_4_bent,
-    char3_alltop_spectrum,
-    n5_rupture_exact,
-    two_stab_qgt_metric,
-    v2_valuation,
-    wh_gauss_moments,
-)
+# (id, description, target_snippet, replacement_snippet)
+MUTANTS: list[tuple[str, str, str, str]] = [
+    (
+        "M1-P1-v2",
+        "Pillar 1: corrupt v2_valuation step (k += 1 -> k += 2)",
+        "        x >>= 1\n        k += 1",
+        "        x >>= 1\n        k += 2",
+    ),
+    (
+        "M2-P2-deg",
+        "Pillar 2: corrupt F_2^4 ANF degree threshold (<= 2 -> <= 1)",
+        "        if max_deg <= 2:\n            quad_bent += 1",
+        "        if max_deg <= 1:\n            quad_bent += 1",
+    ),
+    (
+        "M3-P2-triple",
+        "Pillar 2: corrupt 3-hyperplane zero-sum triple test (== 0 -> == 1)",
+        "                if (ea[a] ^ ea[b] ^ ea[a ^ b]) == 0:",
+        "                if (ea[a] ^ ea[b] ^ ea[a ^ b]) == 1:",
+    ),
+    (
+        "M4-P3-z8mul",
+        "Pillar 3: corrupt Z[zeta_8] cyclotomic reduction sign (- a[3]*b[1] -> + a[3]*b[1])",
+        "        a[0] * b[0] - a[1] * b[3] - a[2] * b[2] - a[3] * b[1],",
+        "        a[0] * b[0] - a[1] * b[3] - a[2] * b[2] + a[3] * b[1],",
+    ),
+    (
+        "M5-P3-num4",
+        "Pillar 3: corrupt Gaussian 4th-moment accumulator (+1)",
+        "            num4 += m2\n            num6 += m2 * m",
+        "            num4 += m2 + 1\n            num6 += m2 * m",
+    ),
+    (
+        "M6-P4-tower",
+        "Pillar 4: corrupt two-stabilizer Stratum II term ((1 - 2*t)^4 -> (1 - 3*t)^4)",
+        "    s2 = (1 - 2 * t) ** 4",
+        "    s2 = (1 - 3 * t) ** 4",
+    ),
+    (
+        "M7-P4-n5",
+        "Pillar 4: corrupt n=5 rupture FWHT accumulator (+1)",
+        "            m = fre[b] * fre[b] + fim[b] * fim[b]\n            num4 += m * m",
+        "            m = fre[b] * fre[b] + fim[b] * fim[b]\n            num4 += m * m + 1",
+    ),
+    (
+        "M8-P5-char3",
+        "Pillar 5: corrupt char-3 Z[zeta_9] Alltop phase exponent (+ x)",
+        "                p = _z9_pow((g[xa] + 9 - g[x] + 3 * bx) % 9)",
+        "                p = _z9_pow((g[xa] + 9 - g[x] + 3 * bx + x) % 9)",
+    ),
+    (
+        "M9-P5-qgt",
+        "Pillar 5: corrupt QGT numerator sign (1 - 1/D -> 1 + 1/D)",
+        "    return (1.0 - 1.0 / float(dim)) / (norm_sq * norm_sq)",
+        "    return (1.0 + 1.0 / float(dim)) / (norm_sq * norm_sq)",
+    ),
+]
 
 
-def _cubic(t: Fraction) -> Fraction:
-    return 453 * (t**3) - 651 * (t**2) + 311 * t - 49
+def run_pytest(src_dir: Path) -> subprocess.CompletedProcess[str]:
+    env = os.environ.copy()
+    env["WEYL_MAGIC_MUTANT_SRC"] = str(src_dir)
+    env["PYTHONPATH"] = f"{src_dir}{os.pathsep}{ROOT}"
+    return subprocess.run(
+        [sys.executable, "-m", "pytest", "-q", "-x", "tests/test_all.py"],
+        cwd=str(ROOT),
+        env=env,
+        capture_output=True,
+        text=True,
+        timeout=120,
+        check=False,
+    )
 
 
 def main() -> int:
-    mutants_killed = 0
-    total_mutants = 0
+    with tempfile.TemporaryDirectory(prefix="wm_mutation_") as td:
+        tmp_src = Path(td) / "src"
+        shutil.copytree(SRC_PKG, tmp_src / "weyl_magic")
+        oracle_path = tmp_src / "weyl_magic" / "oracle.py"
+        original_src = oracle_path.read_text(encoding="utf-8")
 
-    # Mutant 1: Perturb 2-adic valuation parity (add +1 to v2)
-    total_mutants += 1
-    assert v2_valuation((2**3) * ((2**3 - 2) ** 2)) % 2 == 1
-    if (v2_valuation((2**3) * ((2**3 - 2) ** 2)) + 1) % 2 == 0:
-        mutants_killed += 1
+        # Sanity check: ensure isolated copy is actually imported & unmutated baseline passes
+        probe = subprocess.run(
+            [sys.executable, "-c", "import weyl_magic.oracle as o; print(o.__file__)"],
+            cwd=str(ROOT),
+            env={**os.environ, "PYTHONPATH": f"{tmp_src}{os.pathsep}{ROOT}"},
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        imported_file = Path(probe.stdout.strip()).resolve()
+        if imported_file != oracle_path.resolve():
+            print(f"[mutation_check] ERROR: imported {imported_file}, expected {oracle_path}", file=sys.stderr)
+            return 1
 
-    # Mutant 2: Perturb n=4 bent count by -1
-    total_mutants += 1
-    bent = audit_all_f2_4_bent()
-    assert bent["total_bent"] == 896 and bent["deg_gt2_bent"] == 0
-    if bent["total_bent"] - 1 != 896:
-        mutants_killed += 1
+        base_res = run_pytest(tmp_src)
+        if base_res.returncode != 0:
+            print("[mutation_check] ERROR: unmutated baseline failed pytest!", file=sys.stderr)
+            print(base_res.stdout, base_res.stderr, file=sys.stderr)
+            return 1
+        print("[mutation_check] Baseline pytest PASS on isolated source copy.")
 
-    # Mutant 3: Flip inequality direction on v42 alpha=2 Super-MUB check
-    total_mutants += 1
-    norm2, phi4, phi6, phi8 = wh_gauss_moments((4, 2), V42_SUPER_MUB)
-    assert norm2 == 1001 and phi4 < Fraction(15, 8) and phi6 < Fraction(71, 64) and phi8 > Fraction(519, 512)
-    if not (phi4 >= Fraction(15, 8)):
-        mutants_killed += 1
+        killed = 0
+        for mid, desc, target, replacement in MUTANTS:
+            count = original_src.count(target)
+            if count != 1:
+                print(
+                    f"[mutation_check] ERROR: mutant {mid} target matched {count} times (must match exactly once)",
+                    file=sys.stderr,
+                )
+                return 1
+            mutated = original_src.replace(target, replacement, 1)
+            oracle_path.write_text(mutated, encoding="utf-8")
+            # Clear cached bytecode so Python always compiles the mutated file
+            pycache = oracle_path.parent / "__pycache__"
+            if pycache.exists():
+                shutil.rmtree(pycache)
+            res = run_pytest(tmp_src)
+            if res.returncode != 0:
+                killed += 1
+                print(f"[mutation_check] KILLED   {mid}: {desc}")
+            else:
+                print(f"[mutation_check] SURVIVED {mid}: {desc}", file=sys.stderr)
 
-    # Mutant 4: Perturb n=4 cubic constant term (-49 -> -48) and check sign bracket
-    total_mutants += 1
-    lo = Fraction(37745680118, 10**11)
-    hi = Fraction(37745680119, 10**11)
-    assert _cubic(lo) < 0 < _cubic(hi)
-    if not (_cubic(lo) + 1 < 0 < _cubic(hi) + 1):
-        mutants_killed += 1
+        oracle_path.write_text(original_src, encoding="utf-8")
 
-    # Mutant 5: Perturb n=5 rupture witness num4 and verify inequality/exact match breaks
-    total_mutants += 1
-    n5_norm, n5_num4, n5_phi4 = n5_rupture_exact()
-    assert n5_norm == 254 and n5_num4 == 11097089024 and n5_phi4 < 3
-    if (n5_num4 + 1) != 11097089024:
-        mutants_killed += 1
-
-    # Mutant 6: Perturb char-3 D=27 flat count (702 -> 700)
-    total_mutants += 1
-    c3 = char3_alltop_spectrum(3)
-    assert c3 == (1, 26, 702, 0)
-    if (c3[0], c3[1], c3[2] - 2, c3[3]) != (1, 26, 702, 0):
-        mutants_killed += 1
-
-    # Mutant 7: Perturb QGT denominator factor (2 -> 4) at theta = pi/2
-    total_mutants += 1
-    g = two_stab_qgt_metric(16, math.pi / 2.0)
-    mut_g = (1.0 - 1.0 / 16.0) / ((4.0 + 2.0 * (16.0**-0.5) * 0.0) ** 2)
-    if abs(g - mut_g) > 1e-6:
-        mutants_killed += 1
-
-    if mutants_killed != total_mutants:
-        print(f"[mutation_check] FAIL: killed {mutants_killed}/{total_mutants} mutants", file=sys.stderr)
+    total = len(MUTANTS)
+    if killed != total:
+        print(f"[mutation_check] FAIL: killed {killed}/{total} real source mutants", file=sys.stderr)
         return 1
-    print(f"[mutation_check] PASS: {mutants_killed}/{total_mutants} arithmetic mutants killed (100.0%)")
+    print(f"[mutation_check] PASS: {killed}/{total} real source-code mutants killed by pytest (100.0%)")
     return 0
 
 

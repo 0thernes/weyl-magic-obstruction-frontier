@@ -17,3 +17,9 @@ path = ["third_party/moonlab/**", "third_party/qgtl/**"]
 precedence = "override"
 SPDX-FileCopyrightText = "2024 Tsotchke"
 SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = ["c/src/qrng_stream.c"]
+precedence = "override"
+SPDX-FileCopyrightText = ["2026 Alexander Stephen Donahue", "2024 Tsotchke"]
+SPDX-License-Identifier = "Apache-2.0 AND MIT"

@@ -167,12 +167,18 @@ int main(void) {
         }
     }
 
-    /* 6. Deterministic QRNG stream known-answer check */
+    /* 6. Deterministic QRNG stream bit-exact known-answer assertion */
     uint64_t st = wm_qrng_absorb_u64(1ULL);
     uint64_t w0 = wm_qrng_stream_next(st, 0ULL);
     uint64_t w1 = wm_qrng_stream_next(st, 1ULL);
-    printf("[qrng] deterministic seed=1: state=%016" PRIx64 " w0=%016" PRIx64 " w1=%016" PRIx64 "\n",
-           st, w0, w1);
+    if (st != 0x532662e3dcf55ef7ULL || w0 != 0x5df9ef9ba7cdcca2ULL || w1 != 0xddb5674ec90579d9ULL) {
+        fprintf(stderr, "[qrng] FAIL deterministic seed=1 mismatch: state=%016" PRIx64 " w0=%016" PRIx64 " w1=%016" PRIx64 "\n",
+                st, w0, w1);
+        fails++;
+    } else {
+        printf("[qrng] PASS deterministic seed=1: state=%016" PRIx64 " w0=%016" PRIx64 " w1=%016" PRIx64 "\n",
+               st, w0, w1);
+    }
 
     return fails == 0 ? 0 : 1;
 }

@@ -58,8 +58,8 @@
 
   <main>
     <section class="card" aria-labelledby="h-webgl">
-      <h2 id="h-webgl">1. Interactive 3D WebGL2 Order-16 Abelian Phase Landscape &amp; Tower Surface</h2>
-      <p>Real-time zero-CDN WebGL2 projection of the exact two-stabilizer magic surface Φ<sub>4</sub>(|Ψ<sub>n</sub>(θ)⟩) alongside the five order-16 abelian Weyl–Heisenberg phases (ℤ<sub>16</sub>, ℤ<sub>4</sub>×ℤ<sub>4</sub> Super-MUB, ℤ<sub>4</sub>×ℤ<sub>2</sub><sup>2</sup> WH-MUB, ℤ<sub>8</sub>×ℤ<sub>2</sub>, ℤ<sub>2</sub><sup>4</sup>). Drag horizontally on the canvas or adjust sliders below.</p>
+      <h2 id="h-webgl">1. Interactive 3D WebGL2 Two-Stabilizer Magic Tower Surface (with 2D Fallback)</h2>
+      <p>Real-time zero-CDN WebGL2 projection (with automatic 2D Canvas fallback) of the exact two-stabilizer magic curves Φ<sub>4</sub>(|Ψ<sub>n</sub>(θ)⟩) for n = 2, 3, 4, 5 against the WH-MUB threshold (31/16) and Welch SIC floor (32/17). Drag horizontally on the canvas or adjust sliders below.</p>
       <canvas id="glCanvas" width="1180" height="320" role="img" aria-label="3D WebGL2 visualization of the Weyl-Heisenberg magic landscape"></canvas>
       <div class="controls">
         <label>Qubits n:
@@ -182,7 +182,30 @@
       const mub = 2.0 - 1.0 / info.D;
       towerReadout.textContent = `n=${n} (D=${info.D}) | theta=${theta.toFixed(6)} rad | t=${info.t.toFixed(9)} | Phi_4=${info.phi4.toFixed(9)} | M_2=${info.m2.toFixed(9)} nats | QGT g_tt=${info.gtt.toFixed(9)} | WH-MUB ref=${mub.toFixed(6)}`;
 
-      if (!gl || !prog) return;
+      if (!gl || !prog) {
+        // Crisp 2D Canvas fallback when WebGL2 is unavailable
+        const c2 = glCanvas.getContext('2d');
+        if (!c2) return;
+        const W = glCanvas.width, H = glCanvas.height;
+        c2.fillStyle = '#070b14'; c2.fillRect(0, 0, W, H);
+        const xOf = (frac) => 60 + frac * (W - 96);
+        const yOf = (val) => H - 36 - ((Math.min(4.6, val) - 1.5) / 3.1) * (H - 64);
+        c2.strokeStyle = '#334155'; c2.setLineDash([4, 4]); c2.beginPath();
+        c2.moveTo(60, yOf(31 / 16)); c2.lineTo(W - 36, yOf(31 / 16));
+        c2.moveTo(60, yOf(32 / 17)); c2.lineTo(W - 36, yOf(32 / 17)); c2.stroke(); c2.setLineDash([]);
+        const hexCols = { 2: '#009e73', 3: '#56b4e9', 4: '#e69f00', 5: '#d55e00' };
+        for (const k of [2, 3, 4, 5]) {
+          c2.strokeStyle = hexCols[k]; c2.lineWidth = (k === n) ? 3.0 : 1.3; c2.beginPath();
+          for (let s = 0; s <= 90; s++) {
+            const ev = evalTower(k, (s / 90) * Math.PI);
+            const x = xOf(s / 90), y = yOf(ev.phi4);
+            if (s === 0) c2.moveTo(x, y); else c2.lineTo(x, y);
+          }
+          c2.stroke();
+        }
+        c2.fillStyle = '#ffffff'; c2.beginPath(); c2.arc(xOf(thFrac), yOf(info.phi4), 5, 0, 7); c2.fill();
+        return;
+      }
       gl.viewport(0, 0, glCanvas.width, glCanvas.height);
       gl.clearColor(0.03, 0.05, 0.09, 1.0);
       gl.enable(gl.DEPTH_TEST);

@@ -25,12 +25,12 @@ GitHub Actions CI additionally signs SLSA Build Provenance attestations (`action
 
 To protect against single-host loss or repository mutation, this project maintains **three independent archival mirrors**:
 
-1. **Master Research Archive Submodule:** Pinned at the exact `v1.0.0` commit SHA inside `https://github.com/0thernes/0thernes-research-archive` (`0TH-2026-022`), together with the frozen PDF and verified SHA-256 digest.
-2. **Software Heritage (ISO/IEC 18670 SWHID):** Submitted to `archive.softwareheritage.org` via the Save Code Now API upon publication, providing permanent content-addressed archival.
+1. **Master Research Archive Submodule:** Pinned at the exact release commit SHA inside `https://github.com/0thernes/0thernes-research-archive` (`0TH-2026-022`), together with the frozen PDF and verified SHA-256 digest.
+2. **Software Heritage (ISO/IEC 18670 SWHID):** Archived on `archive.softwareheritage.org` (`swh:1:snp:955c878bdc1ebd454f0846dc7fac1938c244e3dc`, plus updated Save Code Now submissions on new releases).
 3. **Offline Git Bundle Backup:** Maintainers can create a complete self-contained portable mirror bundle at any release point via:
    ```bash
-   git bundle create ../weyl-magic-obstruction-frontier-v1.0.0.bundle --all
-   git bundle verify ../weyl-magic-obstruction-frontier-v1.0.0.bundle
+   git bundle create ../weyl-magic-obstruction-frontier-v1.1.0.bundle --all
+   git bundle verify ../weyl-magic-obstruction-frontier-v1.1.0.bundle
    ```
    Store offline bundles alongside `MANIFEST.sha256`, `MANIFEST.sha256.tsr`, and `MANIFEST.sha256.ots`.
 

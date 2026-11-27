@@ -14,10 +14,10 @@ No. Theorem `T2e` rules out all **equimodular** $n=4$ qubit states ($|c_x| = 1/4
 Because Super-MUB maximizers in $W(4)\otimes W(2)$ and $W(4)\otimes W(4)$ do **not** have a flat Weyl–Heisenberg spectrum! Minimizing $\Phi_4$ ($\alpha=2$) produces a non-uniform spectrum whose higher moments ($\Phi_8$, $\alpha=4$) overtake the flat WH-MUB baseline, whereas re-optimizing directly for $\Phi_8$ shifts the state to a slightly flatter non-MUB spectrum that still beats WH-MUB at $\alpha=4$.
 
 ### 5. Are QGTL, Moonlab WASM, Eshkol AD, and `qrng_stream.c` running on a quantum computer?
-No. All four are strictly **deterministic classical CPU** cross-checks (finite-difference differential geometry, WASM double-precision state-vector simulation, automatic differentiation, and SplitMix64/Xoshiro256++ pseudorandom stream seeding). See [LIMITATIONS.md](../LIMITATIONS.md).
+No. All four are strictly **deterministic classical CPU** cross-checks (finite-difference differential geometry, WASM double-precision state-vector simulation, a source-level Eshkol automatic-differentiation companion specification, and a deterministic `splitmix64` + `hadamard_mix` integer stream from `tsotchke/quantum_rng`). Note that `eshkol/magic_qgt_ad.esk` is a source-level specification not executed in CI because no `eshkol` binary is installed on the runner. See [LIMITATIONS.md](../LIMITATIONS.md).
 
 ### 6. How does Pillar 5 relate to Damski et al. (`arXiv:2603.15550`)?
-Damski et al. established the existence of complete characteristic-3 Weyl–Heisenberg MUBs via Galois rings $\mathrm{GR}(9,n)$. Our Pillar 5 (`T5a`–`T5b`) provides an elementary $\mathbb{Z}_9$ divided-power carry formulation, a universal bilinear Gauss-sum flat-modulus theorem, and machine-checked Lean 4.35.0 $\mathbb{Z}[\zeta_9]$ certificates for $n = 1, 2, 3$ (extended to $n = 4, D = 81$ in Rust and C11).
+Damski et al. established the existence of complete characteristic-3 Weyl–Heisenberg MUBs via Galois rings $\mathrm{GR}(9,n)$. Our Pillar 5 (`T5a`–`T5c`) provides an elementary $\mathbb{Z}_9$ divided-power carry formulation, a universal bilinear Gauss-sum flat-modulus theorem (`T5b`), and machine-checked Lean 4.35.0 $\mathbb{Z}[\zeta_9]$ certificates for $n = 1, 2, 3$ (`T5c`, extended to $n = 4, D = 81$ in Rust and C11).
 
 ### 7. Has this work been peer-reviewed?
 No. It is an independent machine-checked research preprint (`0TH-2026-022`). Machine checking guarantees logical validity relative to Lean 4.35.0's kernels and our stated definitions, not peer review.

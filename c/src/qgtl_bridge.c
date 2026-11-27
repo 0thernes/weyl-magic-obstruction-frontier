@@ -59,6 +59,11 @@ int main(void) {
             diffgeo_point_t *pp2 = diffgeo_point_create(eng, psi_p2, (size_t)D);
             if (!pm1 || !pp1 || !pm2 || !pp2) {
                 fprintf(stderr, "[qgtl] FAIL: diffgeo_point_create\n");
+                if (pm1) diffgeo_point_destroy(pm1);
+                if (pp1) diffgeo_point_destroy(pp1);
+                if (pm2) diffgeo_point_destroy(pm2);
+                if (pp2) diffgeo_point_destroy(pp2);
+                diffgeo_engine_destroy(eng);
                 return 1;
             }
             double d1 = diffgeo_distance(eng, pm1, pp1);

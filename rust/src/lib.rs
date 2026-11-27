@@ -89,8 +89,13 @@ impl Zeta8 {
         }
     }
 
+    pub const fn norm_sq_full(self) -> Self {
+        self.mul(self.conj())
+    }
+
     pub const fn norm_sq_pair(self) -> (i128, i128) {
         let p = self.mul(self.conj());
+        assert!(p.c2 == 0 && p.c3 == -p.c1);
         (p.c0, p.c1)
     }
 }
@@ -264,11 +269,11 @@ pub fn verify_w42_z8_mub() -> ((i128, i128), (usize, usize, usize, usize)) {
                 let prod = psi[x].conj().mul(psi[xa]);
                 s = s.add(prod.mul_pow_i(b0 * x0 + 2 * b1 * x1));
             }
-            let (r0, r1) = s.norm_sq_pair();
-            if r1 != 0 { co += 1; }
-            else if r0 == 64 { ci += 1; }
-            else if r0 == 0 { cz += 1; }
-            else if r0 == 8 { cf += 1; }
+            let ns = s.norm_sq_full();
+            if ns.c1 != 0 || ns.c2 != 0 || ns.c3 != 0 { co += 1; }
+            else if ns.c0 == 64 { ci += 1; }
+            else if ns.c0 == 0 { cz += 1; }
+            else if ns.c0 == 8 { cf += 1; }
             else { co += 1; }
         }
     }
@@ -300,11 +305,11 @@ pub fn verify_w44_z8_mub() -> ((i128, i128), (usize, usize, usize, usize)) {
                 let prod = psi[x].conj().mul(psi[xa]);
                 s = s.add(prod.mul_pow_i(b0 * x0 + b1 * x1));
             }
-            let (r0, r1) = s.norm_sq_pair();
-            if r1 != 0 { co += 1; }
-            else if r0 == 102400 { ci += 1; }
-            else if r0 == 0 { cz += 1; }
-            else if r0 == 6400 { cf += 1; }
+            let ns = s.norm_sq_full();
+            if ns.c1 != 0 || ns.c2 != 0 || ns.c3 != 0 { co += 1; }
+            else if ns.c0 == 102400 { ci += 1; }
+            else if ns.c0 == 0 { cz += 1; }
+            else if ns.c0 == 6400 { cf += 1; }
             else { co += 1; }
         }
     }

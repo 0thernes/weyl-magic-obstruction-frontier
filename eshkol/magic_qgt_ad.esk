@@ -9,8 +9,11 @@
 ;;      via exact forward/reverse-mode automatic differentiation of the projective
 ;;      state overlap |<Psi_n(theta)|Psi_n(theta')>|^2 across n = 1, 2, 3, 4.
 ;;
-;; HONEST LABELLING: Classical floating-point automatic differentiation cross-check;
-;; formal algebraic proofs live in Lean 4.35.0 (TwoStabilizerTower.lean & Char3AlltopAndQGT.lean).
+;; HONEST LABELLING: Source-level Eshkol automatic-differentiation companion specification.
+;; NOT compiled or executed in this repository's CI (no Eshkol compiler binary is installed
+;; on the verification runner). Formal algebraic proofs live in Lean 4.35.0
+;; (TwoStabilizerTower.lean & Char3AlltopAndQGT.lean), and executable double-precision QGT
+;; checks run in C/QGTL (c/src/qgtl_bridge.c) and Python (tests/test_all.py).
 
 (define (phi4-n4 t)
   (let* ((t2 (* t t))

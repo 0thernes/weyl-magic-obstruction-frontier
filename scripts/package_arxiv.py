@@ -67,6 +67,10 @@ def main() -> int:
         out_dir = td_path / "out"
         out_dir.mkdir(parents=True, exist_ok=True)
         with tarfile.open(tar_path, "r:gz") as tf:
+            for member in tf.getmembers():
+                dest = (td_path / member.name).resolve()
+                if not str(dest).startswith(str(td_path.resolve())):
+                    raise ValueError(f"Unsafe tar member path: {member.name}")
             tf.extractall(td_path)
         subprocess.run(
             [tectonic, "-X", "compile", str(td_path / "main.tex"), "--outdir", str(out_dir)],

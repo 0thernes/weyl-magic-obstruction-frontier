@@ -6,11 +6,15 @@ from __future__ import annotations
 
 import json
 import math
+import os
+import re
 import sys
 from fractions import Fraction
 from pathlib import Path
 
 import pytest
+import yaml
+from jsonschema import Draft202012Validator
 
 try:
     from hypothesis import given, settings
@@ -21,8 +25,13 @@ except ImportError:
     HAS_HYPOTHESIS = False
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
-sys.path.insert(0, str(ROOT))
+_MUTANT_SRC = os.environ.get("WEYL_MAGIC_MUTANT_SRC")
+if _MUTANT_SRC:
+    sys.path.insert(0, _MUTANT_SRC)
+else:
+    sys.path.append(str(ROOT / "src"))
+if str(ROOT) not in sys.path:
+    sys.path.append(str(ROOT))
 
 from reference.oracle import ref_pauli_phi_alpha, ref_product_wh_phi_alpha  # noqa: E402
 from weyl_magic import (  # noqa: E402
@@ -252,10 +261,9 @@ def test_qrng_bit_exact_cross_language_known_answers() -> None:
     assert f"{qrng_stream_next(st_val, 1):016x}" == "ddb5674ec90579d9"
 
 
-def test_differential_against_rust_json_if_present() -> None:
+def test_all_frozen_json_datasets_consistent() -> None:
     rust_json = ROOT / "data" / "rust_exact_crosscheck.json"
-    if not rust_json.exists():
-        pytest.skip("rust_exact_crosscheck.json not generated yet")
+    assert rust_json.exists(), "missing data/rust_exact_crosscheck.json"
     data = json.loads(rust_json.read_text(encoding="utf-8-sig"))
     assert data["bent4"] == {"total": 896, "quad": 896, "deg_gt2": 0, "zero_triple": 896}
     assert data["w42_z8_mub"] == {"norm2": 8, "counts": [1, 7, 56, 0]}
@@ -263,6 +271,66 @@ def test_differential_against_rust_json_if_present() -> None:
     assert data["w42_super_mub"]["num4"] == "1851540086824"
     assert data["w44_super_mub"]["num4"] == "12399519780160"
     assert data["n5_rupture"] == {"norm2": 254, "num4": "11097089024"}
+    assert data["char3_alltop"] == [
+        {"n": 1, "counts": [1, 2, 6, 0]},
+        {"n": 2, "counts": [1, 8, 72, 0]},
+        {"n": 3, "counts": [1, 26, 702, 0]},
+        {"n": 4, "counts": [1, 80, 6480, 0]},
+    ]
+
+    summary = json.loads((ROOT / "data" / "exact_frontier_summary.json").read_text(encoding="utf-8-sig"))
+    assert summary["id"] == "0TH-2026-022"
+    assert summary["pillar2_bent4"]["total_bent"] == 896
+    assert summary["pillar4_two_stab_and_ame"]["n5_rupture_num4"] == "11097089024"
+
+    cpp = json.loads((ROOT / "data" / "cpp_search_phase_diagram.json").read_text(encoding="utf-8-sig"))
+    assert cpp["starts_per_group"] == 64
+    gmap = {row["group"]: row for row in cpp["groups"]}
+    assert set(gmap.keys()) == {"Z8", "Z4xZ2", "Z2^3", "Z16", "Z8xZ2", "Z4xZ4", "Z4xZ2^2", "Z2^4"}
+    assert gmap["Z4xZ2"]["best_phi4"] < 15 / 8
+    assert gmap["Z4xZ4"]["best_phi4"] < 31 / 16
+    assert abs(gmap["Z2^4"]["best_phi4"] - 2.150520154714) < 1e-9
+
+    alpha_rows = json.loads((ROOT / "data" / "alpha_crossover_curves.json").read_text(encoding="utf-8-sig"))
+    assert len(alpha_rows) == 36
+    row2 = next(r for r in alpha_rows if r["alpha"] == 2.0)
+    row4 = next(r for r in alpha_rows if r["alpha"] == 4.0)
+    assert row2["v42_delta_M"] > 0 and row2["v44_delta_M"] > 0
+    assert row4["v42_delta_M"] < 0 and row4["v44_delta_M"] < 0
+
+    tower_rows = json.loads((ROOT / "data" / "two_stabilizer_tower_curves.json").read_text(encoding="utf-8-sig"))
+    assert len(tower_rows) == 181
+    assert all(r["phi4_n5"] >= 3.0 - 1e-12 for r in tower_rows)
+
+
+def test_repo_yaml_draft2020_12_schema_valid() -> None:
+    schema = json.loads((ROOT / "repo-standard.schema.json").read_text(encoding="utf-8"))
+    manifest = yaml.safe_load((ROOT / "repo.yaml").read_text(encoding="utf-8"))
+    validator = Draft202012Validator(schema)
+    errors = sorted(validator.iter_errors(manifest), key=lambda e: list(e.path))
+    assert errors == [], [f"{list(e.path)}: {e.message}" for e in errors]
+    assert manifest["items"]["B44"]["status"] == "partial"
+
+
+def test_citation_cff_and_version_single_source_of_truth() -> None:
+    version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
+    assert re.fullmatch(r"\d+\.\d+\.\d+", version)
+
+    cff = yaml.safe_load((ROOT / "CITATION.cff").read_text(encoding="utf-8"))
+    assert cff["cff-version"] == "1.2.0"
+    assert cff["version"] == version
+    assert cff["authors"][0]["orcid"] == "https://orcid.org/0009-0006-8168-9648"
+    assert any(
+        ident.get("type") == "swh" and str(ident.get("value", "")).startswith("swh:1:")
+        for ident in cff["identifiers"]
+    )
+
+    assert f'version = "{version}"' in (ROOT / "pyproject.toml").read_text(encoding="utf-8")
+    assert f'version = "{version}"' in (ROOT / "rust" / "Cargo.toml").read_text(encoding="utf-8")
+    assert f'version = "{version}"' in (ROOT / "lean" / "lakefile.toml").read_text(encoding="utf-8")
+    assert f'version: "{version}"' in (ROOT / "lean" / "formalization.yaml").read_text(encoding="utf-8")
+    assert f"`v{version}`" in (ROOT / "README.md").read_text(encoding="utf-8")
+    assert f"Version {version}" in (ROOT / "paper" / "main.tex").read_text(encoding="utf-8")
 
 
 # ---- Mutation-Killing Tests (ensure witnesses are genuinely sensitive) -----

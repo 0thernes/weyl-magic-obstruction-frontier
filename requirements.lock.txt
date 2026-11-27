@@ -1,5 +1,7 @@
-# Pinned test/reproducibility dependencies for Python 3.10-3.12 CI
+# Pinned test/reproducibility dependencies for Python 3.9-3.12 CI
 pytest==9.0.3
 hypothesis==6.130.8
 matplotlib==3.10.1
 numpy==2.2.4
+PyYAML==6.0.2
+jsonschema==4.23.0
