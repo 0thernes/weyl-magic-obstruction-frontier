@@ -1,5 +1,5 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
-# Weyl–Heisenberg Magic Obstruction Frontier (`0TH-2026-021`)
+# Weyl–Heisenberg Magic Obstruction Frontier (`0TH-2026-022`)
 
 Machine-checked zero-Mathlib Lean 4.35.0 six-kernel formalization (22 theorem groups `T1a`–`T5d`, 23 Palomar targets, 36 audited declarations) and nine-engine polyglot verifier proving the 2-Adic Odd-Qubit Magic Obstruction, $n=4$ Quaternary Bent-Hyperplane Rupture, Super-MUB Torsion Anomalies and $\alpha$-Dependence, Two-Stabilizer $n=5$ SOS Rupture, Universal $k$-Uniform/AME Magic Ceilings, and Divided-Power Characteristic-3 Alltop Constructions across product Weyl–Heisenberg groups.
 
@@ -9,9 +9,9 @@ Machine-checked zero-Mathlib Lean 4.35.0 six-kernel formalization (22 theorem gr
 [![Code License: Apache-2.0](https://img.shields.io/badge/Code%20License-Apache--2.0-22c55e.svg)](LICENSE)
 [![Docs License: CC-BY-4.0](https://img.shields.io/badge/Docs%20License-CC--BY--4.0-f59e0b.svg)](LICENSE-DOCS)
 [![Project Status: Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![Archive ID: 0TH-2026-021](https://img.shields.io/badge/Archive-0TH--2026--021-6366f1.svg)](https://github.com/0thernes/0thernes-research-archive)
+[![Archive ID: 0TH-2026-022](https://img.shields.io/badge/Archive-0TH--2026--022-6366f1.svg)](https://github.com/0thernes/0thernes-research-archive)
 
-**Status:** Active (`v1.0.1`, released 2026-11-26) · **Author:** Alexander Stephen Donahue (`Independent Researcher, Spokane, WA, USA`, ORCID [`0009-0006-8168-9648`](https://orcid.org/0009-0006-8168-9648)) · **Preprint notice:** This work is an independent machine-checked research preprint and has not undergone formal journal peer review.
+**Status:** Active (`v1.0.2`, released 2026-11-26) · **Author:** Alexander Stephen Donahue (`Independent Researcher, Spokane, WA, USA`, ORCID [`0009-0006-8168-9648`](https://orcid.org/0009-0006-8168-9648)) · **Preprint notice:** This work is an independent machine-checked research preprint and has not undergone formal journal peer review.
 
 ![Weyl–Heisenberg Magic Obstruction Frontier Overview](docs/media/social-preview.png)
 

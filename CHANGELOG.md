@@ -1,9 +1,14 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 # Changelog
 
-All notable changes to `weyl-magic-obstruction-frontier` (`0TH-2026-021`) are documented in this file.
+All notable changes to `weyl-magic-obstruction-frontier` (`0TH-2026-022`) are documented in this file.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [1.0.2] - 2026-11-27
+
+### Changed
+- Reassigned canonical Master Research Archive identifier from `0TH-2026-021` to `0TH-2026-022` to avoid collision with concurrent archive registration `38f7fbd`, re-sealing frozen PDF, clean-room arXiv tarball, figures, manifests, and RFC 3161 / OpenTimestamps proofs (zero changes to any Lean 4.35.0 proof or polyglot verification engine).
 
 ## [1.0.1] - 2026-11-26
 

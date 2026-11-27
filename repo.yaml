@@ -5,8 +5,8 @@ name: "weyl-magic-obstruction-frontier"
 description: "Zero-Mathlib Lean 4.35.0 six-kernel formalization (22 theorem groups, T1a-T5d) and nine-engine polyglot verifier for the 2-Adic Odd-Qubit Magic Obstruction, n=4 Bent-Hyperplane Rupture, Super-MUB Torsion Anomalies, Two-Stabilizer n=5 SOS Rupture, AME Magic Ceilings, and Divided-Power Characteristic-3 Alltop Constructions."
 owner: "0thernes"
 year: "2026"
-version: "1.0.1"
-archive_id: "0TH-2026-021"
+version: "1.0.2"
+archive_id: "0TH-2026-022"
 project_type: research
 stack: [lean4, rust, zig, c11, asm, cpp20, python, node, eshkol, latex, web]
 author:

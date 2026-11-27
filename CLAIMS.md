@@ -1,5 +1,5 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
-# CLAIMS.md — Falsifiable Claim Ledger (`0TH-2026-021`)
+# CLAIMS.md — Falsifiable Claim Ledger (`0TH-2026-022`)
 
 Every mathematical, computational, and empirical claim in `weyl-magic-obstruction-frontier` is enumerated below with its exact epistemic tier, formal Lean 4.35.0 symbol (where applicable), executable verification command, and explicit falsification condition (**what would prove us wrong**).
 
