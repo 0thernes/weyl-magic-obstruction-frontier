@@ -1,7 +1,8 @@
 {
   "title": "The 2-Adic Magic Obstruction, Quaternary Bent-Hyperplane Rupture, Super-MUB Torsion Anomalies, and Divided-Power Characteristic-3 Alltop Constructions Across Product Weyl-Heisenberg Groups",
-  "description": "Machine-checks 22 numbered theorem groups (T1a-T5d) + arbitrary-bent n=4 kernel bridge n4_z4_bent_hyperplane_rupture_arbitrary_bent + master conjunction prove_all_weyl_magic_theorems (23 Palomar comparator targets, 3 strictly zero-axiom) plus 6 NonVacuity witnesses (including nontrivial n=2 nonvacuity_pillar1_n2_mub_spectrum) and 8 AdversarialTests sharpness refutations (38 audited declarations, zero Mathlib, zero native_decide, all 6 independent Lean 4.35.0 proof kernels verified inside bubblewrap on Ubuntu CI 12/12 green) across five linked pillars governing extremal Stabilizer Renyi Entropy across product Weyl-Heisenberg groups: (I) Universal 2-Adic Odd-Qubit Obstruction (T1a-T1d): for all odd n >= 3, v_2(2^n(2^n-2)^2) = n+2 is odd, unconditionally ruling out any n-qubit pure state with WH-MUB Pauli spectrum |c_P|^2 in {0, 2^{-n}} (zero subgroup or equimodularity assumptions), sharp at n=1 and n=2 ((1,1,1,i)/2, Phi_4 = 7/4); (II) Quaternary Bent-Hyperplane Rupture at n=4 (T2a-T2e + arbitrary-bent kernel bridge): universal symplectic rigidity H^perp subseteq H, Fermat Gaussian-square phase locking R^2+I^2 = 4^m -> u_x in Z_4, universal Rothaus (1976) degree bound deg_ANF(f) <= m for all m >= 2, exhaustive F_2^4 classification (all 896 bent functions are quadratic, 0 of degree > 2), and universal 3-hyperplane zero-sum parity obstruction ruling out equimodular n=4 WH-MUB states directly inside the Lean kernel for arbitrary IsBent 2 f; (III) Super-MUB Torsion Anomalies & alpha-Dependence (T3a-T3e): exact Z[zeta_8] WH-MUB fiducials in W(4)xW(2) (norm2=8) and W(4)xW(4) (norm2=320) alongside exact Z[i] Super-MUB witnesses v42 (norm2=1001) and v44 (norm2=1596) strictly beating WH-MUB at alpha=2 and alpha=3 while crossing above WH-MUB at alpha=4, paired with C++20 L-BFGS numerical evidence that direct alpha=4 re-optimization still beats WH-MUB; (IV) Two-Stabilizer Tower, n=5 SOS Rupture & AME Ceilings (T4a-T4d): universal 3-stratum Parseval unifying n=1,2,3 (4/3, 7/4, ...",
+  "description": "Zero-Mathlib Lean 4.35.0 formalization (38 audited declarations strictly within [propext, Classical.choice, Quot.sound], verified across 6 independent proof kernels inside bubblewrap plus a live tamper-injecting negative gate) and 8-engine polyglot verifier (Rust, Zig, ISO C11 + x86-64 NASM, C++20, Python exact oracle + 9/9 isolated source-code mutation kills, QGTL, and Moonlab WASM, plus a source-level Eshkol AD companion specification) governing extremal Stabilizer Renyi Entropy across product Weyl-Heisenberg groups. Establishes: (I) universal 2-adic odd-qubit WH-MUB obstruction for all odd n >= 3 (T1a-T1d, sharp at n = 1, 2); (II) symplectic Lagrangian rigidity, Fermat Gaussian-square phase locking, universal Rothaus (1976) bent-function degree bound for all m >= 2, exhaustive F_2^4 bent classification (896 quadratics), and complete n = 4 Z_4 bent-hyperplane rupture closed inside Lean for arbitrary IsBent 2 f (T2a-T2e); (III) exact Z[zeta_8] WH-MUB fiducials and exact Z[i] Super-MUB witnesses in W(4) x W(2) and W(4) x W(4) strictly beating WH-MUB at alpha = 2, 3 while crossing above WH-MUB at alpha = 4, plus the four-tier order-16 hierarchy (T3a-T3e); (IV) universal two-stabilizer Parseval tower unifying n = 1, 2, 3, exact n = 4 stationary cubic, exact n = 5 SOS floor >= 3 ruptured by a Z[i]^32 witness, and universal k-uniform/AME Cauchy-Schwarz magic ceilings (T4a-T4d); and (V) ring-free Z_9 divided-power char-3 Alltop MUBs for W(3)^tensor-{1,2,3,4}, Z[zeta_5] certificates for W(5)^tensor-{1,2}, and exact Fubini-Study QGT metric g_{theta,theta} (T5a-T5d).",
   "upload_type": "software",
+  "version": "1.1.2",
   "license": "apache-2.0",
   "creators": [
     {
@@ -12,14 +13,16 @@
   ],
   "keywords": [
     "Quantum Information Theory",
+    "Stabilizer Renyi Entropy",
+    "Weyl-Heisenberg Groups",
+    "Mutually Unbiased Bases",
     "Finite Geometry",
-    "Combinatorics",
+    "Bent Functions",
     "Formal Verification",
     "Lean 4",
-    "Palomar Registry",
-    "open research"
+    "Palomar Registry"
   ],
-  "notes": "Code and Lean 4.35.0 proofs are licensed under Apache-2.0; manuscripts and figures are licensed under CC-BY-4.0. Independent research preprint (v1.1.1); not externally peer-reviewed. AI tools (Antigravity / Google DeepMind) assisted under human direction and audit. Software Heritage snapshot: swh:1:snp:8c1d97bd8c7f23b45d70d4a5750690b9f74e7b97.",
+  "notes": "Code and Lean 4.35.0 proofs are licensed under Apache-2.0; manuscripts, data, and figures are licensed under CC-BY-4.0. Independent research preprint (v1.1.2, Archive ID 0TH-2026-022); not externally peer-reviewed. AI tools (Antigravity / Google DeepMind) assisted under human direction and statement-fidelity audit. Prior Software Heritage snapshot: swh:1:snp:8c1d97bd8c7f23b45d70d4a5750690b9f74e7b97.",
   "related_identifiers": [
     {
       "identifier": "https://github.com/0thernes/weyl-magic-obstruction-frontier",
@@ -33,7 +36,7 @@
     },
     {
       "identifier": "https://archive.softwareheritage.org/swh:1:snp:8c1d97bd8c7f23b45d70d4a5750690b9f74e7b97",
-      "relation": "isIdenticalTo",
+      "relation": "isContinuedBy",
       "scheme": "url"
     }
   ]

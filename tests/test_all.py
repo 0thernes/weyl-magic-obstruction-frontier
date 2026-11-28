@@ -328,7 +328,15 @@ def test_citation_cff_and_version_single_source_of_truth() -> None:
     assert f'version = "{version}"' in (ROOT / "pyproject.toml").read_text(encoding="utf-8")
     assert f'version = "{version}"' in (ROOT / "rust" / "Cargo.toml").read_text(encoding="utf-8")
     assert f'version = "{version}"' in (ROOT / "lean" / "lakefile.toml").read_text(encoding="utf-8")
-    assert f'version: "{version}"' in (ROOT / "lean" / "formalization.yaml").read_text(encoding="utf-8")
+    root_fy = (ROOT / "formalization.yaml").read_text(encoding="utf-8")
+    lean_fy = (ROOT / "lean" / "formalization.yaml").read_text(encoding="utf-8")
+    assert root_fy == lean_fy
+    assert 'version: "v0.4"' in root_fy
+    assert f'release_version: "{version}"' in root_fy
+    zenodo = json.loads((ROOT / ".zenodo.json").read_text(encoding="utf-8"))
+    assert zenodo["version"] == version
+    assert zenodo["creators"][0]["orcid"] == "0009-0006-8168-9648"
+    assert not zenodo["description"].endswith("...")
     assert f"`v{version}`" in (ROOT / "README.md").read_text(encoding="utf-8")
     assert f"Version {version}" in (ROOT / "paper" / "main.tex").read_text(encoding="utf-8")
 

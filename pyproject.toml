@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "weyl-magic-obstruction-frontier"
-version = "1.1.1"
+version = "1.1.2"
 description = "Formal proofs and polyglot exact verifiers for Weyl-Heisenberg magic obstructions, bent-hyperplane rupture, Super-MUB anomalies, and divided-power char-3 Alltop constructions"
 readme = "README.md"
 license = {text = "Apache-2.0"}

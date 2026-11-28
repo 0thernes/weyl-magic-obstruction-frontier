@@ -30,7 +30,13 @@ def main() -> None:
     targets: list[Path] = []
     targets.extend(sorted((ROOT / "lean").rglob("*.lean")))
     targets.extend(
-        [ROOT / "lean" / "lakefile.toml", ROOT / "lean" / "comparator.json", ROOT / "lean" / "formalization.yaml"]
+        [
+            ROOT / "formalization.yaml",
+            ROOT / ".zenodo.json",
+            ROOT / "lean" / "lakefile.toml",
+            ROOT / "lean" / "comparator.json",
+            ROOT / "lean" / "formalization.yaml",
+        ]
     )
     targets.extend(data_files)
     if (ROOT / "results" / "lean_axioms.txt").exists():

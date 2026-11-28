@@ -1,7 +1,7 @@
 version = 1
 
 [[annotations]]
-path = ["lean/**", "rust/**", "zig/**", "c/**", "cpp/**", "asm/**", "src/**", "reference/**", "tests/**", "scripts/**", "examples/**", "node/**", "eshkol/**", ".github/**", "justfile", "pyproject.toml", "repo.yaml", "repo-standard.schema.json"]
+path = ["lean/**", "rust/**", "zig/**", "c/**", "cpp/**", "asm/**", "src/**", "reference/**", "tests/**", "scripts/**", "examples/**", "node/**", "eshkol/**", ".github/**", "justfile", "pyproject.toml", "repo.yaml", "repo-standard.schema.json", "formalization.yaml", ".zenodo.json"]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2026 Alexander Stephen Donahue"
 SPDX-License-Identifier = "Apache-2.0"

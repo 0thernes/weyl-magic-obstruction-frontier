@@ -5,6 +5,12 @@ All notable changes to `weyl-magic-obstruction-frontier` (`0TH-2026-022`) are do
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.2] - 2026-11-27
+
+### Added
+- **Official Palomar Registry `v0.4` Schema (`formalization.yaml` & `lean/formalization.yaml`):** Added synced `mathlib-initiative/formalization.yaml` `v0.4` metadata at both repository root and `lean/` with full authorship, ORCID, arXiv/MSC2020 classifications, live source links (`Leone2022SRE`, `Rothaus1976`, `Liu2026`, `Damski2026`, `Knipfer2026`), axiom list, AI-assistance disclosure, and self-assessed review status.
+- **Zenodo / ORCID Release Metadata (`.zenodo.json` & verbatim SPDX Apache-2.0 `LICENSE`):** Completed non-truncated `.zenodo.json` description covering all five pillars with ORCID `0009-0006-8168-9648`, Software Heritage link (`swh:1:snp:8c1d97bd8c7f23b45d70d4a5750690b9f74e7b97`), REUSE/SPDX coverage, LF normalization, and automated test assertions in `tests/test_all.py`.
+
 ## [1.1.1] - 2026-11-27
 
 ### Fixed

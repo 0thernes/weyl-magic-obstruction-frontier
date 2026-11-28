@@ -1,0 +1,138 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+# SPDX-License-Identifier: Apache-2.0
+version: "v0.4"
+release_version: "1.1.2"
+
+project:
+  name: "The 2-Adic Magic Obstruction, Quaternary Bent-Hyperplane Rupture, Super-MUB Torsion Anomalies, and Divided-Power Characteristic-3 Alltop Constructions Across Product Weyl-Heisenberg Groups"
+  description: >-
+    Zero-Mathlib Lean 4.35.0 formalization (38 audited declarations strictly within
+    [propext, Classical.choice, Quot.sound], zero sorry outside statement-only
+    PalomarChallenge.lean, zero native_decide, verified across all 6 independent proof
+    kernels) establishing five linked pillars on extremal Stabilizer Renyi Entropy
+    M_alpha across product Weyl-Heisenberg groups: (I) unconditional universal 2-adic
+    odd-qubit WH-MUB obstruction for all odd n >= 3 (T1a-T1d, sharp at n = 1, 2);
+    (II) universal symplectic Lagrangian rigidity, Fermat Gaussian-square phase locking,
+    Rothaus's (1976) bent-function degree bound for all m >= 2, exhaustive F_2^4
+    bent classification (896 bent quadratics), and complete n = 4 Z_4 bent-hyperplane
+    rupture closed end-to-end inside Lean for arbitrary IsBent 2 f (T2a-T2e +
+    n4_z4_bent_hyperplane_rupture_arbitrary_bent); (III) exact Z[zeta_8] WH-MUB
+    fiducials and exact Z[i] Super-MUB witnesses in W(4) x W(2) and W(4) x W(4)
+    strictly beating WH-MUB at alpha = 2, 3 while crossing above WH-MUB at alpha = 4,
+    plus the four-tier order-16 phase hierarchy (T3a-T3e); (IV) universal three-stratum
+    two-stabilizer Parseval tower unifying n = 1, 2, 3, exact n = 4 stationary cubic,
+    exact n = 5 SOS floor >= 3 ruptured by a Z[i]^32 witness (Phi_4 ~= 2.666086), and
+    universal k-uniform/AME Cauchy-Schwarz magic ceilings (T4a-T4d); and (V) elementary
+    ring-free Z_9 carry-quadratic divided-power char-3 Alltop MUBs for W(3)^tensor-{1,2,3}
+    (extended to D = 81 in Rust/C11), Z[zeta_5] certificates for W(5)^tensor-{1,2}, and
+    exact Fubini-Study Quantum Geometric Tensor metric g_{theta,theta} (T5a-T5d).
+  authors:
+    - name: "Alexander Stephen Donahue"
+      orcid: "0009-0006-8168-9648"
+      email: "0_0@0thernes.art"
+      affiliation: "Independent Researcher, Spokane, WA, USA"
+  responsible_maintainers:
+    - name: "Alexander Stephen Donahue"
+      github: "0thernes"
+      orcid: "0009-0006-8168-9648"
+      email: "0_0@0thernes.art"
+  license: "Apache-2.0"
+
+classification:
+  arxiv:
+    - "quant-ph"
+    - "math.CO"
+    - "cs.LO"
+  msc2020:
+    - "81P15"
+    - "81P45"
+    - "05B15"
+    - "11T23"
+    - "94D10"
+
+sources:
+  - title: "Stabilizer Renyi Entropy"
+    authors:
+      - "L. Leone"
+      - "S. F. E. Oliviero"
+      - "A. Hamma"
+    id: "https://arxiv.org/abs/2106.12587"
+    type: "paper"
+    relationship: "background"
+    note: "Foundational definition of Stabilizer Renyi Entropy M_alpha and 2*alpha-th Pauli moments."
+  - title: "On 'bent' functions"
+    authors:
+      - "O. S. Rothaus"
+    id: "https://doi.org/10.1016/0097-3165(76)90024-8"
+    type: "paper"
+    relationship: "independently-proves"
+    note: "Universal zero-Mathlib Lean 4.35.0 proof of deg_ANF(f) <= m for all m >= 2 (T2c)."
+  - title: "Maximal magic states, mutually unbiased bases, and symmetric informationally complete measurements"
+    authors:
+      - "Z.-W. Liu"
+      - "R. Low"
+      - "Y. Yin"
+    id: "https://arxiv.org/abs/2602.07992"
+    type: "paper"
+    relationship: "refutes"
+    note: "Refutes Part II for all odd n >= 5 (T1c) and sharpens Part I into a logical dichotomy via exact Super-MUB torsion anomalies in W(4) x W(2) and W(4) x W(4) (T3a-T3e)."
+  - title: "Magic and mutually unbiased bases across Weyl-Heisenberg groups"
+    authors:
+      - "B. Damski"
+      - "R. Bistron"
+      - "A. Ponterio"
+      - "J. Czartowski"
+      - "K. Zyczkowski"
+    id: "https://arxiv.org/abs/2603.15550"
+    type: "paper"
+    relationship: "extends"
+    note: "Settles Strong Form of Conjecture 1 for all odd n >= 3 (T1c) and equimodular n = 4 (T2e); complements GR(9,n) char-3 MUB existence with a ring-free Z_9 divided-power carry-quadratic formalization (T5a-T5c)."
+  - title: "Extremal magic in prime-dimensional two-qudit systems"
+    authors:
+      - "T. Knipfer"
+      - "A. Roman"
+      - "K. Matcheva"
+      - "K. T. Matchev"
+    id: "https://arxiv.org/abs/2607.07197"
+    type: "paper"
+    relationship: "extends"
+    note: "Provides machine-checked exact Z[zeta_5] WH-MUB lower-bound certificates for W(5)^tensor-{1,2} (T5c)."
+
+status:
+  scope: >-
+    Unconditional zero-Mathlib Lean 4.35.0 proofs of all 22 numbered theorem groups
+    (T1a-T5d), arbitrary-bent n = 4 kernel bridge, master conjunction, 6 NonVacuity
+    witnesses (including nontrivial n = 2 Pauli-MUB witness), and 8 AdversarialTests
+    boundary refutations (38 audited declarations). Open questions explicitly excluded:
+    non-equimodular global optimality of |Psi_4(theta*)> over C^16, strong form for
+    even n >= 6 qubits, non-cyclic WH-SIC exclusion in W(4) x W(2) and W(4) x W(4),
+    and continuous closed-form Super-MUB families in alpha. Full statement-fidelity map
+    in docs/statement-fidelity.md.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms:
+    - "propext"
+    - "Classical.choice"
+    - "Quot.sound"
+
+automation:
+  methods:
+    - method: "manual"
+      notes: "Alexander Stephen Donahue directed problem selection, mathematical scope, statement-fidelity auditing, hostile red-team reviews, and publication governance."
+    - method: "agent"
+      models:
+        - "Gemini (Antigravity)"
+      framework: "Antigravity"
+      notes: >-
+        Assisted with zero-Mathlib Lean 4.35.0 proof engineering, 8-engine polyglot
+        differential verification (Rust, Zig, ISO C11 + x86-64 NASM, C++20, Python,
+        QGTL, Moonlab WASM), and AMS-LaTeX manuscript preparation under human direction.
+
+review:
+  status: "self-assessed"
+  notes: >-
+    Not externally peer-reviewed. All 38 audited declarations strictly use
+    [propext, Classical.choice, Quot.sound] and pass all 6 independent Lean 4.35.0
+    proof kernels inside bubblewrap on Ubuntu CI plus a live tamper-injecting negative
+    gate, 8 executed polyglot engines, 9/9 real source-code mutation kills, and 17/17
+    live Crossref/arXiv citation verification.

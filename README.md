@@ -11,7 +11,7 @@ Machine-checked zero-Mathlib Lean 4.35.0 six-kernel formalization (22 theorem gr
 [![Project Status: Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Archive ID: 0TH-2026-022](https://img.shields.io/badge/Archive-0TH--2026--022-6366f1.svg)](https://github.com/0thernes/0thernes-research-archive)
 
-**Status:** Active (`v1.1.1`, released 2026-11-27) · **Author:** Alexander Stephen Donahue (`Independent Researcher, Spokane, WA, USA`, ORCID [`0009-0006-8168-9648`](https://orcid.org/0009-0006-8168-9648)) · **Preprint notice:** This work is an independent machine-checked research preprint and has not undergone formal journal peer review.
+**Status:** Active (`v1.1.2`, released 2026-11-27) · **Author:** Alexander Stephen Donahue (`Independent Researcher, Spokane, WA, USA`, ORCID [`0009-0006-8168-9648`](https://orcid.org/0009-0006-8168-9648)) · **Preprint notice:** This work is an independent machine-checked research preprint and has not undergone formal journal peer review.
 
 ![Weyl–Heisenberg Magic Obstruction Frontier Overview](docs/media/social-preview.png)
 
