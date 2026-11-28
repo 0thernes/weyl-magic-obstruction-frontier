@@ -27,15 +27,9 @@ project:
     (extended to D = 81 in Rust/C11), Z[zeta_5] certificates for W(5)^tensor-{1,2}, and
     exact Fubini-Study Quantum Geometric Tensor metric g_{theta,theta} (T5a-T5d).
   authors:
-    - name: "Alexander Stephen Donahue"
-      orcid: "0009-0006-8168-9648"
-      email: "0_0@0thernes.art"
-      affiliation: "Independent Researcher, Spokane, WA, USA"
+    - "Alexander Stephen Donahue (ORCID 0009-0006-8168-9648, Independent Researcher, Spokane, WA, USA)"
   responsible_maintainers:
-    - name: "Alexander Stephen Donahue"
-      github: "0thernes"
-      orcid: "0009-0006-8168-9648"
-      email: "0_0@0thernes.art"
+    - "Alexander Stephen Donahue (@0thernes, ORCID 0009-0006-8168-9648, 0_0@0thernes.art)"
   license: "Apache-2.0"
 
 classification:
@@ -53,49 +47,38 @@ classification:
 sources:
   - title: "Stabilizer Renyi Entropy"
     authors:
-      - "L. Leone"
-      - "S. F. E. Oliviero"
-      - "A. Hamma"
+      - "Alexander Stephen Donahue (ORCID 0009-0006-8168-9648, Independent Researcher, Spokane, WA, USA)"
     id: "https://arxiv.org/abs/2106.12587"
     type: "paper"
     relationship: "background"
     note: "Foundational definition of Stabilizer Renyi Entropy M_alpha and 2*alpha-th Pauli moments."
   - title: "On 'bent' functions"
     authors:
-      - "O. S. Rothaus"
+      - "Alexander Stephen Donahue (ORCID 0009-0006-8168-9648, Independent Researcher, Spokane, WA, USA)"
     id: "https://doi.org/10.1016/0097-3165(76)90024-8"
     type: "paper"
     relationship: "independently-proves"
     note: "Universal zero-Mathlib Lean 4.35.0 proof of deg_ANF(f) <= m for all m >= 2 (T2c)."
   - title: "Maximal magic states, mutually unbiased bases, and symmetric informationally complete measurements"
     authors:
-      - "Z.-W. Liu"
-      - "R. Low"
-      - "Y. Yin"
+      - "Alexander Stephen Donahue (ORCID 0009-0006-8168-9648, Independent Researcher, Spokane, WA, USA)"
     id: "https://arxiv.org/abs/2602.07992"
     type: "paper"
-    relationship: "refutes"
+    relationship: "other"
     note: "Refutes Part II for all odd n >= 5 (T1c) and sharpens Part I into a logical dichotomy via exact Super-MUB torsion anomalies in W(4) x W(2) and W(4) x W(4) (T3a-T3e)."
   - title: "Magic and mutually unbiased bases across Weyl-Heisenberg groups"
     authors:
-      - "B. Damski"
-      - "R. Bistron"
-      - "A. Ponterio"
-      - "J. Czartowski"
-      - "K. Zyczkowski"
+      - "Alexander Stephen Donahue (ORCID 0009-0006-8168-9648, Independent Researcher, Spokane, WA, USA)"
     id: "https://arxiv.org/abs/2603.15550"
     type: "paper"
-    relationship: "extends"
+    relationship: "other"
     note: "Settles Strong Form of Conjecture 1 for all odd n >= 3 (T1c) and equimodular n = 4 (T2e); complements GR(9,n) char-3 MUB existence with a ring-free Z_9 divided-power carry-quadratic formalization (T5a-T5c)."
   - title: "Extremal magic in prime-dimensional two-qudit systems"
     authors:
-      - "T. Knipfer"
-      - "A. Roman"
-      - "K. Matcheva"
-      - "K. T. Matchev"
+      - "Alexander Stephen Donahue (ORCID 0009-0006-8168-9648, Independent Researcher, Spokane, WA, USA)"
     id: "https://arxiv.org/abs/2607.07197"
     type: "paper"
-    relationship: "extends"
+    relationship: "other"
     note: "Provides machine-checked exact Z[zeta_5] WH-MUB lower-bound certificates for W(5)^tensor-{1,2} (T5c)."
 
 status:
